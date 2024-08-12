@@ -43,8 +43,7 @@ int main(int argc, char* argv[]) {
             timer.Set();
         }
 
-        frb.Delay();
-        frb.SetTimer();
+        frb.Balance();
     }
 
     CloseGui(window, renderer);

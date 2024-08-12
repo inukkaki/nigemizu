@@ -20,6 +20,8 @@ public:
     void SetTimer();
     void Delay() const;
 
+    void Balance();
+
 private:
     const int& frame_rate_;
     impl::timer::SimpleTimer timer_;

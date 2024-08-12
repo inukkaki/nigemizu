@@ -16,4 +16,9 @@ void FrameRateBalancer::Delay() const {
     }
 }
 
+void FrameRateBalancer::Balance() {
+    Delay();
+    SetTimer();
+}
+
 }  // nigemizu::interfaces::framerate
