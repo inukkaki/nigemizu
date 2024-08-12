@@ -2,11 +2,33 @@
 
 #include "SDL2/SDL.h"
 
+#include "interfaces/modal.h"
+
 namespace nigemizu::interfaces::boot {
+
+namespace {
+
+bool InitSdl(Uint32 flags) {
+    bool succeeds = true;
+    if (SDL_Init(flags) < 0) {
+        succeeds = false;
+        modal::ShowErrorMessage(
+            "Initialization Error",
+            "Could not initialize the SDL library.",
+            SDL_GetError());
+    }
+    return succeeds;
+}
+
+}  // namespace
 
 bool InitGui(SDL_Window*& window, SDL_Renderer*& renderer) {
     // TODO: Implement this!
     bool succeeds = false;
+    if (InitSdl(SDL_INIT_VIDEO)) {
+        // ...
+        succeeds = true;
+    }
     return succeeds;
 }
 
