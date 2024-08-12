@@ -22,25 +22,30 @@ int main(int argc, char* argv[]) {
     int frame_rate = 60;
     FrameRateBalancer frb(frame_rate);
 
+    using nigemizu::interfaces::framerate::FrameRateMeasurer;
+    FrameRateMeasurer frm;
+    double measured_frame_rate = 0.0;
+
     using nigemizu::models::timer::SimpleTimer;
     SimpleTimer timer;
 
     int count = 0;
-    int elapsed_frames = 0;
 
     frb.SetTimer();
+    frm.SetTimer();
     timer.Set();
 
     while (count < 5) {
-        ++elapsed_frames;
-
         unsigned long long int elapsed_time = timer.GetElapsedTime();
         if (elapsed_time >= 1000) {
-            std::cout << elapsed_time << " ms  ";
-            std::cout << elapsed_frames << " frames" << std::endl;
+            std::cout << elapsed_time << " ms" << std::endl;
             ++count;
-            elapsed_frames = 0;
             timer.Set();
+        }
+
+        // Measure the frame rate
+        if (frm.MeasureFrameRate(measured_frame_rate)) {
+            std::cout << measured_frame_rate << " fps" << std::endl;
         }
 
         frb.Balance();

@@ -27,6 +27,19 @@ private:
     impl::timer::SimpleTimer timer_;
 };
 
+class FrameRateMeasurer {
+public:
+    FrameRateMeasurer() : elapsed_frames_(0) {}
+    ~FrameRateMeasurer() {}
+
+    void SetTimer();
+    bool MeasureFrameRate(double& measured_frame_rate);
+
+private:
+    int elapsed_frames_;
+    impl::timer::SimpleTimer timer_;
+};
+
 }  // nigemizu::interfaces::framerate
 
 #endif  // NIGEMIZU_INTERFACES_FRAMERATE_H_
