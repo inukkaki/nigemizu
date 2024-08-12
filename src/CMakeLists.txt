@@ -6,6 +6,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(nigemizu
     main.cc
 
+    interfaces/boot.cc
     interfaces/modal.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)

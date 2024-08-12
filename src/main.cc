@@ -3,6 +3,7 @@
 #include "SDL2/SDL.h"
 
 // DEBUG
+#include "interfaces/boot.h"
 #include "interfaces/modal.h"
 
 int main(int argc, char* argv[]) {
