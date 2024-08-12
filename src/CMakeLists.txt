@@ -8,6 +8,8 @@ add_executable(nigemizu
 
     interfaces/boot.cc
     interfaces/modal.cc
+
+    models/config.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)
 target_include_directories(nigemizu
