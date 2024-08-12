@@ -6,7 +6,7 @@ namespace nigemizu::models::config {
 inline constexpr char kTitle[] = "nigemizu (wip)";
 
 inline constexpr int kWindowWidth = 640;
-inline constexpr int kWindowHeight = 320;
+inline constexpr int kWindowHeight = 480;
 
 }  // namespace nigemizu::models::config
 

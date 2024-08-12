@@ -37,13 +37,26 @@ bool CreateWindow(SDL_Window*& window) {
     return succeeds;
 }
 
+bool CreateRenderer(SDL_Window*& window, SDL_Renderer*& renderer) {
+    bool succeeds = true;
+    renderer = SDL_CreateRenderer(
+        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (renderer == nullptr) {
+        succeeds = false;
+        modal::ShowErrorMessage(
+            "Initialization Error",
+            "Could not create a renderer.",
+            SDL_GetError());
+    }
+    return succeeds;
+}
+
 }  // namespace
 
 bool InitGui(SDL_Window*& window, SDL_Renderer*& renderer) {
-    // TODO: Implement this!
     bool succeeds = false;
     if (InitSdl(SDL_INIT_VIDEO)) {
-        if (CreateWindow(window) /* && ... */) {
+        if (CreateWindow(window) && CreateRenderer(window, renderer)) {
             succeeds = true;
         }
     }
