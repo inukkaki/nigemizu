@@ -1,4 +1,4 @@
-#include "modal.h"
+#include "interfaces/modal.h"
 
 #include <iostream>
 #include <string>
