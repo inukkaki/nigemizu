@@ -4,13 +4,18 @@
 
 namespace nigemizu::interfaces::framerate {
 
+void FrameRateBalancer::SetFrameRate(int frame_rate) {
+    frame_rate_ = frame_rate;
+    milliseconds_per_frame_ = 1000.0/frame_rate;
+}
+
 void FrameRateBalancer::SetTimer() {
     timer_.Set();
 }
 
 void FrameRateBalancer::Delay() const {
     unsigned long long int elapsed_time = timer_.GetElapsedTime();
-    double delay_time = 1000.0/frame_rate_ - elapsed_time;
+    double delay_time = milliseconds_per_frame_ - elapsed_time;
     if (delay_time > 0.0) {
         SDL_Delay(static_cast<int>(delay_time));
     }

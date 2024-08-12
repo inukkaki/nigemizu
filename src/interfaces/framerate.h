@@ -13,9 +13,12 @@ namespace timer = nigemizu::models::timer;
 
 class FrameRateBalancer {
 public:
-    explicit FrameRateBalancer(const int& frame_rate)
-        : frame_rate_(frame_rate) {}
+    explicit FrameRateBalancer(int frame_rate) {
+        SetFrameRate(frame_rate);
+    }
     ~FrameRateBalancer() {}
+
+    void SetFrameRate(int frame_rate);
 
     void SetTimer();
     void Delay() const;
@@ -23,7 +26,9 @@ public:
     void Balance();
 
 private:
-    const int& frame_rate_;
+    int frame_rate_;
+    double milliseconds_per_frame_;
+
     impl::timer::SimpleTimer timer_;
 };
 

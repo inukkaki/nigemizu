@@ -19,8 +19,7 @@ int main(int argc, char* argv[]) {
     std::cout << InitGui(window, renderer) << std::endl;
 
     using nigemizu::interfaces::framerate::FrameRateBalancer;
-    int frame_rate = 60;
-    FrameRateBalancer frb(frame_rate);
+    FrameRateBalancer frb(60);
 
     using nigemizu::interfaces::framerate::FrameRateMeasurer;
     FrameRateMeasurer frm;
@@ -38,9 +37,13 @@ int main(int argc, char* argv[]) {
     while (count < 5) {
         unsigned long long int elapsed_time = timer.GetElapsedTime();
         if (elapsed_time >= 1000) {
-            std::cout << elapsed_time << " ms" << std::endl;
+            std::cout << "  " << elapsed_time << " ms" << std::endl;
             ++count;
             timer.Set();
+
+            if (count == 2) {
+                frb.SetFrameRate(30);
+            }
         }
 
         // Measure the frame rate
