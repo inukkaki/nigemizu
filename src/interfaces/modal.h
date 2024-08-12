@@ -3,7 +3,9 @@
 
 namespace nigemizu::interfaces::modal {
 
-// ...
+void ShowErrorMessage(const char* title, const char* message);
+void ShowErrorMessage(
+    const char* title, const char* message, const char* quotation);
 
 }  // namespace nigemizu::interfaces::modal
 
