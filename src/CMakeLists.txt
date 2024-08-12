@@ -7,6 +7,7 @@ add_executable(nigemizu
     main.cc
 
     interfaces/boot.cc
+    interfaces/framerate.cc
     interfaces/modal.cc
 
     models/config.cc
