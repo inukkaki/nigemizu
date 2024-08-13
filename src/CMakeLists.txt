@@ -6,6 +6,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(nigemizu
     main.cc
 
+    controllers/loop.cc
+
     interfaces/boot.cc
     interfaces/framerate.cc
     interfaces/modal.cc
