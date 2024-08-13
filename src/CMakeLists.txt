@@ -13,6 +13,7 @@ add_executable(nigemizu
     interfaces/modal.cc
 
     models/config.cc
+    models/singleton.cc
     models/timer.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)
