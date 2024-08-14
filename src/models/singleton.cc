@@ -9,6 +9,8 @@ namespace nigemizu::models::singleton {
 namespace impl {
 
 void SingletonFinalizer::AddFinalizer(std::function<void()>&& func) {
+    // NOTE: This implement might occur errors when the function called by
+    // several threads at the same time.
     finalizers_.emplace_back(std::forward<decltype(func)>(func));
 }
 
