@@ -8,6 +8,25 @@
 
 namespace nigemizu::controllers::loop {
 
+namespace {
+
+bool HandleEvents() {
+    bool running = true;
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+        case SDL_QUIT:
+            running = false;
+            break;
+        default:
+            break;
+        }
+    }
+    return running;
+}
+
+}  // namespace
+
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
@@ -17,19 +36,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     FrameRateBalancer frb(60);
     FrameRateMeasurer frm;
 
-    using nigemizu::models::timer::SimpleTimer;
-    SimpleTimer timer;
-
     double measured_frame_rate = 0.0;
 
     frb.SetTimer();
     frm.SetTimer();
 
-    timer.Set();
-
     while (running) {
-        if (timer.GetElapsedTime() > 5000) {
-            running = false;
+        running = HandleEvents();
+        if (!running) {
+            break;
         }
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {
