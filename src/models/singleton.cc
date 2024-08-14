@@ -2,8 +2,6 @@
 
 #include <algorithm>
 #include <functional>
-#include <memory>
-#include <mutex>
 #include <utility>
 
 namespace nigemizu::models::singleton {
@@ -24,30 +22,7 @@ void SingletonFinalizer::Finalize() {
     ), finalizers_.clear();
 }
 
-template <typename T>
-template <typename... Args>
-T& SingletonImpl<T>::GetInstance(Args&&... args) {
-    std::call_once(init_flag_, Create<Args...>, std::forward<Args>(args)...);
-    return *instance_.get();
-}
-
-template <typename T>
-template <typename... Args>
-void SingletonImpl<T>::Create(Args&&... args) {
-    instance_ = std::make_unique<T>(std::forward<Args>(args)...);
-    SingletonFinalizer::AddFinalizer(
-        []() -> void {
-            instance_.reset(nullptr);
-        }
-    );
-}
-
 }  // namespace impl
-
-template <typename T, typename... Args>
-T& Singleton::GetInstance(Args&&... args) {
-    return impl::SingletonImpl<T>::GetInstance(std::forward<Args>(args)...);
-}
 
 void Singleton::Finalize() {
     impl::SingletonFinalizer::Finalize();

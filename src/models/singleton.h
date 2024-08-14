@@ -4,6 +4,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <utility>
 #include <vector>
 
 namespace nigemizu::models::singleton {
@@ -27,11 +28,22 @@ public:
     SingletonImpl() = delete;
 
     template <typename... Args>
-    static T& GetInstance(Args&&... args);
+    static inline T& GetInstance(Args&&... args) {
+        std::call_once(
+            init_flag_, Create<Args...>, std::forward<Args>(args)...);
+        return *instance_.get();
+    }
 
 private:
     template <typename... Args>
-    static void Create(Args&&... args);
+    static inline void Create(Args&&... args) {
+        instance_ = std::make_unique<T>(std::forward<Args>(args)...);
+        SingletonFinalizer::AddFinalizer(
+            []() -> void {
+                instance_.reset(nullptr);
+            }
+        );
+    }
 
     static inline std::once_flag init_flag_;
     static inline std::unique_ptr<T> instance_;
@@ -44,7 +56,10 @@ public:
     Singleton() = delete;
 
     template <typename T, typename... Args>
-    static T& GetInstance(Args&&... args);
+    static inline T& GetInstance(Args&&... args) {
+        return impl::SingletonImpl<T>
+            ::GetInstance(std::forward<Args>(args)...);
+    }
 
     static void Finalize();
 };
