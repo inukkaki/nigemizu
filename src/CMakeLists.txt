@@ -13,6 +13,7 @@ add_executable(nigemizu
     interfaces/modal.cc
 
     models/config.cc
+    models/keyboard.cc
     models/singleton.cc
     models/timer.cc
 )
