@@ -39,7 +39,15 @@ private:
 
 }  // namespace impl
 
-// ...
+class Singleton final {
+public:
+    Singleton() = delete;
+
+    template <typename T, typename... Args>
+    static T& GetInstance(Args&&... args);
+
+    static void Finalize();
+};
 
 }  // namespace nigemizu::models::singleton
 

@@ -44,6 +44,13 @@ void SingletonImpl<T>::Create(Args&&... args) {
 
 }  // namespace impl
 
-// ...
+template <typename T, typename... Args>
+T& Singleton::GetInstance(Args&&... args) {
+    return impl::SingletonImpl<T>::GetInstance(std::forward<Args>(args)...);
+}
+
+void Singleton::Finalize() {
+    impl::SingletonFinalizer::Finalize();
+}
 
 }  // namespace nigemizu::models::singleton
