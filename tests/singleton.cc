@@ -36,8 +36,14 @@ private:
 int main() {
     using nigemizu::models::singleton::Singleton;
 
-    A& x = Singleton::GetInstance<A>();  // ERROR
+    A& x = Singleton::GetInstance<A>(156);
     x.Print(9);
+
+    A& y = Singleton::GetInstance<A>();
+    y.Print(12);
+
+    A& z = Singleton::GetInstance<A>(229);
+    z.Print(11);
 
     Singleton::Finalize();
 
