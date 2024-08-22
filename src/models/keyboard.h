@@ -3,7 +3,11 @@
 
 namespace nigemizu::models::keyboard {
 
-// ...
+enum class KeyCode : unsigned char {
+    kA,
+    kD,
+    kMax,
+};
 
 }  // namespace nigemizu::models::keyboard
 
