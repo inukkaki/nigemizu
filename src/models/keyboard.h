@@ -2,6 +2,9 @@
 #define NIGEMIZU_MODELS_KEYBOARD_H_
 
 #include <array>
+#include <unordered_map>
+
+#include "SDL2/SDL.h"
 
 namespace nigemizu::models::keyboard {
 
@@ -15,6 +18,7 @@ inline constexpr int kNumOfKeyCodes = static_cast<int>(KeyCode::kMax);
 
 namespace impl {
 
+using KeyMap = std::unordered_map<SDL_KeyCode, int>;
 using KeyArray = std::array<bool, kNumOfKeyCodes>;
 
 }  // namespace impl
@@ -22,6 +26,7 @@ using KeyArray = std::array<bool, kNumOfKeyCodes>;
 class Keyboard {
 public:
     Keyboard() {
+        SetKeyMap();
         pressed_.fill(false);
         pressed_prev_.fill(false);
     }
@@ -30,6 +35,10 @@ public:
     // ...
 
 private:
+    void SetKeyMap();
+
+    impl::KeyMap key_map_;
+
     impl::KeyArray pressed_;
     impl::KeyArray pressed_prev_;
 };
