@@ -5,6 +5,8 @@
 // DEBUG
 #include <iostream>
 #include "interfaces/framerate.h"
+#include "models/keyboard.h"
+#include "models/singleton.h"
 
 namespace nigemizu::controllers::loop {
 
@@ -30,6 +32,10 @@ bool HandleEvents() {
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
+
+    using nigemizu::models::singleton::Singleton;
+    using nigemizu::models::keyboard::Keyboard;
+    Keyboard& kbd = Singleton::GetInstance<Keyboard>();
 
     using nigemizu::interfaces::framerate::FrameRateBalancer;
     using nigemizu::interfaces::framerate::FrameRateMeasurer;

@@ -4,6 +4,7 @@
 
 #include "controllers/loop.h"
 #include "interfaces/boot.h"
+#include "models/singleton.h"
 
 int main(int argc, char* argv[]) {
     namespace boot = nigemizu::interfaces::boot;
@@ -17,6 +18,9 @@ int main(int argc, char* argv[]) {
     if (initialized) {
         loop::MainLoop(window, renderer);
     }
+
+    using nigemizu::models::singleton::Singleton;
+    Singleton::Finalize();
 
     boot::CloseGui(window, renderer);
 
