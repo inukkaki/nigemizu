@@ -33,6 +33,9 @@ public:
     }
     ~Keyboard() {}
 
+    void HandleKeyDown(SDL_Keycode key);
+    void HandleKeyUp(SDL_Keycode key);
+
     std::string ToString() const;
 
 private:

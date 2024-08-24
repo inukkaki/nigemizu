@@ -18,6 +18,22 @@ void Keyboard::SetKeyMap() {
     }
 }
 
+void Keyboard::HandleKeyDown(SDL_Keycode key) {
+    auto it = key_map_.find(static_cast<SDL_KeyCode>(key));
+    if (it != key_map_.end()) {
+        int index = it->second;
+        pressed_[index] = true;
+    }
+}
+
+void Keyboard::HandleKeyUp(SDL_Keycode key) {
+    auto it = key_map_.find(static_cast<SDL_KeyCode>(key));
+    if (it != key_map_.end()) {
+        int index = it->second;
+        pressed_[index] = false;
+    }
+}
+
 std::string Keyboard::ToString() const {
     std::string result;
     for (int i = 0; i < kNumOfKeyCodes; ++i) {
