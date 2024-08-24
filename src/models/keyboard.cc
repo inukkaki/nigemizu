@@ -47,6 +47,21 @@ void Keyboard::Update() {
     }
 }
 
+bool Keyboard::Presses(KeyCode key) const {
+    const auto& pressed = pressed_.at(static_cast<int>(key));
+    return pressed.curr && !pressed.prev;
+}
+
+bool Keyboard::Pressing(KeyCode key) const {
+    const auto& pressed = pressed_.at(static_cast<int>(key));
+    return pressed.curr;
+}
+
+bool Keyboard::Releases(KeyCode key) const {
+    const auto& pressed = pressed_.at(static_cast<int>(key));
+    return !pressed.curr && pressed.prev;
+}
+
 std::string Keyboard::ToString() const {
     std::string result;
     for (const auto& pressed : pressed_) {

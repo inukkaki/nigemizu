@@ -44,6 +44,10 @@ public:
 
     void Update();
 
+    bool Presses(KeyCode key) const;
+    bool Pressing(KeyCode key) const;
+    bool Releases(KeyCode key) const;
+
     std::string ToString() const;
 
 private:

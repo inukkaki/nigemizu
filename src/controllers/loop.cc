@@ -68,7 +68,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        std::cout << kbd.ToString() << std::endl;
+        using nigemizu::models::keyboard::KeyCode;
+        if (kbd.Presses(KeyCode::kA)) {
+            std::cout << "A pressed" << std::endl;
+        }
+        if (kbd.Releases(KeyCode::kA)) {
+            std::cout << "A released" << std::endl;
+        }
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {
             std::cout << measured_frame_rate << " fps" << std::endl;
