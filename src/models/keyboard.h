@@ -37,6 +37,8 @@ public:
     }
     ~Keyboard() {}
 
+    void Clear();
+
     void HandleKeyDown(SDL_Keycode key);
     void HandleKeyUp(SDL_Keycode key);
 

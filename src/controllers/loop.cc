@@ -49,6 +49,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::singleton::Singleton;
     using nigemizu::models::keyboard::Keyboard;
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
+    kbd.Clear();
 
     using nigemizu::interfaces::framerate::FrameRateBalancer;
     using nigemizu::interfaces::framerate::FrameRateMeasurer;

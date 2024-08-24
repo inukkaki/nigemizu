@@ -18,6 +18,13 @@ void Keyboard::SetKeyMap() {
     }
 }
 
+void Keyboard::Clear() {
+    for (auto& pressed : pressed_) {
+        pressed.curr = false;
+        pressed.prev = false;
+    }
+}
+
 void Keyboard::HandleKeyDown(SDL_Keycode key) {
     auto it = key_map_.find(static_cast<SDL_KeyCode>(key));
     if (it != key_map_.end()) {
