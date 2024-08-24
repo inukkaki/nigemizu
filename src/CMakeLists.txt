@@ -6,11 +6,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(nigemizu
     main.cc
 
+    controllers/loop.cc
+
     interfaces/boot.cc
     interfaces/framerate.cc
     interfaces/modal.cc
 
     models/config.cc
+    models/keyboard.cc
+    models/singleton.cc
     models/timer.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)

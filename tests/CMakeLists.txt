@@ -1,0 +1,24 @@
+# Target: singleton
+add_executable(singleton
+    singleton.cc
+
+    ${PROJECT_SOURCE_DIR}/src/models/singleton.cc
+)
+target_compile_features(singleton PUBLIC cxx_std_23)
+target_include_directories(singleton
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
+
+
+# Target: stfn
+add_executable(stfn
+    stfn.cc
+
+    ${PROJECT_SOURCE_DIR}/src/models/singleton.cc
+)
+target_compile_features(stfn PUBLIC cxx_std_23)
+target_include_directories(stfn
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
