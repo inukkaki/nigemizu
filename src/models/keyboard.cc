@@ -34,6 +34,12 @@ void Keyboard::HandleKeyUp(SDL_Keycode key) {
     }
 }
 
+void Keyboard::Update() {
+    for (int i = 0; i < kNumOfKeyCodes; ++i) {
+        pressed_prev_[i] = pressed_[i];
+    }
+}
+
 std::string Keyboard::ToString() const {
     std::string result;
     for (int i = 0; i < kNumOfKeyCodes; ++i) {

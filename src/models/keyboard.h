@@ -36,6 +36,8 @@ public:
     void HandleKeyDown(SDL_Keycode key);
     void HandleKeyUp(SDL_Keycode key);
 
+    void Update();
+
     std::string ToString() const;
 
 private:

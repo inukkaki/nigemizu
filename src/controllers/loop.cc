@@ -73,6 +73,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
             std::cout << measured_frame_rate << " fps" << std::endl;
         }
 
+        kbd.Update();
         frb.Balance();
     }
 }
