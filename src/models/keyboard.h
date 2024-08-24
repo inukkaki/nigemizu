@@ -17,6 +17,11 @@ enum class KeyCode : unsigned char {
 
 inline constexpr int kNumOfKeyCodes = static_cast<int>(KeyCode::kMax);
 
+struct KeyReceptor {
+    bool curr;
+    bool prev;
+};
+
 namespace impl {
 
 using KeyMap = std::unordered_map<SDL_KeyCode, int>;
