@@ -22,7 +22,7 @@ void Keyboard::HandleKeyDown(SDL_Keycode key) {
     auto it = key_map_.find(static_cast<SDL_KeyCode>(key));
     if (it != key_map_.end()) {
         int index = it->second;
-        pressed_[index] = true;
+        pressed_[index].curr = true;
     }
 }
 
@@ -30,21 +30,21 @@ void Keyboard::HandleKeyUp(SDL_Keycode key) {
     auto it = key_map_.find(static_cast<SDL_KeyCode>(key));
     if (it != key_map_.end()) {
         int index = it->second;
-        pressed_[index] = false;
+        pressed_[index].curr = false;
     }
 }
 
 void Keyboard::Update() {
-    for (int i = 0; i < kNumOfKeyCodes; ++i) {
-        pressed_prev_[i] = pressed_[i];
+    for (auto& pressed : pressed_) {
+        pressed.prev = pressed.curr;
     }
 }
 
 std::string Keyboard::ToString() const {
     std::string result;
-    for (int i = 0; i < kNumOfKeyCodes; ++i) {
-        result.append(std::to_string(pressed_[i] ? 1 : 0));
-        result.append(std::to_string(pressed_prev_[i] ? 1 : 0));
+    for (const auto& pressed : pressed_) {
+        result.append(std::to_string(pressed.curr ? 1 : 0));
+        result.append(std::to_string(pressed.prev ? 1 : 0));
         result.append(" ");
     }
     return result;

@@ -15,17 +15,18 @@ enum class KeyCode : unsigned char {
     kMax,
 };
 
-inline constexpr int kNumOfKeyCodes = static_cast<int>(KeyCode::kMax);
-
 struct KeyReceptor {
     bool curr;
     bool prev;
+
+    KeyReceptor() : curr(false), prev(false) {}
+    ~KeyReceptor() {}
 };
 
 namespace impl {
 
 using KeyMap = std::unordered_map<SDL_KeyCode, int>;
-using KeyArray = std::array<bool, kNumOfKeyCodes>;
+using KeyArray = std::array<KeyReceptor, static_cast<int>(KeyCode::kMax)>;
 
 }  // namespace impl
 
@@ -33,8 +34,6 @@ class Keyboard {
 public:
     Keyboard() {
         SetKeyMap();
-        pressed_.fill(false);
-        pressed_prev_.fill(false);
     }
     ~Keyboard() {}
 
@@ -49,9 +48,7 @@ private:
     void SetKeyMap();
 
     impl::KeyMap key_map_;
-
     impl::KeyArray pressed_;
-    impl::KeyArray pressed_prev_;
 };
 
 }  // namespace nigemizu::models::keyboard
