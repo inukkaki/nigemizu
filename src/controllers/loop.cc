@@ -53,6 +53,9 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
             break;
         }
 
+        // DEBUG
+        std::cout << kbd.ToString() << std::endl;
+
         if (frm.MeasureFrameRate(measured_frame_rate)) {
             std::cout << measured_frame_rate << " fps" << std::endl;
         }

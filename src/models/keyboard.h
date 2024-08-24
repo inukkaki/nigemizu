@@ -2,6 +2,7 @@
 #define NIGEMIZU_MODELS_KEYBOARD_H_
 
 #include <array>
+#include <string>
 #include <unordered_map>
 
 #include "SDL2/SDL.h"
@@ -32,7 +33,7 @@ public:
     }
     ~Keyboard() {}
 
-    // ...
+    std::string ToString() const;
 
 private:
     void SetKeyMap();
