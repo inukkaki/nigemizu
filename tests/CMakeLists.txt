@@ -22,3 +22,16 @@ target_include_directories(stfn
     PUBLIC
         ${PROJECT_SOURCE_DIR}/src
 )
+
+
+# Target: vector
+add_executable(vector
+    vector.cc
+
+    ${PROJECT_SOURCE_DIR}/src/models/math.cc
+)
+target_compile_features(vector PUBLIC cxx_std_23)
+target_include_directories(vector
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
