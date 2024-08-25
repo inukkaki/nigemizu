@@ -12,7 +12,8 @@ namespace math = nigemizu::models::math;
 
 void PrintVector2D(const impl::math::Vector2D& vec, const char* label) {
     std::cout << label << ": ";
-    std::cout << "x=" << vec.x << ", y=" << vec.y << std::endl;
+    std::cout << "x=" << vec.x << ", y=" << vec.y << " ";
+    std::cout << "[" << &vec << "]" << std::endl;
 }
 
 int main() {
@@ -23,6 +24,12 @@ int main() {
     PrintVector2D(zero, "zero");
     PrintVector2D(v1, "v1");
     PrintVector2D(v2, "v2");
+    std::cout << std::endl;
+
+    v1.Zero();
+    PrintVector2D(v1, "v1 after v1.Zero()");
+    v1.Set(0.5f, -2.5f);
+    PrintVector2D(v1, "v1 after v1.Set()");
 
     return 0;
 }
