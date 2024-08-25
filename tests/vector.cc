@@ -69,6 +69,9 @@ int main() {
     using nigemizu::models::math::Dot;
     std::cout << "Dot(v1): " << Dot(v1) << std::endl;
     std::cout << "Dot(v1, v2): " << Dot(v1, v2) << std::endl;
+    using nigemizu::models::math::Cross;
+    std::cout << "Cross(v1, v1): " << Cross(v1, v1) << std::endl;
+    std::cout << "Cross(v1, v2): " << Cross(v1, v2) << std::endl;
 
     return 0;
 }

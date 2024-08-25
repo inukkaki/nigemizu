@@ -85,4 +85,8 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs) {
     return lhs.x*rhs.x + lhs.y*rhs.y;
 }
 
+float Cross(const Vector2D& lhs, const Vector2D& rhs) {
+    return lhs.x*rhs.y - lhs.y*rhs.x;
+}
+
 }  // namespace nigemizu::models::math

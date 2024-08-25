@@ -34,6 +34,8 @@ Vector2D operator/(const Vector2D& lhs, float rhs);
 float Dot(const Vector2D& v);
 float Dot(const Vector2D& lhs, const Vector2D& rhs);
 
+float Cross(const Vector2D& lhs, const Vector2D& rhs);
+
 }  // namespace nigemizu::models::math
 
 #endif  // NIGEMIZU_MODELS_MATH_H_
