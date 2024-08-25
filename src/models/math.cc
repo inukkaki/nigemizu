@@ -1,5 +1,7 @@
 #include "models/math.h"
 
+#include <cmath>
+
 namespace nigemizu::models::math {
 
 void Vector2D::Zero() {
@@ -10,6 +12,10 @@ void Vector2D::Zero() {
 void Vector2D::Set(float x, float y) {
     this->x = x;
     this->y = y;
+}
+
+float Vector2D::Length() const {
+    return std::sqrt(x*x + y*y);
 }
 
 Vector2D& Vector2D::operator=(const Vector2D& rhs) {

@@ -66,6 +66,7 @@ int main() {
 
     PrintVector2D(v1, "v1");
     PrintVector2D(v2, "v2");
+    std::cout << "v1.Length(): " << v1.Length() << std::endl;
     using nigemizu::models::math::Dot;
     std::cout << "Dot(v1): " << Dot(v1) << std::endl;
     std::cout << "Dot(v1, v2): " << Dot(v1, v2) << std::endl;
