@@ -39,6 +39,18 @@ int main() {
         +impl::math::Vector2D(-1.0f, -2.0f), "+Vector2D(-1.0f, -2.0f)");
     PrintVector2D(
         -impl::math::Vector2D(-1.0f, -2.0f), "-Vector2D(-1.0f, -2.0f)");
+    std::cout << std::endl;
+
+    PrintVector2D(v1, "v1");
+    PrintVector2D(v2, "v2");
+    PrintVector2D(v1 + v2, "v1 + v2");
+    PrintVector2D(v1 - v2, "v1 - v2");
+    PrintVector2D(-1.5f*v1, "-1.5f*v1");
+    PrintVector2D(v1*(-1.5f), "v1*(-1.5f)");
+    PrintVector2D(v1/(-0.5f), "v1/(-0.5f)");
+    std::cout << std::endl;
+
+    PrintVector2D((5*v1 - (v2 - v1)*(-5))/5, "(5*v1 - (v2 - v1)*(-5))/5");
 
     return 0;
 }
