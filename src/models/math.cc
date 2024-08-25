@@ -77,4 +77,12 @@ Vector2D operator/(const Vector2D& lhs, float rhs) {
     return tmp;
 }
 
+float Dot(const Vector2D& v) {
+    return v.x*v.x + v.y*v.y;
+}
+
+float Dot(const Vector2D& lhs, const Vector2D& rhs) {
+    return lhs.x*rhs.x + lhs.y*rhs.y;
+}
+
 }  // namespace nigemizu::models::math
