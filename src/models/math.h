@@ -15,6 +15,9 @@ struct Vector2D {
     void Set(float x, float y);
 };
 
+Vector2D operator+(const Vector2D& v);
+Vector2D operator-(const Vector2D& v);
+
 }  // namespace nigemizu::models::math
 
 #endif  // NIGEMIZU_MODELS_MATH_H_

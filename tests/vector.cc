@@ -31,5 +31,14 @@ int main() {
     v1.Set(0.5f, -2.5f);
     PrintVector2D(v1, "v1 after v1.Set()");
 
+    PrintVector2D(+v1, "+v1");
+    PrintVector2D(-v1, "-v1");
+    std::cout << std::endl;
+
+    PrintVector2D(
+        +impl::math::Vector2D(-1.0f, -2.0f), "+Vector2D(-1.0f, -2.0f)");
+    PrintVector2D(
+        -impl::math::Vector2D(-1.0f, -2.0f), "-Vector2D(-1.0f, -2.0f)");
+
     return 0;
 }
