@@ -51,6 +51,18 @@ int main() {
     std::cout << std::endl;
 
     PrintVector2D((5*v1 - (v2 - v1)*(-5))/5, "(5*v1 - (v2 - v1)*(-5))/5");
+    std::cout << std::endl;
+
+    v1 = impl::math::Vector2D(-1.5f, 2.0f);
+    PrintVector2D(v1, "v1 after v1 = Vector2D(-1.5f, 2.0f)");
+    v1 += impl::math::Vector2D(0.5f, -1.0f);
+    PrintVector2D(v1, "v1 after v1 += Vector2D(0.5f, -1.0f)");
+    v1 -= impl::math::Vector2D(0.5f, -1.0f);
+    PrintVector2D(v1, "v1 after v1 -= Vector2D(0.5f, -1.0f)");
+    v1 *= -0.5f;
+    PrintVector2D(v1, "v1 after v1 *= -0.5f");
+    v1 /= -0.5f;
+    PrintVector2D(v1, "v1 after v1 /= -0.5f");
 
     return 0;
 }

@@ -12,6 +12,36 @@ void Vector2D::Set(float x, float y) {
     this->y = y;
 }
 
+Vector2D& Vector2D::operator=(const Vector2D& rhs) {
+    x = rhs.x;
+    y = rhs.y;
+    return *this;
+}
+
+Vector2D& Vector2D::operator+=(const Vector2D& rhs) {
+    x += rhs.x;
+    y += rhs.y;
+    return *this;
+}
+
+Vector2D& Vector2D::operator-=(const Vector2D& rhs) {
+    x -= rhs.x;
+    y -= rhs.y;
+    return *this;
+}
+
+Vector2D& Vector2D::operator*=(float rhs) {
+    x *= rhs;
+    y *= rhs;
+    return *this;
+}
+
+Vector2D& Vector2D::operator/=(float rhs) {
+    x /= rhs;
+    y /= rhs;
+    return *this;
+}
+
 Vector2D operator+(const Vector2D& v) {
     Vector2D tmp(+v.x, +v.y);
     return tmp;
