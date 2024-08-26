@@ -17,6 +17,15 @@ struct Data {
     impl::math::Vector2D a_;  // px frame-2
 };
 
+class Entity {
+public:
+    Entity(const Data& data) : data_(data) {}
+    ~Entity() {}
+
+private:
+    Data data_;
+};
+
 }  // namespace nigemizu::models::entity
 
 #endif  // NIGEMIZU_MODELS_ENTITY_H_
