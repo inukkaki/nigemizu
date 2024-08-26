@@ -7,6 +7,8 @@
 // DEBUG
 #include <iostream>
 #include "interfaces/framerate.h"
+#include "models/entity.h"
+#include "models/math.h"
 #include "models/singleton.h"
 
 namespace nigemizu::controllers::loop {
@@ -58,9 +60,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     double measured_frame_rate = 0.0;
 
+    namespace entity = nigemizu::models::entity;
+    using nigemizu::models::math::Vector2D;
+    entity::Data data;
+    data.r = Vector2D(5.0f, 4.0f);
+    entity::Entity ent(data);
+
     frb.SetTimer();
     frm.SetTimer();
-
     while (running) {
         running = HandleEvents(kbd);
         if (!running) {
@@ -68,13 +75,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        using nigemizu::models::keyboard::KeyCode;
-        if (kbd.Presses(KeyCode::kA)) {
-            std::cout << "A pressed" << std::endl;
-        }
-        if (kbd.Releases(KeyCode::kA)) {
-            std::cout << "A released" << std::endl;
-        }
+        SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
+        SDL_RenderClear(renderer);
+        ent.Display(renderer);
+        SDL_RenderPresent(renderer);
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {
             std::cout << measured_frame_rate << " fps" << std::endl;

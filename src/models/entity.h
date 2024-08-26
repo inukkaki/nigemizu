@@ -3,6 +3,9 @@
 
 #include "models/math.h"
 
+// DEBUG
+#include "SDL2/SDL.h"
+
 namespace nigemizu::models::entity {
 
 namespace impl {
@@ -12,15 +15,18 @@ namespace math = nigemizu::models::math;
 }  // namespace impl
 
 struct Data {
-    impl::math::Vector2D r_;  // px
-    impl::math::Vector2D v_;  // px frame-1
-    impl::math::Vector2D a_;  // px frame-2
+    impl::math::Vector2D r;  // px
+    impl::math::Vector2D v;  // px frame-1
+    impl::math::Vector2D a;  // px frame-2
 };
 
 class Entity {
 public:
     Entity(const Data& data) : data_(data) {}
     ~Entity() {}
+
+    // DEBUG
+    void Display(SDL_Renderer* renderer) const;
 
 private:
     Data data_;
