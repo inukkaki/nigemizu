@@ -55,6 +55,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     kbd.Clear();
 
     namespace config = nigemizu::models::config;
+    config::SetFrameRate(60);
     int frame_rate = config::GetFrameRate();
     float frame_duration = config::GetFrameDuration();
     std::cout << frame_rate << " fps" << std::endl;
@@ -70,9 +71,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
     entity::Data data;
-    data.r = Vector2D(5.0f, 4.0f);
-    data.v = Vector2D(64.0f, 32.0f);
-    entity::Entity ent(data, entity::kAddVToR);
+    data.r = Vector2D(0.0f, 0.0f);
+    data.v = Vector2D(.0f, .0f);
+    data.a = Vector2D(0.0f, 9.8f);
+    entity::Entity ent(
+        data,
+        entity::kAddAToV,
+        entity::kAddVToR);
 
     frb.SetTimer();
     frm.SetTimer();
@@ -83,6 +88,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
+        ent.UpdateV(frame_duration);
         ent.UpdateR(frame_duration);
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);

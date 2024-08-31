@@ -5,8 +5,16 @@
 
 namespace nigemizu::models::entity {
 
+void AddAToV::UpdateV(Data& self, float dt) const {
+    self.v += self.a*dt;
+}
+
 void AddVToR::UpdateR(Data& self, float dt) const {
     self.r += self.v*dt;
+}
+
+void Entity::UpdateV(float dt) {
+    update_v_->UpdateV(data_, dt);
 }
 
 void Entity::UpdateR(float dt) {
