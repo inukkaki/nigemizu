@@ -24,6 +24,29 @@ struct Data {
     impl::math::Vector2D external_force;  // kg px s-2
 };
 
+class ModifyExternalForceDelegate {
+public:
+    virtual void ModifyExternalForce(
+        Data& self, const impl::math::Vector2D& force) const = 0;
+};
+
+class NotModifyExternalForce final : public ModifyExternalForceDelegate {
+public:
+    void ModifyExternalForce(
+            Data& self, const impl::math::Vector2D& force) const override {
+        /* NO-OP */
+    }
+};
+
+class AddExternalForce final : public ModifyExternalForceDelegate {
+public:
+    void ModifyExternalForce(
+        Data& self, const impl::math::Vector2D& force) const override;
+};
+
+inline constexpr NotModifyExternalForce kNotModifyExternalForce;
+inline constexpr AddExternalForce kAddExternalForce;
+
 class UpdateADelegate {
 public:
     virtual void UpdateA(Data& self) const = 0;
@@ -81,24 +104,31 @@ inline constexpr AddVToR kAddVToR;
 class Entity {
 public:
     Entity(const Data& data,
+           const ModifyExternalForceDelegate& modify_external_force,
            const UpdateADelegate& update_a,
            const UpdateVDelegate& update_v,
            const UpdateRDelegate& update_r)
         : data_(data),
+          modify_external_force_(&modify_external_force),
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {}
     ~Entity() {}
+
+    void ModifyExternalForce(const impl::math::Vector2D& force);
 
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
 
     // DEBUG
+    const impl::math::Vector2D& r() { return data_.r; }
     void Display(SDL_Renderer* renderer) const;
 
 private:
     Data data_;
+
+    const ModifyExternalForceDelegate* modify_external_force_;
 
     const UpdateADelegate* update_a_;
     const UpdateVDelegate* update_v_;

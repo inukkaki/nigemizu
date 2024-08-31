@@ -1,9 +1,22 @@
 #include "models/entity.h"
 
+#include "models/math.h"
+
 // DEBUG
 #include "SDL2/SDL.h"
 
 namespace nigemizu::models::entity {
+
+namespace impl {
+
+namespace math = nigemizu::models::math;
+
+}  // namespace impl
+
+void AddExternalForce::ModifyExternalForce(
+        Data& self, const impl::math::Vector2D& force) const {
+    self.external_force += force;
+}
 
 void ApplyExternalForceToA::UpdateA(Data& self) const {
     self.a = self.external_force/self.mass;
@@ -16,6 +29,10 @@ void AddAToV::UpdateV(Data& self, float dt) const {
 
 void AddVToR::UpdateR(Data& self, float dt) const {
     self.r += self.v*dt;
+}
+
+void Entity::ModifyExternalForce(const impl::math::Vector2D& force) {
+    modify_external_force_->ModifyExternalForce(data_, force);
 }
 
 void Entity::UpdateA() {

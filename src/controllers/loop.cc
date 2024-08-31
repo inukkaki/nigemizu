@@ -72,15 +72,17 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     entity::Data data;
     data.mass = 16.0f;
-    data.r = Vector2D(16.0f, 16.0f);
-    data.v = Vector2D(.0f, .0f);
-    //data.a = Vector2D(0.0f, 9.8f);
-    data.external_force = Vector2D(0.0f, 10000.0f);
+    data.r = Vector2D(80.0f, 80.0f);
+    data.v = Vector2D(16.0f, 48.0f);
     entity::Entity ent(
         data,
+        entity::kAddExternalForce,
         entity::kApplyExternalForceToA,
         entity::kAddAToV,
         entity::kAddVToR);
+
+    Vector2D force(.0f, .0f);
+    Vector2D center(320.0f, 240.0f);
 
     frb.SetTimer();
     frm.SetTimer();
@@ -91,6 +93,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
+        Vector2D r = center - ent.r();
+        force = 4*r;
+
+        ent.ModifyExternalForce(force);
         ent.UpdateA();
         ent.UpdateV(frame_duration);
         ent.UpdateR(frame_duration);
