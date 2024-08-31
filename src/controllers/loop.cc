@@ -71,11 +71,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
     entity::Data data;
-    data.r = Vector2D(0.0f, 0.0f);
+    data.mass = 16.0f;
+    data.r = Vector2D(16.0f, 16.0f);
     data.v = Vector2D(.0f, .0f);
-    data.a = Vector2D(0.0f, 9.8f);
+    //data.a = Vector2D(0.0f, 9.8f);
+    data.external_force = Vector2D(0.0f, 10000.0f);
     entity::Entity ent(
         data,
+        entity::kApplyExternalForceToA,
         entity::kAddAToV,
         entity::kAddVToR);
 
@@ -88,6 +91,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
+        ent.UpdateA();
         ent.UpdateV(frame_duration);
         ent.UpdateR(frame_duration);
 

@@ -5,12 +5,21 @@
 
 namespace nigemizu::models::entity {
 
+void ApplyExternalForceToA::UpdateA(Data& self) const {
+    self.a = self.external_force/self.mass;
+    self.external_force.Zero();
+}
+
 void AddAToV::UpdateV(Data& self, float dt) const {
     self.v += self.a*dt;
 }
 
 void AddVToR::UpdateR(Data& self, float dt) const {
     self.r += self.v*dt;
+}
+
+void Entity::UpdateA() {
+    update_a_->UpdateA(data_);
 }
 
 void Entity::UpdateV(float dt) {
