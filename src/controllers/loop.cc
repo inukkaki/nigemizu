@@ -71,7 +71,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     entity::Data data;
     data.r = Vector2D(5.0f, 4.0f);
-    entity::Entity ent(data);
+    data.v = Vector2D(64.0f, 32.0f);
+    entity::Entity ent(data, entity::kAddVToR);
 
     frb.SetTimer();
     frm.SetTimer();
@@ -82,19 +83,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        using nigemizu::models::keyboard::KeyCode;
-        if (kbd.Presses(KeyCode::kA)) {
-            config::SetFrameRate(30);
-            frb.SetFrameRate(config::GetFrameRate());
-            std::cout << config::GetFrameRate() << " fps" << std::endl;
-            std::cout << config::GetFrameDuration() << " s" << std::endl;
-        }
-        if (kbd.Presses(KeyCode::kD)) {
-            config::SetFrameRate(60);
-            frb.SetFrameRate(config::GetFrameRate());
-            std::cout << config::GetFrameRate() << " fps" << std::endl;
-            std::cout << config::GetFrameDuration() << " s" << std::endl;
-        }
+        ent.UpdateR(frame_duration);
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);

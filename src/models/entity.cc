@@ -5,6 +5,14 @@
 
 namespace nigemizu::models::entity {
 
+void AddVToR::UpdateR(Data& self, float dt) const {
+    self.r += self.v*dt;
+}
+
+void Entity::UpdateR(float dt) {
+    update_r_->UpdateR(data_, dt);
+}
+
 // DEBUG
 void Entity::Display(SDL_Renderer* renderer) const {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
