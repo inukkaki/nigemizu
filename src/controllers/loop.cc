@@ -7,6 +7,7 @@
 // DEBUG
 #include <iostream>
 #include "interfaces/framerate.h"
+#include "models/config.h"
 #include "models/entity.h"
 #include "models/math.h"
 #include "models/singleton.h"
@@ -53,9 +54,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
 
+    namespace config = nigemizu::models::config;
+    int frame_rate = config::GetFrameRate();
+    float frame_duration = config::GetFrameDuration();
+    std::cout << frame_rate << " fps" << std::endl;
+    std::cout << frame_duration << " s" << std::endl;
+
     using nigemizu::interfaces::framerate::FrameRateBalancer;
     using nigemizu::interfaces::framerate::FrameRateMeasurer;
-    FrameRateBalancer frb(60);
+    FrameRateBalancer frb(frame_rate);
     FrameRateMeasurer frm;
 
     double measured_frame_rate = 0.0;
@@ -75,6 +82,20 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
+        using nigemizu::models::keyboard::KeyCode;
+        if (kbd.Presses(KeyCode::kA)) {
+            config::SetFrameRate(30);
+            frb.SetFrameRate(config::GetFrameRate());
+            std::cout << config::GetFrameRate() << " fps" << std::endl;
+            std::cout << config::GetFrameDuration() << " s" << std::endl;
+        }
+        if (kbd.Presses(KeyCode::kD)) {
+            config::SetFrameRate(60);
+            frb.SetFrameRate(config::GetFrameRate());
+            std::cout << config::GetFrameRate() << " fps" << std::endl;
+            std::cout << config::GetFrameDuration() << " s" << std::endl;
+        }
+
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
         ent.Display(renderer);
