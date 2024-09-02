@@ -4,10 +4,14 @@
 
 // DEBUG
 #include "SDL2/SDL.h"
+#include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
+
+// DEBUG
+namespace kbd = nigemizu::models::keyboard;
 
 namespace math = nigemizu::models::math;
 
@@ -54,6 +58,20 @@ void Entity::Display(SDL_Renderer* renderer) const {
         renderer, data_.r.x - 8, data_.r.y, data_.r.x + 8, data_.r.y);
     SDL_RenderDrawLineF(
         renderer, data_.r.x, data_.r.y - 8, data_.r.x, data_.r.y + 8);
+}
+
+// DEBUG
+void Player::Control(const impl::kbd::Keyboard& kbd) {
+    using nigemizu::models::keyboard::KeyCode;
+    using nigemizu::models::math::Vector2D;
+    Vector2D force;
+    if (kbd.Pressing(KeyCode::kA)) {
+        force += Vector2D(-1000.0f, 0.0f);
+    }
+    if (kbd.Pressing(KeyCode::kD)) {
+        force += Vector2D(1000.0f, 0.0f);
+    }
+    ModifyExternalForce(force);
 }
 
 }  // namespace nigemizu::models::entity

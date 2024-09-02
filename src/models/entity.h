@@ -5,10 +5,14 @@
 
 // DEBUG
 #include "SDL2/SDL.h"
+#include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
+
+// DEBUG
+namespace kbd = nigemizu::models::keyboard;
 
 namespace math = nigemizu::models::math;
 
@@ -113,7 +117,7 @@ public:
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {}
-    ~Entity() {}
+    virtual ~Entity() {}
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
@@ -122,7 +126,6 @@ public:
     void UpdateR(float dt);
 
     // DEBUG
-    const impl::math::Vector2D& r() { return data_.r; }
     void Display(SDL_Renderer* renderer) const;
 
 private:
@@ -133,6 +136,20 @@ private:
     const UpdateADelegate* update_a_;
     const UpdateVDelegate* update_v_;
     const UpdateRDelegate* update_r_;
+};
+
+class Player : public Entity {
+public:
+    Player(const Data& data)
+        : Entity(data,
+                 kAddExternalForce,
+                 kApplyExternalForceToA,
+                 kAddAToV,
+                 kAddVToR) {}
+    ~Player() override {}
+
+    // DEBUG
+    void Control(const impl::kbd::Keyboard& kbd);
 };
 
 }  // namespace nigemizu::models::entity

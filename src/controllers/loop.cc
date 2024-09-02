@@ -55,7 +55,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     kbd.Clear();
 
     namespace config = nigemizu::models::config;
-    config::SetFrameRate(60);
+    //config::SetFrameRate(30);
     int frame_rate = config::GetFrameRate();
     float frame_duration = config::GetFrameDuration();
     std::cout << frame_rate << " fps" << std::endl;
@@ -71,18 +71,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
     entity::Data data;
-    data.mass = 16.0f;
-    data.r = Vector2D(80.0f, 80.0f);
-    data.v = Vector2D(16.0f, 48.0f);
-    entity::Entity ent(
-        data,
-        entity::kAddExternalForce,
-        entity::kApplyExternalForceToA,
-        entity::kAddAToV,
-        entity::kAddVToR);
-
-    Vector2D force(.0f, .0f);
-    Vector2D center(320.0f, 240.0f);
+    data.mass = 4.0f;
+    entity::Player player(data);
 
     frb.SetTimer();
     frm.SetTimer();
@@ -93,17 +83,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        Vector2D r = center - ent.r();
-        force = 4*r;
+        player.Control(kbd);
 
-        ent.ModifyExternalForce(force);
-        ent.UpdateA();
-        ent.UpdateV(frame_duration);
-        ent.UpdateR(frame_duration);
+        player.UpdateA();
+        player.UpdateV(frame_duration);
+        player.UpdateR(frame_duration);
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
-        ent.Display(renderer);
+        player.Display(renderer);
         SDL_RenderPresent(renderer);
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {
