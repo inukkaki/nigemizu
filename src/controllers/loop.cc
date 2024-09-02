@@ -7,6 +7,9 @@
 // DEBUG
 #include <iostream>
 #include "interfaces/framerate.h"
+#include "models/config.h"
+#include "models/entity.h"
+#include "models/math.h"
 #include "models/singleton.h"
 
 namespace nigemizu::controllers::loop {
@@ -51,16 +54,28 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
 
+    namespace config = nigemizu::models::config;
+    //config::SetFrameRate(30);
+    int frame_rate = config::GetFrameRate();
+    float frame_duration = config::GetFrameDuration();
+    std::cout << frame_rate << " fps" << std::endl;
+    std::cout << frame_duration << " s" << std::endl;
+
     using nigemizu::interfaces::framerate::FrameRateBalancer;
     using nigemizu::interfaces::framerate::FrameRateMeasurer;
-    FrameRateBalancer frb(60);
+    FrameRateBalancer frb(frame_rate);
     FrameRateMeasurer frm;
 
     double measured_frame_rate = 0.0;
 
+    namespace entity = nigemizu::models::entity;
+    using nigemizu::models::math::Vector2D;
+    entity::Data data;
+    data.mass = 4.0f;
+    entity::Player player(data);
+
     frb.SetTimer();
     frm.SetTimer();
-
     while (running) {
         running = HandleEvents(kbd);
         if (!running) {
@@ -68,13 +83,16 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        using nigemizu::models::keyboard::KeyCode;
-        if (kbd.Presses(KeyCode::kA)) {
-            std::cout << "A pressed" << std::endl;
-        }
-        if (kbd.Releases(KeyCode::kA)) {
-            std::cout << "A released" << std::endl;
-        }
+        player.Control(kbd);
+
+        player.UpdateA();
+        player.UpdateV(frame_duration);
+        player.UpdateR(frame_duration);
+
+        SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
+        SDL_RenderClear(renderer);
+        player.Display(renderer);
+        SDL_RenderPresent(renderer);
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {
             std::cout << measured_frame_rate << " fps" << std::endl;

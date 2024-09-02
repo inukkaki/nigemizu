@@ -26,8 +26,8 @@ public:
     void Balance();
 
 private:
-    int frame_rate_;
-    double milliseconds_per_frame_;
+    int frame_rate_;                 // s-1
+    double milliseconds_per_frame_;  // ms
 
     impl::timer::SimpleTimer timer_;
 };
@@ -41,7 +41,7 @@ public:
     bool MeasureFrameRate(double& measured_frame_rate);
 
 private:
-    int elapsed_frames_;
+    int elapsed_frames_;  // s-1
     impl::timer::SimpleTimer timer_;
 };
 
