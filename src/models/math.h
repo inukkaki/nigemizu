@@ -39,11 +39,22 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs);
 float Cross(const Vector2D& lhs, const Vector2D& rhs);
 
 enum class ShapeType : unsigned char {
-    // ...
+    kCircle2D,
 };
 
 struct Shape2D {
     virtual ShapeType Type() const = 0;
+};
+
+struct Circle2D : public Shape2D {
+    Vector2D c;  // center
+    float r;     // radius
+
+    Circle2D() : r(0.0f) {}
+    Circle2D(float r) : r(r) {}
+    ~Circle2D() {}
+
+    ShapeType Type() const override { return ShapeType::kCircle2D; }
 };
 
 }  // namespace nigemizu::models::math
