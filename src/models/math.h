@@ -44,6 +44,8 @@ enum class ShapeType : unsigned char {
 
 struct Shape2D {
     virtual ShapeType Type() const = 0;
+
+    virtual bool CollidesWith(const Shape2D& other) const = 0;
 };
 
 struct Circle2D : public Shape2D {
@@ -55,6 +57,8 @@ struct Circle2D : public Shape2D {
     ~Circle2D() {}
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }
+
+    bool CollidesWith(const Shape2D& other) const override;
 };
 
 }  // namespace nigemizu::models::math

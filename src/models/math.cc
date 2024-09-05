@@ -95,4 +95,16 @@ float Cross(const Vector2D& lhs, const Vector2D& rhs) {
     return lhs.x*rhs.y - lhs.y*rhs.x;
 }
 
+bool Circle2D::CollidesWith(const Shape2D& other) const {
+    bool result = false;
+    switch (other.Type()) {
+    case ShapeType::kCircle2D:
+        // ...
+        break;
+    default:
+        break;
+    }
+    return result;
+}
+
 }  // namespace nigemizu::models::math
