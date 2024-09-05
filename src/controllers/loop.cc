@@ -74,6 +74,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     data.mass = 4.0f;
     entity::Player player(data);
 
+    using nigemizu::models::math::Circle2D;
+    Circle2D c1(Vector2D(336.98f, 256.98f), 8.0f);
+    Circle2D c2(Vector2D(320.0f, 240.0f), 16.0f);
+    std::cout << c1.CollidesWith(c2) << std::endl;
+    std::cout << c2.CollidesWith(c1) << std::endl;
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {

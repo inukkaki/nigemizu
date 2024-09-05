@@ -54,6 +54,7 @@ struct Circle2D : public Shape2D {
 
     Circle2D() : r(0.0f) {}
     Circle2D(float r) : r(r) {}
+    Circle2D(const Vector2D& c, float r) : c(c), r(r) {}
     ~Circle2D() {}
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }

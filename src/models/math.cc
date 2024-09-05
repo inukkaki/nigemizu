@@ -95,11 +95,22 @@ float Cross(const Vector2D& lhs, const Vector2D& rhs) {
     return lhs.x*rhs.y - lhs.y*rhs.x;
 }
 
+namespace {
+
+bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {
+    float r = c1.r + c2.r;
+    return Dot(c1.c - c2.c) <= r*r;
+}
+
+}  // namespace
+
 bool Circle2D::CollidesWith(const Shape2D& other) const {
+    // WARN: This function includes explicit downcasts.
     bool result = false;
     switch (other.Type()) {
     case ShapeType::kCircle2D:
-        // ...
+        result = DetectCollisionBetween(
+            *this, static_cast<const Circle2D&>(other));
         break;
     default:
         break;
