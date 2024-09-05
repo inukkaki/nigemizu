@@ -38,6 +38,14 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs);
 
 float Cross(const Vector2D& lhs, const Vector2D& rhs);
 
+enum class ShapeType : unsigned char {
+    // ...
+};
+
+struct Shape2D {
+    virtual ShapeType Type() const = 0;
+};
+
 }  // namespace nigemizu::models::math
 
 #endif  // NIGEMIZU_MODELS_MATH_H_
