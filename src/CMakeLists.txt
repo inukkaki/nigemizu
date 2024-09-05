@@ -14,6 +14,7 @@ add_executable(nigemizu
 
     models/config.cc
     models/entity.cc
+    models/field.cc
     models/keyboard.cc
     models/math.cc
     models/singleton.cc
