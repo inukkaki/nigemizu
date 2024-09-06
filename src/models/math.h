@@ -39,13 +39,17 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs);
 float Cross(const Vector2D& lhs, const Vector2D& rhs);
 
 enum class ShapeType : unsigned char {
+    kShape2D,
     kCircle2D,
 };
 
 struct Shape2D {
-    virtual ShapeType Type() const = 0;
+    Shape2D() {}
+    virtual ~Shape2D() {}
 
-    virtual bool CollidesWith(const Shape2D& other) const = 0;
+    virtual ShapeType Type() const { return ShapeType::kShape2D; }
+
+    virtual bool CollidesWith(const Shape2D& other) const { return false; }
 };
 
 struct Circle2D : public Shape2D {
