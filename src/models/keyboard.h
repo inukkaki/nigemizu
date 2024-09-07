@@ -10,7 +10,9 @@
 namespace nigemizu::models::keyboard {
 
 enum class KeyCode : unsigned char {
+    kW,
     kA,
+    kS,
     kD,
     kMax,
 };

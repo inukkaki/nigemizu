@@ -71,6 +71,12 @@ void Player::Control(const impl::kbd::Keyboard& kbd) {
     if (kbd.Pressing(KeyCode::kD)) {
         force += Vector2D(1000.0f, 0.0f);
     }
+    if (kbd.Pressing(KeyCode::kW)) {
+        force += Vector2D(0.0f, -1000.0f);
+    }
+    if (kbd.Pressing(KeyCode::kS)) {
+        force += Vector2D(0.0f, 1000.0f);
+    }
     ModifyExternalForce(force);
 }
 
