@@ -97,7 +97,18 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
+
         player.Display(renderer);
+
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        using nigemizu::models::math::RenderLine;
+        RenderLine(
+            0, 0, 16, 32,
+            [renderer](int x, int y) -> void {
+                SDL_RenderDrawPoint(renderer, x, y);
+            }
+        );
+
         SDL_RenderPresent(renderer);
 
         if (frm.MeasureFrameRate(measured_frame_rate)) {

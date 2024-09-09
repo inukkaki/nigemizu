@@ -1,6 +1,7 @@
 #include "models/math.h"
 
 #include <cmath>
+#include <functional>
 
 namespace nigemizu::models::math {
 
@@ -93,6 +94,28 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs) {
 
 float Cross(const Vector2D& lhs, const Vector2D& rhs) {
     return lhs.x*rhs.y - lhs.y*rhs.x;
+}
+
+void RenderLine(
+        float x0, float y0, float x1, float y1,
+        std::function<void(int, int)> plot) {
+    // NOTE: The following assignments will be changed in the future.
+    int xa = x0;
+    int ya = y0;
+    int xb = x1;
+    int yb = y1;
+    int dx = static_cast<int>( std::abs(xb - xa));
+    int dy = static_cast<int>(-std::abs(yb - ya));
+    int error = dx + dy;
+    int sx = xa < xb ? 1 : -1;
+    int sy = ya < yb ? 1 : -1;
+    while (true) {
+        plot(xa, ya);
+        if ((xa == xb) && (ya == yb)) { break; }
+        int e2 = 2*error;
+        if (e2 >= dy) { error += dy; xa += sx; }
+        if (e2 <= dx) { error += dx; ya += sy; }
+    }
 }
 
 namespace {

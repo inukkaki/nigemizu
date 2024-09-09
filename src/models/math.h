@@ -1,6 +1,8 @@
 #ifndef NIGEMIZU_MODELS_MATH_H_
 #define NIGEMIZU_MODELS_MATH_H_
 
+#include <functional>
+
 namespace nigemizu::models::math {
 
 struct Vector2D {
@@ -37,6 +39,10 @@ float Dot(const Vector2D& v);
 float Dot(const Vector2D& lhs, const Vector2D& rhs);
 
 float Cross(const Vector2D& lhs, const Vector2D& rhs);
+
+void RenderLine(
+    float x0, float y0, float x1, float y1,
+    std::function<void(int, int)> plot);
 
 enum class ShapeType : unsigned char {
     kShape2D,
