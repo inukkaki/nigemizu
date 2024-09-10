@@ -101,6 +101,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
+        using nigemizu::models::math::RenderCircle;
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        RenderCircle(16, 16, 16, plotter);
+        using nigemizu::models::math::RenderLine;
+        RenderLine(31, 0, 31, 31, plotter);
+
         player.RenderDebugInfo(plotter, color_setter);
 
         SDL_RenderPresent(renderer);

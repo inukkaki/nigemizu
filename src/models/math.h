@@ -48,6 +48,9 @@ void RenderLine(
 void RenderLine(
     const Vector2D& p0, const Vector2D& p1, const Plotter& plotter);
 
+void RenderCircle(
+    float center_x, float center_y, float radius, const Plotter& plotter);
+
 enum class ShapeType : unsigned char {
     kShape2D,
     kCircle2D,

@@ -99,10 +99,10 @@ float Cross(const Vector2D& lhs, const Vector2D& rhs) {
 void RenderLine(
         float x0, float y0, float x1, float y1, const Plotter& plotter) {
     // NOTE: The following assignments will be changed in the future.
-    int xa = x0;
-    int ya = y0;
-    int xb = x1;
-    int yb = y1;
+    int xa = static_cast<int>(std::round(x0));
+    int ya = static_cast<int>(std::round(y0));
+    int xb = static_cast<int>(std::round(x1));
+    int yb = static_cast<int>(std::round(y1));
     int dx = static_cast<int>( std::abs(xb - xa));
     int dy = static_cast<int>(-std::abs(yb - ya));
     int error = dx + dy;
@@ -120,6 +120,26 @@ void RenderLine(
 void RenderLine(
         const Vector2D& p0, const Vector2D& p1, const Plotter& plotter) {
     RenderLine(p0.x, p0.y, p1.x, p1.y, plotter);
+}
+
+void RenderCircle(
+        float center_x, float center_y, float radius, const Plotter& plotter) {
+    // NOTE: The following assignments will be changed in the future.
+    int cx = static_cast<int>(std::round(center_x));
+    int cy = static_cast<int>(std::round(center_y));
+    int r = static_cast<int>(std::round(radius));
+    int x = -r;
+    int y = 0;
+    int error = 2 - 2*r;
+    do {
+        plotter(cx - x, cy + y);
+        plotter(cx - y, cy - x);
+        plotter(cx + x, cy - y);
+        plotter(cx + y, cy + x);
+        r = error;
+        if (r <= y) { ++y; error += 2*y + 1; }
+        if ((r > x) || (error > y)) { ++x; error += 2*x + 1; }
+    } while (x < 0);
 }
 
 namespace {
