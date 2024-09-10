@@ -50,6 +50,7 @@ void RenderLine(
 
 void RenderCircle(
     float center_x, float center_y, float radius, const Plotter& plotter);
+void RenderCircle(const Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
     kShape2D,

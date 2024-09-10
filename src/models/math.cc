@@ -142,6 +142,10 @@ void RenderCircle(
     } while (x < 0);
 }
 
+void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
+    RenderCircle(c.x, c.y, r, plotter);
+}
+
 namespace {
 
 bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {
