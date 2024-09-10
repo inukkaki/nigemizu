@@ -64,6 +64,10 @@ struct Shape2D {
     virtual ShapeType Type() const { return ShapeType::kShape2D; }
 
     virtual bool CollidesWith(const Shape2D& other) const { return false; }
+
+    virtual void Render(const Vector2D& offset, const Plotter& plotter) const {
+        /* NO-OP */
+    }
 };
 
 struct Circle2D : public Shape2D {
@@ -78,6 +82,8 @@ struct Circle2D : public Shape2D {
     ShapeType Type() const override { return ShapeType::kCircle2D; }
 
     bool CollidesWith(const Shape2D& other) const override;
+
+    void Render(const Vector2D& offset, const Plotter& plotter) const override;
 };
 
 }  // namespace nigemizu::models::math

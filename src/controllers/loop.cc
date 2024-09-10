@@ -83,6 +83,9 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
 
+    using nigemizu::models::math::Circle2D;
+    Circle2D circle({32, 32}, 16);
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {
@@ -107,6 +110,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         RenderCircle({32, 16}, 16, plotter);
         using nigemizu::models::math::RenderLine;
         RenderLine(31, 0, 31, 31, plotter);
+        circle.Render({}, plotter);
 
         player.RenderDebugInfo(plotter, color_setter);
 

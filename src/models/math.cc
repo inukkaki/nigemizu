@@ -169,4 +169,8 @@ bool Circle2D::CollidesWith(const Shape2D& other) const {
     return result;
 }
 
+void Circle2D::Render(const Vector2D& offset, const Plotter& plotter) const {
+    RenderCircle(c + offset, r, plotter);
+}
+
 }  // namespace nigemizu::models::math
