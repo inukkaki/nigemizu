@@ -24,6 +24,11 @@ void AddExternalForce::ModifyExternalForce(
     self.external_force += force;
 }
 
+void CanGetGravity::GetGravity(
+        Data& self, const impl::math::Vector2D& g) const {
+    self.external_force += self.mass*g;
+}
+
 void ApplyExternalForceToA::UpdateA(Data& self) const {
     self.a = self.external_force/self.mass;
     self.external_force.Zero();
@@ -39,6 +44,10 @@ void AddVToR::UpdateR(Data& self, float dt) const {
 
 void Entity::ModifyExternalForce(const impl::math::Vector2D& force) {
     modify_external_force_->ModifyExternalForce(data_, force);
+}
+
+void Entity::GetGravity(const impl::math::Vector2D& g) {
+    get_gravity_->GetGravity(data_, g);
 }
 
 void Entity::UpdateA() {

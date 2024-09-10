@@ -97,6 +97,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         // DEBUG
         player.Control(kbd);
 
+        player.GetGravity({0.0f, 8*9.8f});
+
         player.UpdateA();
         player.UpdateV(frame_duration);
         player.UpdateR(frame_duration);

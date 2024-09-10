@@ -51,6 +51,27 @@ public:
 inline constexpr NotModifyExternalForce kNotModifyExternalForce;
 inline constexpr AddExternalForce kAddExternalForce;
 
+class GetGravityDelegate {
+public:
+    virtual void GetGravity(
+        Data& self, const impl::math::Vector2D& g) const = 0;
+};
+
+class NotGetGravity final : public GetGravityDelegate {
+public:
+    void GetGravity(Data& self, const impl::math::Vector2D& g) const override {
+        /* NO-OP */
+    }
+};
+
+class CanGetGravity final : public GetGravityDelegate {
+public:
+    void GetGravity(Data& self, const impl::math::Vector2D& g) const override;
+};
+
+inline constexpr NotGetGravity kNotGetGravity;
+inline constexpr CanGetGravity kCanGetGravity;
+
 class UpdateADelegate {
 public:
     virtual void UpdateA(Data& self) const = 0;
@@ -109,17 +130,21 @@ class Entity {
 public:
     Entity(const Data& data,
            const ModifyExternalForceDelegate& modify_external_force,
+           const GetGravityDelegate& get_gravity,
            const UpdateADelegate& update_a,
            const UpdateVDelegate& update_v,
            const UpdateRDelegate& update_r)
         : data_(data),
           modify_external_force_(&modify_external_force),
+          get_gravity_(&get_gravity),
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {}
     virtual ~Entity() {}
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
+
+    void GetGravity(const impl::math::Vector2D& g);
 
     void UpdateA();
     void UpdateV(float dt);
@@ -137,6 +162,8 @@ private:
 
     const ModifyExternalForceDelegate* modify_external_force_;
 
+    const GetGravityDelegate* get_gravity_;
+
     const UpdateADelegate* update_a_;
     const UpdateVDelegate* update_v_;
     const UpdateRDelegate* update_r_;
@@ -147,6 +174,7 @@ public:
     Player(const Data& data)
         : Entity(data,
                  kAddExternalForce,
+                 kCanGetGravity,
                  kApplyExternalForceToA,
                  kAddAToV,
                  kAddVToR) {}
