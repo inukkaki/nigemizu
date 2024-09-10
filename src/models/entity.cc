@@ -4,7 +4,6 @@
 #include "models/math.h"
 
 // DEBUG
-#include "SDL2/SDL.h"
 #include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
@@ -107,15 +106,6 @@ void Entity::RenderDebugInfo(
     RenderEntityV(data_, plotter, color_setter);
     RenderEntityA(data_, plotter, color_setter);
 };
-
-// DEBUG
-void Entity::Display(SDL_Renderer* renderer) const {
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderDrawLineF(
-        renderer, data_.r.x - 8, data_.r.y, data_.r.x + 8, data_.r.y);
-    SDL_RenderDrawLineF(
-        renderer, data_.r.x, data_.r.y - 8, data_.r.x, data_.r.y + 8);
-}
 
 // DEBUG
 void Player::Control(const impl::kbd::Keyboard& kbd) {

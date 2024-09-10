@@ -4,7 +4,6 @@
 #include "models/math.h"
 
 // DEBUG
-#include "SDL2/SDL.h"
 #include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
@@ -153,9 +152,6 @@ public:
     void RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const;
-
-    // DEBUG
-    void Display(SDL_Renderer* renderer) const;
 
 private:
     Data data_;
