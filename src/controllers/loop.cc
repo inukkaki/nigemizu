@@ -72,6 +72,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     entity::Data data;
     data.mass = 4.0f;
+    data.drag_factor = 3.0f;
     entity::Player player(data);
 
     using nigemizu::models::math::Plotter;
@@ -97,7 +98,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         // DEBUG
         player.Control(kbd);
 
-        player.GetGravity({0.0f, 8*9.8f});
+        player.GetGravity({0.0f, 16*9.8f});
+        player.GetDrag(1.0f);
 
         player.UpdateA();
         player.UpdateV(frame_duration);

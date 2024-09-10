@@ -25,6 +25,8 @@ struct Data {
     impl::math::Vector2D a;  // px s-2
 
     impl::math::Vector2D external_force;  // kg px s-2
+
+    float drag_factor;
 };
 
 class ModifyExternalForceDelegate {
@@ -70,6 +72,24 @@ public:
 
 inline constexpr NotGetGravity kNotGetGravity;
 inline constexpr CanGetGravity kCanGetGravity;
+
+class GetDragDelegate {
+public:
+    virtual void GetDrag(Data& self, float fluid_factor) const = 0;
+};
+
+class NotGetDrag final : public GetDragDelegate {
+public:
+    void GetDrag(Data& self, float fluid_factor) const override { /* NO-OP */ }
+};
+
+class CanGetDrag final : public GetDragDelegate {
+public:
+    void GetDrag(Data& self, float fluid_factor) const override;
+};
+
+inline constexpr NotGetDrag kNotGetDrag;
+inline constexpr CanGetDrag kCanGetDrag;
 
 class UpdateADelegate {
 public:
@@ -130,12 +150,14 @@ public:
     Entity(const Data& data,
            const ModifyExternalForceDelegate& modify_external_force,
            const GetGravityDelegate& get_gravity,
+           const GetDragDelegate& get_drag,
            const UpdateADelegate& update_a,
            const UpdateVDelegate& update_v,
            const UpdateRDelegate& update_r)
         : data_(data),
           modify_external_force_(&modify_external_force),
           get_gravity_(&get_gravity),
+          get_drag_(&get_drag),
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {}
@@ -144,6 +166,7 @@ public:
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
     void GetGravity(const impl::math::Vector2D& g);
+    void GetDrag(float fluid_factor);
 
     void UpdateA();
     void UpdateV(float dt);
@@ -159,6 +182,7 @@ private:
     const ModifyExternalForceDelegate* modify_external_force_;
 
     const GetGravityDelegate* get_gravity_;
+    const GetDragDelegate* get_drag_;
 
     const UpdateADelegate* update_a_;
     const UpdateVDelegate* update_v_;
@@ -171,6 +195,7 @@ public:
         : Entity(data,
                  kAddExternalForce,
                  kCanGetGravity,
+                 kCanGetDrag,
                  kApplyExternalForceToA,
                  kAddAToV,
                  kAddVToR) {}

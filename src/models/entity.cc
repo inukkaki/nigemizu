@@ -28,6 +28,11 @@ void CanGetGravity::GetGravity(
     self.external_force += self.mass*g;
 }
 
+void CanGetDrag::GetDrag(Data& self, float fluid_factor) const {
+    float k = self.drag_factor*fluid_factor;
+    self.external_force -= k*self.v;
+}
+
 void ApplyExternalForceToA::UpdateA(Data& self) const {
     self.a = self.external_force/self.mass;
     self.external_force.Zero();
@@ -47,6 +52,10 @@ void Entity::ModifyExternalForce(const impl::math::Vector2D& force) {
 
 void Entity::GetGravity(const impl::math::Vector2D& g) {
     get_gravity_->GetGravity(data_, g);
+}
+
+void Entity::GetDrag(float fluid_factor) {
+    get_drag_->GetDrag(data_, fluid_factor);
 }
 
 void Entity::UpdateA() {
