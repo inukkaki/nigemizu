@@ -74,11 +74,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     data.mass = 4.0f;
     entity::Player player(data);
 
-    using nigemizu::models::math::Circle2D;
-    Circle2D c1(Vector2D(336.98f, 256.98f), 8.0f);
-    Circle2D c2(Vector2D(320.0f, 240.0f), 16.0f);
-    std::cout << c1.CollidesWith(c2) << std::endl;
-    std::cout << c2.CollidesWith(c1) << std::endl;
+    using nigemizu::models::math::Plotter;
+    using nigemizu::models::math::ColorSetter;
+    Plotter plotter = [renderer](int x, int y) -> void {
+        SDL_RenderDrawPoint(renderer, x, y);
+    };
+    ColorSetter color_setter = [renderer](int r, int g, int b, int a) -> void {
+        SDL_SetRenderDrawColor(renderer, r, g, b, g);
+    };
 
     frb.SetTimer();
     frm.SetTimer();
@@ -98,22 +101,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
-        player.Display(renderer);
-
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        using nigemizu::models::math::RenderLine;
-        RenderLine(
-            0, 0, 15, 31,
-            [renderer](int x, int y) -> void {
-                SDL_RenderDrawPoint(renderer, x, y);
-            }
-        );
-        RenderLine(
-            {16, 0}, {31, 31},
-            [renderer](int x, int y) -> void {
-                SDL_RenderDrawPoint(renderer, x, y);
-            }
-        );
+        player.RenderDebugInfo(plotter, color_setter);
 
         SDL_RenderPresent(renderer);
 

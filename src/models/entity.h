@@ -125,6 +125,10 @@ public:
     void UpdateV(float dt);
     void UpdateR(float dt);
 
+    void RenderDebugInfo(
+        const impl::math::Plotter& plotter,
+        const impl::math::ColorSetter& color_setter) const;
+
     // DEBUG
     void Display(SDL_Renderer* renderer) const;
 
