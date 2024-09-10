@@ -103,7 +103,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         using nigemizu::models::math::RenderLine;
         RenderLine(
-            0, 0, 16, 32,
+            0, 0, 15, 31,
+            [renderer](int x, int y) -> void {
+                SDL_RenderDrawPoint(renderer, x, y);
+            }
+        );
+        RenderLine(
+            {16, 0}, {31, 31},
             [renderer](int x, int y) -> void {
                 SDL_RenderDrawPoint(renderer, x, y);
             }

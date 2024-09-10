@@ -40,9 +40,13 @@ float Dot(const Vector2D& lhs, const Vector2D& rhs);
 
 float Cross(const Vector2D& lhs, const Vector2D& rhs);
 
+using Plotter = std::function<void(int, int)>;
+using ColorSetter = std::function<void(int, int, int, int)>;
+
 void RenderLine(
-    float x0, float y0, float x1, float y1,
-    std::function<void(int, int)> plot);
+    float x0, float y0, float x1, float y1, const Plotter& plotter);
+void RenderLine(
+    const Vector2D& p0, const Vector2D& p1, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
     kShape2D,

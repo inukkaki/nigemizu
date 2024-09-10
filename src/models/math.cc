@@ -97,8 +97,7 @@ float Cross(const Vector2D& lhs, const Vector2D& rhs) {
 }
 
 void RenderLine(
-        float x0, float y0, float x1, float y1,
-        std::function<void(int, int)> plot) {
+        float x0, float y0, float x1, float y1, const Plotter& plotter) {
     // NOTE: The following assignments will be changed in the future.
     int xa = x0;
     int ya = y0;
@@ -110,12 +109,17 @@ void RenderLine(
     int sx = xa < xb ? 1 : -1;
     int sy = ya < yb ? 1 : -1;
     while (true) {
-        plot(xa, ya);
+        plotter(xa, ya);
         if ((xa == xb) && (ya == yb)) { break; }
         int e2 = 2*error;
         if (e2 >= dy) { error += dy; xa += sx; }
         if (e2 <= dx) { error += dx; ya += sy; }
     }
+}
+
+void RenderLine(
+        const Vector2D& p0, const Vector2D& p1, const Plotter& plotter) {
+    RenderLine(p0.x, p0.y, p1.x, p1.y, plotter);
 }
 
 namespace {
