@@ -27,6 +27,20 @@ struct Data {
     impl::math::Vector2D external_force;  // kg px s-2
 
     float drag_factor;
+
+    Data(float mass,
+         const impl::math::Vector2D& r,
+         const impl::math::Vector2D& v,
+         const impl::math::Vector2D& a,
+         const impl::math::Vector2D& external_force,
+         float drag_factor)
+        : mass(mass),
+          r(r),
+          v(v),
+          a(a),
+          external_force(external_force),
+          drag_factor(drag_factor) {}
+    ~Data() {}
 };
 
 class ModifyExternalForceDelegate {

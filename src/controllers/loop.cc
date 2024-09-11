@@ -70,9 +70,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
-    entity::Data data;
-    data.mass = 4.0f;
-    data.drag_factor = 3.0f;
+    entity::Data data(
+        4.0f,
+        {},
+        {},
+        {},
+        {},
+        3.0f);
     entity::Player player(data);
 
     using nigemizu::models::math::Plotter;
