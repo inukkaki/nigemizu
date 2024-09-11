@@ -53,21 +53,16 @@ void RenderCircle(
 void RenderCircle(const Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
-    kShape2D,
     kCircle2D,
 };
 
 struct Shape2D {
-    Shape2D() {}
-    virtual ~Shape2D() {}
+    virtual ShapeType Type() const = 0;
 
-    virtual ShapeType Type() const { return ShapeType::kShape2D; }
+    virtual bool CollidesWith(const Shape2D& other) const = 0;
 
-    virtual bool CollidesWith(const Shape2D& other) const { return false; }
-
-    virtual void Render(const Vector2D& offset, const Plotter& plotter) const {
-        /* NO-OP */
-    }
+    virtual void Render(
+        const Vector2D& offset, const Plotter& plotter) const = 0;
 };
 
 struct Circle2D : public Shape2D {
