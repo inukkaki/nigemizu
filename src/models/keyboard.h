@@ -22,7 +22,6 @@ struct KeyReceptor {
     bool prev;
 
     KeyReceptor() : curr(false), prev(false) {}
-    ~KeyReceptor() {}
 };
 
 namespace impl {
@@ -37,7 +36,6 @@ public:
     Keyboard() {
         SetKeyMap();
     }
-    ~Keyboard() {}
 
     void Clear();
 

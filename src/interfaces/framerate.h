@@ -16,7 +16,6 @@ public:
     explicit FrameRateBalancer(int frame_rate) {
         SetFrameRate(frame_rate);
     }
-    ~FrameRateBalancer() {}
 
     void SetFrameRate(int frame_rate);
 
@@ -35,7 +34,6 @@ private:
 class FrameRateMeasurer {
 public:
     FrameRateMeasurer() : elapsed_frames_(0) {}
-    ~FrameRateMeasurer() {}
 
     void SetTimer();
     bool MeasureFrameRate(double& measured_frame_rate);
