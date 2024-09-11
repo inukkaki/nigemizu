@@ -1,6 +1,9 @@
 #ifndef NIGEMIZU_MODELS_ENTITY_H_
 #define NIGEMIZU_MODELS_ENTITY_H_
 
+#include <cassert>
+#include <memory>
+
 #include "models/math.h"
 
 // DEBUG
@@ -161,7 +164,7 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
-    Entity(const Data& data,
+    Entity(Data* data,
            const ModifyExternalForceDelegate& modify_external_force,
            const GetGravityDelegate& get_gravity,
            const GetDragDelegate& get_drag,
@@ -174,8 +177,10 @@ public:
           get_drag_(&get_drag),
           update_a_(&update_a),
           update_v_(&update_v),
-          update_r_(&update_r) {}
-    virtual ~Entity() {}
+          update_r_(&update_r) {
+        assert(data_ != nullptr);
+    }
+    virtual ~Entity() = default;
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
@@ -191,7 +196,7 @@ public:
         const impl::math::ColorSetter& color_setter) const;
 
 private:
-    Data data_;
+    std::unique_ptr<Data> data_;
 
     const ModifyExternalForceDelegate* modify_external_force_;
 
@@ -205,15 +210,23 @@ private:
 
 class Player : public Entity {
 public:
-    Player(const Data& data)
-        : Entity(data,
-                 kAddExternalForce,
-                 kCanGetGravity,
-                 kCanGetDrag,
-                 kApplyExternalForceToA,
-                 kAddAToV,
-                 kAddVToR) {}
-    ~Player() override {}
+    Player()
+        : Entity(
+            // DEBUG
+            new Data(
+                4.0f,
+                {},
+                {},
+                {},
+                {},
+                3.0f
+            ),
+            kAddExternalForce,
+            kCanGetGravity,
+            kCanGetDrag,
+            kApplyExternalForceToA,
+            kAddAToV,
+            kAddVToR) {}
 
     // DEBUG
     void Control(const impl::kbd::Keyboard& kbd);

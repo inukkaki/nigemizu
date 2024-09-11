@@ -47,27 +47,27 @@ void AddVToR::UpdateR(Data& self, float dt) const {
 }
 
 void Entity::ModifyExternalForce(const impl::math::Vector2D& force) {
-    modify_external_force_->ModifyExternalForce(data_, force);
+    modify_external_force_->ModifyExternalForce(*data_, force);
 }
 
 void Entity::GetGravity(const impl::math::Vector2D& g) {
-    get_gravity_->GetGravity(data_, g);
+    get_gravity_->GetGravity(*data_, g);
 }
 
 void Entity::GetDrag(float fluid_factor) {
-    get_drag_->GetDrag(data_, fluid_factor);
+    get_drag_->GetDrag(*data_, fluid_factor);
 }
 
 void Entity::UpdateA() {
-    update_a_->UpdateA(data_);
+    update_a_->UpdateA(*data_);
 }
 
 void Entity::UpdateV(float dt) {
-    update_v_->UpdateV(data_, dt);
+    update_v_->UpdateV(*data_, dt);
 }
 
 void Entity::UpdateR(float dt) {
-    update_r_->UpdateR(data_, dt);
+    update_r_->UpdateR(*data_, dt);
 }
 
 namespace {
@@ -111,9 +111,9 @@ void Entity::RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const {
     // DEBUG
-    RenderEntityCenter(data_, plotter, color_setter);
-    RenderEntityV(data_, plotter, color_setter);
-    RenderEntityA(data_, plotter, color_setter);
+    RenderEntityCenter(*data_, plotter, color_setter);
+    RenderEntityV(*data_, plotter, color_setter);
+    RenderEntityA(*data_, plotter, color_setter);
 };
 
 // DEBUG

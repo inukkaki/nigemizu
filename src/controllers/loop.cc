@@ -69,15 +69,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     double measured_frame_rate = 0.0;
 
     namespace entity = nigemizu::models::entity;
-    using nigemizu::models::math::Vector2D;
-    entity::Data data(
-        4.0f,
-        {},
-        {},
-        {},
-        {},
-        3.0f);
-    entity::Player player(data);
+    entity::Player player;
 
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
