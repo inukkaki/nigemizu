@@ -110,7 +110,8 @@ void RenderEntityA(
 void Entity::RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const {
-    // DEBUG
+    color_setter(0xFF, 0xFF, 0xFF, 0xFF);
+    data_->boundary->Render(data_->r, plotter);
     RenderEntityCenter(*data_, plotter, color_setter);
     RenderEntityV(*data_, plotter, color_setter);
     RenderEntityA(*data_, plotter, color_setter);

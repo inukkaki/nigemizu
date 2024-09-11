@@ -31,19 +31,24 @@ struct Data {
 
     float drag_factor;
 
+    std::unique_ptr<impl::math::Shape2D> boundary;
+
     Data(float mass,
          const impl::math::Vector2D& r,
          const impl::math::Vector2D& v,
          const impl::math::Vector2D& a,
          const impl::math::Vector2D& external_force,
-         float drag_factor)
+         float drag_factor,
+         impl::math::Shape2D* boundary)
         : mass(mass),
           r(r),
           v(v),
           a(a),
           external_force(external_force),
-          drag_factor(drag_factor) {}
-    ~Data() {}
+          drag_factor(drag_factor),
+          boundary(boundary) {
+        assert(this->boundary != nullptr);
+    }
 };
 
 class ModifyExternalForceDelegate {
@@ -219,7 +224,8 @@ public:
                 {},
                 {},
                 {},
-                3.0f
+                3.0f,
+                new impl::math::Circle2D(8.0f)
             ),
             kAddExternalForce,
             kCanGetGravity,
