@@ -10,7 +10,9 @@ namespace nigemizu::models::keyboard {
 void Keyboard::SetKeyMap() {
     key_map_.clear();
     std::unordered_map<SDL_KeyCode, KeyCode> code_pairs = {
+        {SDLK_w, KeyCode::kW},
         {SDLK_a, KeyCode::kA},
+        {SDLK_s, KeyCode::kS},
         {SDLK_d, KeyCode::kD},
     };
     for (const auto& [key, value] : code_pairs) {

@@ -10,7 +10,9 @@
 namespace nigemizu::models::keyboard {
 
 enum class KeyCode : unsigned char {
+    kW,
     kA,
+    kS,
     kD,
     kMax,
 };
@@ -20,7 +22,6 @@ struct KeyReceptor {
     bool prev;
 
     KeyReceptor() : curr(false), prev(false) {}
-    ~KeyReceptor() {}
 };
 
 namespace impl {
@@ -35,7 +36,6 @@ public:
     Keyboard() {
         SetKeyMap();
     }
-    ~Keyboard() {}
 
     void Clear();
 

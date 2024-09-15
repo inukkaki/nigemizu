@@ -1,10 +1,12 @@
 #ifndef NIGEMIZU_MODELS_ENTITY_H_
 #define NIGEMIZU_MODELS_ENTITY_H_
 
+#include <cassert>
+#include <memory>
+
 #include "models/math.h"
 
 // DEBUG
-#include "SDL2/SDL.h"
 #include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
@@ -26,6 +28,27 @@ struct Data {
     impl::math::Vector2D a;  // px s-2
 
     impl::math::Vector2D external_force;  // kg px s-2
+
+    float drag_factor;
+
+    std::unique_ptr<impl::math::Shape2D> boundary;
+
+    Data(float mass,
+         const impl::math::Vector2D& r,
+         const impl::math::Vector2D& v,
+         const impl::math::Vector2D& a,
+         const impl::math::Vector2D& external_force,
+         float drag_factor,
+         std::unique_ptr<impl::math::Shape2D>&& boundary)
+        : mass(mass),
+          r(r),
+          v(v),
+          a(a),
+          external_force(external_force),
+          drag_factor(drag_factor),
+          boundary(std::move(boundary)) {
+        assert(this->boundary != nullptr);
+    }
 };
 
 class ModifyExternalForceDelegate {
@@ -50,6 +73,45 @@ public:
 
 inline constexpr NotModifyExternalForce kNotModifyExternalForce;
 inline constexpr AddExternalForce kAddExternalForce;
+
+class GetGravityDelegate {
+public:
+    virtual void GetGravity(
+        Data& self, const impl::math::Vector2D& g) const = 0;
+};
+
+class NotGetGravity final : public GetGravityDelegate {
+public:
+    void GetGravity(Data& self, const impl::math::Vector2D& g) const override {
+        /* NO-OP */
+    }
+};
+
+class CanGetGravity final : public GetGravityDelegate {
+public:
+    void GetGravity(Data& self, const impl::math::Vector2D& g) const override;
+};
+
+inline constexpr NotGetGravity kNotGetGravity;
+inline constexpr CanGetGravity kCanGetGravity;
+
+class GetDragDelegate {
+public:
+    virtual void GetDrag(Data& self, float fluid_factor) const = 0;
+};
+
+class NotGetDrag final : public GetDragDelegate {
+public:
+    void GetDrag(Data& self, float fluid_factor) const override { /* NO-OP */ }
+};
+
+class CanGetDrag final : public GetDragDelegate {
+public:
+    void GetDrag(Data& self, float fluid_factor) const override;
+};
+
+inline constexpr NotGetDrag kNotGetDrag;
+inline constexpr CanGetDrag kCanGetDrag;
 
 class UpdateADelegate {
 public:
@@ -107,31 +169,52 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
-    Entity(const Data& data,
+    Entity(std::unique_ptr<Data>&& data,
            const ModifyExternalForceDelegate& modify_external_force,
+           const GetGravityDelegate& get_gravity,
+           const GetDragDelegate& get_drag,
            const UpdateADelegate& update_a,
            const UpdateVDelegate& update_v,
            const UpdateRDelegate& update_r)
-        : data_(data),
+        : data_(std::move(data)),
           modify_external_force_(&modify_external_force),
+          get_gravity_(&get_gravity),
+          get_drag_(&get_drag),
           update_a_(&update_a),
           update_v_(&update_v),
-          update_r_(&update_r) {}
-    virtual ~Entity() {}
+          update_r_(&update_r) {
+        assert(data_ != nullptr);
+    }
+    virtual ~Entity() = default;
+
+    const Data& data() const {
+        assert(data_ != nullptr);
+        return *data_;
+    }
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
+
+    void GetGravity(const impl::math::Vector2D& g);
+    void GetDrag(float fluid_factor);
 
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
 
     // DEBUG
-    void Display(SDL_Renderer* renderer) const;
+    void CollideWith(Entity& other);
+
+    void RenderDebugInfo(
+        const impl::math::Plotter& plotter,
+        const impl::math::ColorSetter& color_setter) const;
 
 private:
-    Data data_;
+    std::unique_ptr<Data> data_;
 
     const ModifyExternalForceDelegate* modify_external_force_;
+
+    const GetGravityDelegate* get_gravity_;
+    const GetDragDelegate* get_drag_;
 
     const UpdateADelegate* update_a_;
     const UpdateVDelegate* update_v_;
@@ -140,13 +223,24 @@ private:
 
 class Player : public Entity {
 public:
-    Player(const Data& data)
-        : Entity(data,
-                 kAddExternalForce,
-                 kApplyExternalForceToA,
-                 kAddAToV,
-                 kAddVToR) {}
-    ~Player() override {}
+    Player()
+        : Entity(
+            // DEBUG
+            std::make_unique<Data>(
+                4.0f,
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                3.0f,
+                std::make_unique<impl::math::Circle2D>(8.0f)
+            ),
+            kAddExternalForce,
+            kNotGetGravity,
+            kCanGetDrag,
+            kApplyExternalForceToA,
+            kAddAToV,
+            kAddVToR) {}
 
     // DEBUG
     void Control(const impl::kbd::Keyboard& kbd);

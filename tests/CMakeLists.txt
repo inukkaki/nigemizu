@@ -1,3 +1,10 @@
+# Target: rounding
+add_executable(rounding
+    rounding.cc
+)
+target_compile_features(rounding PUBLIC cxx_std_23)
+
+
 # Target: singleton
 add_executable(singleton
     singleton.cc

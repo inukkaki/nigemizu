@@ -8,7 +8,6 @@ namespace nigemizu::models::timer {
 class SimpleTimer {
 public:
     SimpleTimer() : start_time_(0ull) {}
-    ~SimpleTimer() {}
 
     void Set();
     unsigned long long int GetElapsedTime() const;
