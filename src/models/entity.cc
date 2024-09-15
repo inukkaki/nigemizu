@@ -76,7 +76,9 @@ void Entity::CollideWith(Entity& other) {
     const Data& od = other.data();
     impl::math::Vector2D offset = od.r - data_->r;
     if (data_->boundary->CollidesWith(*od.boundary, offset)) {
-        std::cout << "collided with " << &other << std::endl;
+        impl::math::Vector2D force = offset/offset.Length();
+        force *= 10.0f*data_->v.Length();
+        other.ModifyExternalForce(force);
     }
 }
 

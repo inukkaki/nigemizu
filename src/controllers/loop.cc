@@ -125,6 +125,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e2.UpdateV(frame_duration);
         e2.UpdateR(frame_duration);
 
+        e2.CollideWith(player);
+
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
