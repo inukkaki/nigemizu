@@ -4,6 +4,7 @@
 #include "models/math.h"
 
 // DEBUG
+#include <iostream>
 #include "models/keyboard.h"
 
 namespace nigemizu::models::entity {
@@ -68,6 +69,15 @@ void Entity::UpdateV(float dt) {
 
 void Entity::UpdateR(float dt) {
     update_r_->UpdateR(*data_, dt);
+}
+
+// DEBUG
+void Entity::CollideWith(Entity& other) {
+    const Data& od = other.data();
+    impl::math::Vector2D offset = od.r - data_->r;
+    if (data_->boundary->CollidesWith(*od.boundary, offset)) {
+        std::cout << "collided with " << &other << std::endl;
+    }
 }
 
 namespace {

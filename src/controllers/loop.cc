@@ -6,6 +6,7 @@
 
 // DEBUG
 #include <iostream>
+#include <memory>
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/entity.h"
@@ -69,7 +70,26 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     double measured_frame_rate = 0.0;
 
     namespace entity = nigemizu::models::entity;
+    using nigemizu::models::math::Vector2D;
+    using nigemizu::models::math::Circle2D;
     entity::Player player;
+    entity::Entity e2(
+        std::make_unique<entity::Data>(
+            1.0f,
+            Vector2D(320.0f, 240.0f),
+            Vector2D(),
+            Vector2D(),
+            Vector2D(),
+            1.0f,
+            std::make_unique<Circle2D>(16.0f)
+        ),
+        entity::kAddExternalForce,
+        entity::kNotGetGravity,
+        entity::kCanGetDrag,
+        entity::kApplyExternalForceToA,
+        entity::kAddAToV,
+        entity::kAddVToR
+    );
 
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
@@ -79,12 +99,6 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     ColorSetter color_setter = [renderer](int r, int g, int b, int a) -> void {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
-
-    using nigemizu::models::math::Circle2D;
-    Circle2D c1({32, 32}, 16);
-    Circle2D c2({32, 32}, 16);
-    std::cout << c1.CollidesWith(c2, {}) << std::endl;
-    std::cout << c1.CollidesWith(c2, {32.01f, 0}) << std::endl;
 
     frb.SetTimer();
     frm.SetTimer();
@@ -99,24 +113,23 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         player.GetGravity({0.0f, 16*9.8f});
         player.GetDrag(1.0f);
-
         player.UpdateA();
         player.UpdateV(frame_duration);
         player.UpdateR(frame_duration);
 
+        player.CollideWith(e2);
+
+        e2.GetGravity({0.0f, 16*9.8f});
+        e2.GetDrag(1.0f);
+        e2.UpdateA();
+        e2.UpdateV(frame_duration);
+        e2.UpdateR(frame_duration);
+
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
-        using nigemizu::models::math::RenderCircle;
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        RenderCircle(16, 16, 16, plotter);
-        RenderCircle({32, 16}, 16, plotter);
-        using nigemizu::models::math::RenderLine;
-        RenderLine(31, 0, 31, 31, plotter);
-        c1.Render({}, plotter);
-        c2.Render({}, plotter);
-
         player.RenderDebugInfo(plotter, color_setter);
+        e2.RenderDebugInfo(plotter, color_setter);
 
         SDL_RenderPresent(renderer);
 

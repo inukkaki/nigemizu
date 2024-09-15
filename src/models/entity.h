@@ -187,6 +187,11 @@ public:
     }
     virtual ~Entity() = default;
 
+    const Data& data() const {
+        assert(data_ != nullptr);
+        return *data_;
+    }
+
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
     void GetGravity(const impl::math::Vector2D& g);
@@ -195,6 +200,9 @@ public:
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
+
+    // DEBUG
+    void CollideWith(Entity& other);
 
     void RenderDebugInfo(
         const impl::math::Plotter& plotter,
@@ -228,7 +236,7 @@ public:
                 std::make_unique<impl::math::Circle2D>(8.0f)
             ),
             kAddExternalForce,
-            kCanGetGravity,
+            kNotGetGravity,
             kCanGetDrag,
             kApplyExternalForceToA,
             kAddAToV,
