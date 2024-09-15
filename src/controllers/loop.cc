@@ -81,7 +81,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     };
 
     using nigemizu::models::math::Circle2D;
-    Circle2D circle({32, 32}, 16);
+    Circle2D c1({32, 32}, 16);
+    Circle2D c2({32, 32}, 16);
+    std::cout << c1.CollidesWith(c2, {}) << std::endl;
+    std::cout << c1.CollidesWith(c2, {32.01f, 0}) << std::endl;
 
     frb.SetTimer();
     frm.SetTimer();
@@ -110,7 +113,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         RenderCircle({32, 16}, 16, plotter);
         using nigemizu::models::math::RenderLine;
         RenderLine(31, 0, 31, 31, plotter);
-        circle.Render({}, plotter);
+        c1.Render({}, plotter);
+        c2.Render({}, plotter);
 
         player.RenderDebugInfo(plotter, color_setter);
 

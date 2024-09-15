@@ -153,15 +153,21 @@ bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {
     return Dot(c1.c - c2.c) <= r*r;
 }
 
+bool DetectCollisionBetween(
+        const Circle2D& c1, const Circle2D& c2, const Vector2D& offset) {
+    return DetectCollisionBetween(c1, Circle2D(c2.c + offset, c2.r));
+}
+
 }  // namespace
 
-bool Circle2D::CollidesWith(const Shape2D& other) const {
+bool Circle2D::CollidesWith(
+        const Shape2D& other, const Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
     bool result = false;
     switch (other.Type()) {
     case ShapeType::kCircle2D:
         result = DetectCollisionBetween(
-            *this, static_cast<const Circle2D&>(other));
+            *this, static_cast<const Circle2D&>(other), offset);
         break;
     default:
         break;

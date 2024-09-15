@@ -58,7 +58,8 @@ enum class ShapeType : unsigned char {
 struct Shape2D {
     virtual ShapeType Type() const = 0;
 
-    virtual bool CollidesWith(const Shape2D& other) const = 0;
+    virtual bool CollidesWith(
+        const Shape2D& other, const Vector2D& offset) const = 0;
 
     virtual void Render(
         const Vector2D& offset, const Plotter& plotter) const = 0;
@@ -74,7 +75,8 @@ struct Circle2D : public Shape2D {
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }
 
-    bool CollidesWith(const Shape2D& other) const override;
+    bool CollidesWith(
+        const Shape2D& other, const Vector2D& offset) const override;
 
     void Render(const Vector2D& offset, const Plotter& plotter) const override;
 };
