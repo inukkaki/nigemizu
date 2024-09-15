@@ -39,14 +39,14 @@ struct Data {
          const impl::math::Vector2D& a,
          const impl::math::Vector2D& external_force,
          float drag_factor,
-         impl::math::Shape2D* boundary)
+         std::unique_ptr<impl::math::Shape2D>&& boundary)
         : mass(mass),
           r(r),
           v(v),
           a(a),
           external_force(external_force),
           drag_factor(drag_factor),
-          boundary(boundary) {
+          boundary(std::move(boundary)) {
         assert(this->boundary != nullptr);
     }
 };
@@ -169,14 +169,14 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
-    Entity(Data* data,
+    Entity(std::unique_ptr<Data>&& data,
            const ModifyExternalForceDelegate& modify_external_force,
            const GetGravityDelegate& get_gravity,
            const GetDragDelegate& get_drag,
            const UpdateADelegate& update_a,
            const UpdateVDelegate& update_v,
            const UpdateRDelegate& update_r)
-        : data_(data),
+        : data_(std::move(data)),
           modify_external_force_(&modify_external_force),
           get_gravity_(&get_gravity),
           get_drag_(&get_drag),
@@ -218,14 +218,14 @@ public:
     Player()
         : Entity(
             // DEBUG
-            new Data(
+            std::make_unique<Data>(
                 4.0f,
-                {},
-                {},
-                {},
-                {},
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
                 3.0f,
-                new impl::math::Circle2D(8.0f)
+                std::make_unique<impl::math::Circle2D>(8.0f)
             ),
             kAddExternalForce,
             kCanGetGravity,
