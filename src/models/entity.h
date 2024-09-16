@@ -47,7 +47,7 @@ struct Data {
           external_force(external_force),
           drag_factor(drag_factor),
           boundary(std::move(boundary)) {
-        assert(this->boundary != nullptr);
+        assert(this->boundary);
     }
 };
 
@@ -183,12 +183,12 @@ public:
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {
-        assert(data_ != nullptr);
+        assert(data_);
     }
     virtual ~Entity() = default;
 
     const Data& data() const {
-        assert(data_ != nullptr);
+        assert(data_);
         return *data_;
     }
 
