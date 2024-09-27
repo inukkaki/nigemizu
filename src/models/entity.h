@@ -263,6 +263,22 @@ public:
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
 };
 
+// DEBUG
+class DebugPlayer : public Playable {
+public:
+    DebugPlayer()
+        : Playable(
+            std::make_unique<Data>(
+                4.0f,
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                impl::math::Vector2D(),
+                3.0f,
+                std::make_unique<impl::math::Circle2D>(8.0f)
+            )) {}
+};
+
 }  // namespace nigemizu::models::entity
 
 #endif  // NIGEMIZU_MODELS_ENTITY_H_
