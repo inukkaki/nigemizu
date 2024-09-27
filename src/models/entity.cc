@@ -124,26 +124,6 @@ void Entity::RenderDebugInfo(
     RenderEntityA(*data_, plotter, color_setter);
 };
 
-// DEBUG
-void Player::Control(const impl::kbd::Keyboard& kbd) {
-    using nigemizu::models::keyboard::KeyCode;
-    using nigemizu::models::math::Vector2D;
-    Vector2D force;
-    if (kbd.Pressing(KeyCode::kA)) {
-        force += Vector2D(-1000.0f, 0.0f);
-    }
-    if (kbd.Pressing(KeyCode::kD)) {
-        force += Vector2D(1000.0f, 0.0f);
-    }
-    if (kbd.Pressing(KeyCode::kW)) {
-        force += Vector2D(0.0f, -1000.0f);
-    }
-    if (kbd.Pressing(KeyCode::kS)) {
-        force += Vector2D(0.0f, 1000.0f);
-    }
-    ModifyExternalForce(force);
-}
-
 void Playable::Move(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
     impl::math::Vector2D force;

@@ -217,32 +217,6 @@ private:
     const UpdateRDelegate* update_r_;
 };
 
-// DEBUG
-class Player : public Entity {
-public:
-    Player()
-        : Entity(
-            // DEBUG
-            std::make_unique<Data>(
-                4.0f,
-                impl::math::Vector2D(),
-                impl::math::Vector2D(),
-                impl::math::Vector2D(),
-                impl::math::Vector2D(),
-                3.0f,
-                std::make_unique<impl::math::Circle2D>(8.0f)
-            ),
-            kAddExternalForce,
-            kNotGetGravity,
-            kCanGetDrag,
-            kApplyExternalForceToA,
-            kAddAToV,
-            kAddVToR) {}
-
-    // DEBUG
-    void Control(const impl::kbd::Keyboard& kbd);
-};
-
 class Playable : public Entity {
 public:
     Playable(std::unique_ptr<Data>&& data)
