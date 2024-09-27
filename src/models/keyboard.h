@@ -18,10 +18,10 @@ enum class KeyCode : unsigned char {
 };
 
 struct KeyConfig {
-    KeyCode move_up;
-    KeyCode move_left;
-    KeyCode move_right;
-    KeyCode move_down;
+    KeyCode transfer_up;
+    KeyCode transfer_left;
+    KeyCode transfer_right;
+    KeyCode transfer_down;
 };
 
 struct KeyReceptor {

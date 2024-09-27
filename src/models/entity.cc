@@ -124,13 +124,13 @@ void Entity::RenderDebugInfo(
     RenderEntityA(*data_, plotter, color_setter);
 };
 
-void Playable::Move(
+void Playable::Transfer(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
     impl::math::Vector2D force;
-    if (kbd.Pressing(kc.move_up))    { force.y -= 1.0f; }
-    if (kbd.Pressing(kc.move_left))  { force.x -= 1.0f; }
-    if (kbd.Pressing(kc.move_right)) { force.x += 1.0f; }
-    if (kbd.Pressing(kc.move_down))  { force.y += 1.0f; }
+    if (kbd.Pressing(kc.transfer_up))    { force.y -= 1.0f; }
+    if (kbd.Pressing(kc.transfer_left))  { force.x -= 1.0f; }
+    if (kbd.Pressing(kc.transfer_right)) { force.x += 1.0f; }
+    if (kbd.Pressing(kc.transfer_down))  { force.y += 1.0f; }
     // DEBUG
     ModifyExternalForce(1000.0f*force);
 }
@@ -138,7 +138,7 @@ void Playable::Move(
 void Playable::Control(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
     // NOTE: Implement this.
-    Move(kbd, kc);
+    Transfer(kbd, kc);
 }
 
 }  // namespace nigemizu::models::entity

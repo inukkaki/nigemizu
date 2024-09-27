@@ -230,7 +230,7 @@ public:
             kAddVToR) {}
     virtual ~Playable() = default;
 
-    virtual void Move(
+    virtual void Transfer(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
 
     void Control(
