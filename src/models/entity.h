@@ -221,6 +221,7 @@ private:
     const UpdateRDelegate* update_r_;
 };
 
+// DEBUG
 class Player : public Entity {
 public:
     Player()
@@ -244,6 +245,20 @@ public:
 
     // DEBUG
     void Control(const impl::kbd::Keyboard& kbd);
+};
+
+class Playable : public Entity {
+public:
+    Playable(std::unique_ptr<Data>&& data)
+        : Entity(
+            std::move(data),
+            kAddExternalForce,
+            kNotGetGravity,
+            kCanGetDrag,
+            kApplyExternalForceToA,
+            kAddAToV,
+            kAddVToR) {}
+    virtual ~Playable() = default;
 };
 
 }  // namespace nigemizu::models::entity
