@@ -258,6 +258,9 @@ public:
 
     virtual void Move(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
+
+    void Control(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
 };
 
 }  // namespace nigemizu::models::entity

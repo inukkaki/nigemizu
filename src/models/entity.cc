@@ -155,4 +155,10 @@ void Playable::Move(
     ModifyExternalForce(1000.0f*force);
 }
 
+void Playable::Control(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
+    // NOTE: Implement this.
+    Move(kbd, kc);
+}
+
 }  // namespace nigemizu::models::entity
