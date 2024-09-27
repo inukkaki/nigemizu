@@ -4,18 +4,14 @@
 #include <cassert>
 #include <memory>
 
-#include "models/math.h"
-
-// DEBUG
 #include "models/keyboard.h"
+#include "models/math.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
 
-// DEBUG
 namespace kbd = nigemizu::models::keyboard;
-
 namespace math = nigemizu::models::math;
 
 }  // namespace impl
@@ -259,6 +255,9 @@ public:
             kAddAToV,
             kAddVToR) {}
     virtual ~Playable() = default;
+
+    virtual void Move(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
 };
 
 }  // namespace nigemizu::models::entity

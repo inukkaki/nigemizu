@@ -1,20 +1,15 @@
 #include "models/entity.h"
 
 #include "models/config.h"
-#include "models/math.h"
-
-// DEBUG
-#include <iostream>
 #include "models/keyboard.h"
+#include "models/math.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
 
-// DEBUG
-namespace kbd = nigemizu::models::keyboard;
-
 namespace config = nigemizu::models::config;
+namespace kbd = nigemizu::models::keyboard;
 namespace math = nigemizu::models::math;
 
 }  // namespace impl
@@ -147,6 +142,17 @@ void Player::Control(const impl::kbd::Keyboard& kbd) {
         force += Vector2D(0.0f, 1000.0f);
     }
     ModifyExternalForce(force);
+}
+
+void Playable::Move(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
+    impl::math::Vector2D force;
+    if (kbd.Pressing(kc.move_up))    { force.y -= 1.0f; }
+    if (kbd.Pressing(kc.move_left))  { force.x -= 1.0f; }
+    if (kbd.Pressing(kc.move_right)) { force.x += 1.0f; }
+    if (kbd.Pressing(kc.move_down))  { force.y += 1.0f; }
+    // DEBUG
+    ModifyExternalForce(1000.0f*force);
 }
 
 }  // namespace nigemizu::models::entity
