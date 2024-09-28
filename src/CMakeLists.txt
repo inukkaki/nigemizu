@@ -16,6 +16,7 @@ add_executable(nigemizu
     models/entity.cc
     models/keyboard.cc
     models/math.cc
+    models/pool.cc
     models/singleton.cc
     models/timer.cc
 )
