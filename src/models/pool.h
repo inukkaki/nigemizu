@@ -3,7 +3,14 @@
 
 namespace nigemizu::models::pool {
 
-// ...
+namespace impl {
+
+template <typename T>
+concept Object = requires (T& x) {
+    T();
+};
+
+}  // namespace impl
 
 }  // namespace nigemizu::models::pool
 
