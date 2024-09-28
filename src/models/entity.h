@@ -166,22 +166,6 @@ inline constexpr AddVToR kAddVToR;
 class Entity {
 public:
     Entity() {}
-    Entity(std::unique_ptr<Data>&& data,
-           const ModifyExternalForceDelegate& modify_external_force,
-           const GetGravityDelegate& get_gravity,
-           const GetDragDelegate& get_drag,
-           const UpdateADelegate& update_a,
-           const UpdateVDelegate& update_v,
-           const UpdateRDelegate& update_r)
-        : data_(std::move(data)),
-          modify_external_force_(&modify_external_force),
-          get_gravity_(&get_gravity),
-          get_drag_(&get_drag),
-          update_a_(&update_a),
-          update_v_(&update_v),
-          update_r_(&update_r) {
-        assert(data_);
-    }
     virtual ~Entity() = default;
 
     const Data& data() const {
@@ -230,15 +214,6 @@ private:
 class Playable : public Entity {
 public:
     Playable() {}
-    Playable(std::unique_ptr<Data>&& data)
-        : Entity(
-            std::move(data),
-            kAddExternalForce,
-            kNotGetGravity,
-            kCanGetDrag,
-            kApplyExternalForceToA,
-            kAddAToV,
-            kAddVToR) {}
     virtual ~Playable() = default;
 
     void Init(std::unique_ptr<Data>&& data);
