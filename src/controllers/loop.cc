@@ -82,7 +82,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::Circle2D;
     entity::DebugPlayer db;
-    entity::Entity e2(
+    entity::Entity e2;
+    e2.Init(
         std::make_unique<entity::Data>(
             1.0f,
             Vector2D(320.0f, 240.0f),
@@ -97,8 +98,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         entity::kCanGetDrag,
         entity::kApplyExternalForceToA,
         entity::kAddAToV,
-        entity::kAddVToR
-    );
+        entity::kAddVToR);
 
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;

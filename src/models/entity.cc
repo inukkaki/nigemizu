@@ -42,6 +42,24 @@ void AddVToR::UpdateR(Data& self, float dt) const {
     self.r += self.v*dt;
 }
 
+void Entity::Init(
+        std::unique_ptr<Data>&& data,
+        const ModifyExternalForceDelegate& modify_external_force,
+        const GetGravityDelegate& get_gravity,
+        const GetDragDelegate& get_drag,
+        const UpdateADelegate& update_a,
+        const UpdateVDelegate& update_v,
+        const UpdateRDelegate& update_r) {
+    assert(data);
+    data_ = std::move(data);
+    modify_external_force_ = &modify_external_force;
+    get_gravity_ = &get_gravity;
+    get_drag_ = &get_drag;
+    update_a_ = &update_a;
+    update_v_ = &update_v;
+    update_r_ = &update_r;
+}
+
 void Entity::ModifyExternalForce(const impl::math::Vector2D& force) {
     modify_external_force_->ModifyExternalForce(*data_, force);
 }

@@ -165,6 +165,7 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
+    Entity() {}
     Entity(std::unique_ptr<Data>&& data,
            const ModifyExternalForceDelegate& modify_external_force,
            const GetGravityDelegate& get_gravity,
@@ -187,6 +188,15 @@ public:
         assert(data_);
         return *data_;
     }
+
+    void Init(
+        std::unique_ptr<Data>&& data,
+        const ModifyExternalForceDelegate& modify_external_force,
+        const GetGravityDelegate& get_gravity,
+        const GetDragDelegate& get_drag,
+        const UpdateADelegate& update_a,
+        const UpdateVDelegate& update_v,
+        const UpdateRDelegate& update_r);
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
