@@ -1,3 +1,16 @@
+# Target: pool
+add_executable(pool
+    pool.cc
+
+    ${PROJECT_SOURCE_DIR}/src/models/pool.cc
+)
+target_compile_features(pool PUBLIC cxx_std_23)
+target_include_directories(pool
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
+
+
 # Target: rounding
 add_executable(rounding
     rounding.cc
