@@ -82,6 +82,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::Circle2D;
     entity::DebugPlayer db;
+    db.Init();
     entity::Entity e2;
     e2.Init(
         std::make_unique<entity::Data>(

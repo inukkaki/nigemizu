@@ -142,6 +142,17 @@ void Entity::RenderDebugInfo(
     RenderEntityA(*data_, plotter, color_setter);
 };
 
+void Playable::Init(std::unique_ptr<Data>&& data) {
+    Entity::Init(
+        std::move(data),
+        kAddExternalForce,
+        kNotGetGravity,
+        kCanGetDrag,
+        kApplyExternalForceToA,
+        kAddAToV,
+        kAddVToR);
+}
+
 void Playable::Transfer(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc) {
     impl::math::Vector2D force;

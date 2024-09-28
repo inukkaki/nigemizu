@@ -229,6 +229,7 @@ private:
 
 class Playable : public Entity {
 public:
+    Playable() {}
     Playable(std::unique_ptr<Data>&& data)
         : Entity(
             std::move(data),
@@ -240,6 +241,8 @@ public:
             kAddVToR) {}
     virtual ~Playable() = default;
 
+    void Init(std::unique_ptr<Data>&& data);
+
     virtual void Transfer(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
 
@@ -250,8 +253,10 @@ public:
 // DEBUG
 class DebugPlayer : public Playable {
 public:
-    DebugPlayer()
-        : Playable(
+    DebugPlayer() {}
+
+    void Init() {
+        Playable::Init(
             std::make_unique<Data>(
                 4.0f,
                 impl::math::Vector2D(),
@@ -260,7 +265,8 @@ public:
                 impl::math::Vector2D(),
                 3.0f,
                 std::make_unique<impl::math::Circle2D>(8.0f)
-            )) {}
+            ));
+    }
 };
 
 }  // namespace nigemizu::models::entity
