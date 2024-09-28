@@ -4,18 +4,14 @@
 #include <cassert>
 #include <memory>
 
-#include "models/math.h"
-
-// DEBUG
 #include "models/keyboard.h"
+#include "models/math.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
 
-// DEBUG
 namespace kbd = nigemizu::models::keyboard;
-
 namespace math = nigemizu::models::math;
 
 }  // namespace impl
@@ -47,7 +43,7 @@ struct Data {
           external_force(external_force),
           drag_factor(drag_factor),
           boundary(std::move(boundary)) {
-        assert(this->boundary != nullptr);
+        assert(this->boundary);
     }
 };
 
@@ -183,12 +179,12 @@ public:
           update_a_(&update_a),
           update_v_(&update_v),
           update_r_(&update_r) {
-        assert(data_ != nullptr);
+        assert(data_);
     }
     virtual ~Entity() = default;
 
     const Data& data() const {
-        assert(data_ != nullptr);
+        assert(data_);
         return *data_;
     }
 
@@ -221,11 +217,31 @@ private:
     const UpdateRDelegate* update_r_;
 };
 
-class Player : public Entity {
+class Playable : public Entity {
 public:
-    Player()
+    Playable(std::unique_ptr<Data>&& data)
         : Entity(
-            // DEBUG
+            std::move(data),
+            kAddExternalForce,
+            kNotGetGravity,
+            kCanGetDrag,
+            kApplyExternalForceToA,
+            kAddAToV,
+            kAddVToR) {}
+    virtual ~Playable() = default;
+
+    virtual void Transfer(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
+
+    void Control(
+        const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
+};
+
+// DEBUG
+class DebugPlayer : public Playable {
+public:
+    DebugPlayer()
+        : Playable(
             std::make_unique<Data>(
                 4.0f,
                 impl::math::Vector2D(),
@@ -234,16 +250,7 @@ public:
                 impl::math::Vector2D(),
                 3.0f,
                 std::make_unique<impl::math::Circle2D>(8.0f)
-            ),
-            kAddExternalForce,
-            kNotGetGravity,
-            kCanGetDrag,
-            kApplyExternalForceToA,
-            kAddAToV,
-            kAddVToR) {}
-
-    // DEBUG
-    void Control(const impl::kbd::Keyboard& kbd);
+            )) {}
 };
 
 }  // namespace nigemizu::models::entity

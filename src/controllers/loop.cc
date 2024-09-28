@@ -55,6 +55,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
 
+    using nigemizu::models::keyboard::KeyConfig;
+    using nigemizu::models::keyboard::KeyCode;
+    KeyConfig kc = {
+        KeyCode::kW,
+        KeyCode::kA,
+        KeyCode::kD,
+        KeyCode::kS,
+    };
+
     namespace config = nigemizu::models::config;
     //config::SetFrameRate(30);
     int frame_rate = config::GetFrameRate();
@@ -72,7 +81,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::Circle2D;
-    entity::Player player;
+    entity::DebugPlayer db;
     entity::Entity e2(
         std::make_unique<entity::Data>(
             1.0f,
@@ -109,15 +118,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        player.Control(kbd);
+        db.Control(kbd, kc);
 
-        player.GetGravity({0.0f, 16*9.8f});
-        player.GetDrag(1.0f);
-        player.UpdateA();
-        player.UpdateV(frame_duration);
-        player.UpdateR(frame_duration);
+        db.GetGravity({0.0f, 16*9.8f});
+        db.GetDrag(1.0f);
+        db.UpdateA();
+        db.UpdateV(frame_duration);
+        db.UpdateR(frame_duration);
 
-        player.CollideWith(e2);
+        db.CollideWith(e2);
 
         e2.GetGravity({0.0f, 16*9.8f});
         e2.GetDrag(1.0f);
@@ -125,12 +134,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e2.UpdateV(frame_duration);
         e2.UpdateR(frame_duration);
 
-        e2.CollideWith(player);
+        e2.CollideWith(db);
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
-        player.RenderDebugInfo(plotter, color_setter);
+        db.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
 
         SDL_RenderPresent(renderer);

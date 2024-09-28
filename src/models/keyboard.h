@@ -17,6 +17,13 @@ enum class KeyCode : unsigned char {
     kMax,
 };
 
+struct KeyConfig {
+    KeyCode transfer_up;
+    KeyCode transfer_left;
+    KeyCode transfer_right;
+    KeyCode transfer_down;
+};
+
 struct KeyReceptor {
     bool curr;
     bool prev;
