@@ -10,7 +10,19 @@
 
 namespace nigemizu::models::pool {
 
+namespace impl {
+
 template <typename T>
+concept Deactivatable = requires (T& x) {
+    x.Activate();
+    x.Deactivate();
+
+    x.IsActivated();
+};
+
+}  // namespace impl
+
+template <impl::Deactivatable T>
 class ObjectPool {
 public:
     explicit ObjectPool(size_t size)
@@ -20,9 +32,24 @@ public:
     std::shared_ptr<T> Create(std::unique_ptr<T>&& object) {
         std::shared_ptr<T> result;
         if (buf_.size() < buf_size_) {
+            object->Activate();
             result = buf_.emplace_back(std::move(object));
         }
         return result;
+    }
+
+    void Update() {
+        buf_size_ = 0ll;
+        for (std::shared_ptr<T>& obj : objects_) {
+            if (!obj) {
+                obj = buf_.back();
+                buf_.pop_back();
+            }
+            if (!obj->IsActivated()) {
+                obj.reset();
+                ++buf_size_;
+            }
+        }
     }
 
     // DEBUG
