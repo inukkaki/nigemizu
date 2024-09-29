@@ -40,21 +40,21 @@ int main() {
 
     ObjectPool<A> pool(5);
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     std::cout << pool.Create(std::make_unique<A>(0)) << std::endl;
     std::cout << std::endl;
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     pool.Update();
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     // ...
@@ -64,24 +64,24 @@ int main() {
     }
     std::cout << std::endl;
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     // ...
 
     pool.Update();
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     // ...
 
     pool.Update();
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     // ...
@@ -89,8 +89,8 @@ int main() {
     ChangeDebugNum(1);
     pool.Update();
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     // ...
@@ -100,15 +100,15 @@ int main() {
     }
     std::cout << std::endl;
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     ChangeDebugNum(3);
     pool.Update();
 
-    pool.PrintObjects();
-    pool.PrintBuf();
+    //pool.PrintObjects();
+    //pool.PrintBuf();
     std::cout << std::endl;
 
     return 0;

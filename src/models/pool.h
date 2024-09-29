@@ -6,9 +6,6 @@
 #include <memory>
 #include <vector>
 
-// DEBUG
-#include <iostream>
-
 namespace nigemizu::models::pool {
 
 namespace impl {
@@ -54,24 +51,6 @@ public:
             }
             if (!obj) { ++buf_size_; }
         }
-    }
-
-    // DEBUG
-    void PrintObjects() const {
-        std::cout << "Objects:" << std::endl << "  ";
-        for (std::shared_ptr<T> obj : objects_) {
-            std::cout << obj << ", ";
-        }
-        std::cout << std::endl;
-    }
-
-    // DEBUG
-    void PrintBuf() const {
-        std::cout << "Buf (" << buf_size_ << "):" << std::endl << "  ";
-        for (size_t i = 0; i < buf_.size(); ++i) {
-            std::cout << buf_[i] << ", ";
-        }
-        std::cout << std::endl;
     }
 
 private:
