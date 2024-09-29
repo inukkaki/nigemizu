@@ -7,6 +7,12 @@
 
 int gDebugNum = -1;
 
+void ChangeDebugNum(int num) {
+    std::cout << "gDebugNum : " << gDebugNum << " -> ";
+    gDebugNum = num;
+    std::cout << gDebugNum << std::endl;
+}
+
 class A {
 public:
     A(int num) : num_(num) {
@@ -45,6 +51,14 @@ int main() {
     pool.PrintBuf();
     std::cout << std::endl;
 
+    pool.Update();
+
+    pool.PrintObjects();
+    pool.PrintBuf();
+    std::cout << std::endl;
+
+    // ...
+
     for (int i = 0; i < 5; ++i) {
         std::cout << pool.Create(std::make_unique<A>(i + 1)) << std::endl;
     }
@@ -64,7 +78,7 @@ int main() {
 
     // ...
 
-    gDebugNum = 1;
+    ChangeDebugNum(1);
     pool.Update();
 
     pool.PrintObjects();
@@ -82,7 +96,7 @@ int main() {
     pool.PrintBuf();
     std::cout << std::endl;
 
-    gDebugNum = 3;
+    ChangeDebugNum(3);
     pool.Update();
 
     pool.PrintObjects();

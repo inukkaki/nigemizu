@@ -41,14 +41,17 @@ public:
     void Update() {
         buf_size_ = 0ll;
         for (std::shared_ptr<T>& obj : objects_) {
-            if (!obj) {
+            if (obj) {
+                if (obj->IsActivated()) {
+                    //Process(*obj);
+                } else {
+                    obj.reset();
+                }
+            } else if (!buf_.empty()) {
                 obj = buf_.back();
                 buf_.pop_back();
             }
-            if (!obj->IsActivated()) {
-                obj.reset();
-                ++buf_size_;
-            }
+            if (!obj) { ++buf_size_; }
         }
     }
 
@@ -76,6 +79,8 @@ private:
 
     size_t buf_size_;
     std::vector<std::shared_ptr<T>> buf_;
+
+    //virtual void Process(T& obj) const { /* NO-OP */ }
 };
 
 }  // namespace nigemizu::models::pool
