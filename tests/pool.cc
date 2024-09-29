@@ -4,8 +4,15 @@
 
 #include "models/pool.h"
 
+class A {
+public:
+    A() {}
+};
+
 int main() {
-    std::cout << "no impl here yet" << std::endl;
+    using nigemizu::models::pool::ObjectPool;
+
+    ObjectPool<A> pool(10);
 
     return 0;
 }
