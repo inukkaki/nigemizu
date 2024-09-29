@@ -110,6 +110,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
 
+    using nigemizu::models::math::Shape2D;
+    Circle2D cbase({16.0f, 16.0f}, 16.0f);
+    std::unique_ptr<Shape2D> ccopy(cbase.Clone());
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {
@@ -139,6 +143,9 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
+
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        ccopy->Render({}, plotter);
 
         db.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
