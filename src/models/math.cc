@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <functional>
+#include <memory>
 
 namespace nigemizu::models::math {
 
@@ -179,8 +180,8 @@ void Circle2D::Render(const Vector2D& offset, const Plotter& plotter) const {
     RenderCircle(c + offset, r, plotter);
 }
 
-Shape2D* Circle2D::Clone() const {
-    return new Circle2D(*this);
+std::unique_ptr<Shape2D> Circle2D::Clone() const {
+    return std::make_unique<Circle2D>(*this);
 }
 
 }  // namespace nigemizu::models::math
