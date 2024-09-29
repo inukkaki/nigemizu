@@ -12,10 +12,10 @@ public:
     SimpleTimer() : start_time_(0ull) {}
 
     void Set();
-    std::uint64_t GetElapsedTime() const;
+    uint64_t GetElapsedTime() const;
 
 private:
-    std::uint64_t start_time_;
+    uint64_t start_time_;
 };
 
 }  // namespace nigemizu::models::timer
