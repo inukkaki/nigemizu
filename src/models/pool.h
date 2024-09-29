@@ -2,6 +2,7 @@
 #define NIGEMIZU_MODELS_POOL_H_
 
 #include <cstddef>
+#include <deque>
 #include <memory>
 #include <vector>
 
@@ -48,8 +49,8 @@ public:
                     obj.reset();
                 }
             } else if (!buf_.empty()) {
-                obj = buf_.back();
-                buf_.pop_back();
+                obj = buf_.front();
+                buf_.pop_front();
             }
             if (!obj) { ++buf_size_; }
         }
@@ -78,7 +79,7 @@ private:
     std::vector<std::shared_ptr<T>> objects_;
 
     size_t buf_size_;
-    std::vector<std::shared_ptr<T>> buf_;
+    std::deque<std::shared_ptr<T>> buf_;
 
     //virtual void Process(T& obj) const { /* NO-OP */ }
 };
