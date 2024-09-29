@@ -11,6 +11,7 @@ struct Vector2D {
 
     Vector2D() : x(0.0f), y(0.0f) {}
     Vector2D(float x, float y) : x(x), y(y) {}
+    Vector2D(const Vector2D& other) = default;
 
     void Zero();
     void Set(float x, float y);
