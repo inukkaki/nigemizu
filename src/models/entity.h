@@ -45,6 +45,16 @@ struct Data {
           boundary(std::move(boundary)) {
         assert(this->boundary);
     }
+    Data(const Data& other)
+        : mass(other.mass),
+          r(other.r),
+          v(other.v),
+          a(other.a),
+          external_force(other.external_force),
+          drag_factor(other.drag_factor),
+          boundary(other.boundary ? other.boundary->Clone() : nullptr) {
+        assert(this->boundary);
+    }
 };
 
 class ModifyExternalForceDelegate {
