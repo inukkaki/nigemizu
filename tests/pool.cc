@@ -78,6 +78,14 @@ int main() {
 
     // ...
 
+    pool.Update();
+
+    pool.PrintObjects();
+    pool.PrintBuf();
+    std::cout << std::endl;
+
+    // ...
+
     ChangeDebugNum(1);
     pool.Update();
 

@@ -44,7 +44,7 @@ public:
         for (std::shared_ptr<T>& obj : objects_) {
             if (obj) {
                 if (obj->IsActivated()) {
-                    //Process(*obj);
+                    Process(*obj);
                 } else {
                     obj.reset();
                 }
@@ -81,7 +81,7 @@ private:
     size_t buf_size_;
     std::deque<std::shared_ptr<T>> buf_;
 
-    //virtual void Process(T& obj) const { /* NO-OP */ }
+    virtual void Process(T& obj) const { /* NO-OP */ }
 };
 
 }  // namespace nigemizu::models::pool
