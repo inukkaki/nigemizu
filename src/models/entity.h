@@ -175,13 +175,18 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
-    Entity() {}
+    Entity() : activated_(false) {}
     virtual ~Entity() = default;
 
     const Data& data() const {
         assert(data_);
         return *data_;
     }
+
+    void Activate()   { activated_ = true; }
+    void Deactivate() { activated_ = false; }
+
+    bool IsActivated() const { return activated_; }
 
     void Init(
         std::unique_ptr<Data>&& data,
@@ -210,6 +215,8 @@ public:
 
 private:
     std::unique_ptr<Data> data_;
+
+    bool activated_;
 
     const ModifyExternalForceDelegate* modify_external_force_;
 
