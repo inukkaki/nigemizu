@@ -1,5 +1,5 @@
-#ifndef NIGEMIZU_MODELS_POOL_H_
-#define NIGEMIZU_MODELS_POOL_H_
+#ifndef NIGEMIZU_CORE_POOL_H_
+#define NIGEMIZU_CORE_POOL_H_
 
 #include <cassert>
 #include <cstddef>
@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace nigemizu::models::pool {
+namespace nigemizu::core::pool {
 
 namespace impl {
 
@@ -68,6 +68,6 @@ private:
     virtual void Process() const { /* NO-OP */ }
 };
 
-}  // namespace nigemizu::models::pool
+}  // namespace nigemizu::core::pool
 
-#endif  // NIGEMIZU_MODELS_POOL_H_
+#endif  // NIGEMIZU_CORE_POOL_H_

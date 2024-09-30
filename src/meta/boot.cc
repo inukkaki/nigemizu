@@ -1,11 +1,17 @@
-#include "interfaces/boot.h"
+#include "meta/boot.h"
 
 #include "SDL2/SDL.h"
 
-#include "interfaces/modal.h"
+#include "meta/modal.h"
 #include "models/config.h"
 
-namespace nigemizu::interfaces::boot {
+namespace nigemizu::meta::boot {
+
+namespace impl {
+
+namespace modal = nigemizu::meta::modal;
+
+}  // namespace impl
 
 namespace {
 
@@ -13,7 +19,7 @@ bool InitSdl(Uint32 flags) {
     bool succeeds = true;
     if (SDL_Init(flags) < 0) {
         succeeds = false;
-        modal::ShowErrorMessage(
+        impl::modal::ShowErrorMessage(
             "Initialization Error",
             "Could not initialize the SDL library.",
             SDL_GetError());
@@ -29,7 +35,7 @@ bool CreateWindow(SDL_Window*& window) {
         config::kWindowWidth, config::kWindowHeight, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         succeeds = false;
-        modal::ShowErrorMessage(
+        impl::modal::ShowErrorMessage(
             "Initialization Error",
             "Could not create a main window.",
             SDL_GetError());
@@ -43,7 +49,7 @@ bool CreateRenderer(SDL_Window*& window, SDL_Renderer*& renderer) {
         window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr) {
         succeeds = false;
-        modal::ShowErrorMessage(
+        impl::modal::ShowErrorMessage(
             "Initialization Error",
             "Could not create a renderer.",
             SDL_GetError());
@@ -71,4 +77,4 @@ void CloseGui(SDL_Window*& window, SDL_Renderer*& renderer) {
     SDL_Quit();
 }
 
-}  // namespace nigemizu::interfaces::boot
+}  // namespace nigemizu::meta::boot

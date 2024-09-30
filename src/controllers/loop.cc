@@ -1,23 +1,23 @@
 #include "controllers/loop.h"
 
-#include "models/keyboard.h"
+#include "interfaces/keyboard.h"
 
 #include "SDL2/SDL.h"
 
 // DEBUG
 #include <iostream>
 #include <memory>
+#include "core/singleton.h"
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/entity.h"
 #include "models/math.h"
-#include "models/singleton.h"
 
 namespace nigemizu::controllers::loop {
 
 namespace impl {
 
-namespace kbd = nigemizu::models::keyboard;
+namespace kbd = nigemizu::interfaces::keyboard;
 
 }  // namespace impl
 
@@ -50,13 +50,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
 
-    using nigemizu::models::singleton::Singleton;
-    using nigemizu::models::keyboard::Keyboard;
+    using nigemizu::core::singleton::Singleton;
+    using nigemizu::interfaces::keyboard::Keyboard;
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
 
-    using nigemizu::models::keyboard::KeyConfig;
-    using nigemizu::models::keyboard::KeyCode;
+    using nigemizu::interfaces::keyboard::KeyConfig;
+    using nigemizu::interfaces::keyboard::KeyCode;
     KeyConfig kc = {
         KeyCode::kW,
         KeyCode::kA,

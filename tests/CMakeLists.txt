@@ -2,7 +2,7 @@
 add_executable(pool
     pool.cc
 
-    ${PROJECT_SOURCE_DIR}/src/models/pool.cc
+    ${PROJECT_SOURCE_DIR}/src/core/pool.cc
 )
 target_compile_features(pool PUBLIC cxx_std_23)
 target_include_directories(pool
@@ -22,7 +22,7 @@ target_compile_features(rounding PUBLIC cxx_std_23)
 add_executable(singleton
     singleton.cc
 
-    ${PROJECT_SOURCE_DIR}/src/models/singleton.cc
+    ${PROJECT_SOURCE_DIR}/src/core/singleton.cc
 )
 target_compile_features(singleton PUBLIC cxx_std_23)
 target_include_directories(singleton
@@ -35,7 +35,7 @@ target_include_directories(singleton
 add_executable(stfn
     stfn.cc
 
-    ${PROJECT_SOURCE_DIR}/src/models/singleton.cc
+    ${PROJECT_SOURCE_DIR}/src/core/singleton.cc
 )
 target_compile_features(stfn PUBLIC cxx_std_23)
 target_include_directories(stfn

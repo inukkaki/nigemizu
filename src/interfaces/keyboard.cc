@@ -1,11 +1,11 @@
-#include "models/keyboard.h"
+#include "interfaces/keyboard.h"
 
 #include <string>
 #include <unordered_map>
 
 #include "SDL2/SDL.h"
 
-namespace nigemizu::models::keyboard {
+namespace nigemizu::interfaces::keyboard {
 
 void Keyboard::SetKeyMap() {
     key_map_.clear();
@@ -74,4 +74,4 @@ std::string Keyboard::ToString() const {
     return result;
 }
 
-}  // namespace nigemizu::models::keyboard
+}  // namespace nigemizu::interfaces::keyboard

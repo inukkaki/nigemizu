@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "models/singleton.h"
+#include "core/singleton.h"
 
 class A {
 public:
@@ -34,7 +34,7 @@ private:
 };
 
 int main() {
-    using nigemizu::models::singleton::Singleton;
+    using nigemizu::core::singleton::Singleton;
 
     A& x = Singleton::GetInstance<A>(156);
     x.Print(9);

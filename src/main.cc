@@ -3,11 +3,11 @@
 #include "SDL2/SDL.h"
 
 #include "controllers/loop.h"
-#include "interfaces/boot.h"
-#include "models/singleton.h"
+#include "core/singleton.h"
+#include "meta/boot.h"
 
 int main(int argc, char* argv[]) {
-    namespace boot = nigemizu::interfaces::boot;
+    namespace boot = nigemizu::meta::boot;
     namespace loop = nigemizu::controllers::loop;
 
     SDL_Window* window = nullptr;
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         loop::MainLoop(window, renderer);
     }
 
-    using nigemizu::models::singleton::Singleton;
+    using nigemizu::core::singleton::Singleton;
     Singleton::Finalize();
 
     boot::CloseGui(window, renderer);

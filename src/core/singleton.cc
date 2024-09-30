@@ -1,10 +1,10 @@
-#include "models/singleton.h"
+#include "core/singleton.h"
 
 #include <algorithm>
 #include <functional>
 #include <utility>
 
-namespace nigemizu::models::singleton {
+namespace nigemizu::core::singleton {
 
 namespace impl {
 
@@ -30,4 +30,4 @@ void Singleton::Finalize() {
     impl::SingletonFinalizer::Finalize();
 }
 
-}  // namespace nigemizu::models::singleton
+}  // namespace nigemizu::core::singleton

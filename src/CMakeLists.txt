@@ -8,16 +8,18 @@ add_executable(nigemizu
 
     controllers/loop.cc
 
-    interfaces/boot.cc
+    core/pool.cc
+    core/singleton.cc
+
     interfaces/framerate.cc
-    interfaces/modal.cc
+    interfaces/keyboard.cc
+
+    meta/boot.cc
+    meta/modal.cc
 
     models/config.cc
     models/entity.cc
-    models/keyboard.cc
     models/math.cc
-    models/pool.cc
-    models/singleton.cc
     models/timer.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)

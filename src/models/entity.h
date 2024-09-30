@@ -4,22 +4,22 @@
 #include <cassert>
 #include <memory>
 
-#include "models/keyboard.h"
+#include "interfaces/keyboard.h"
 #include "models/math.h"
 
 // DEBUG
 #include <cstddef>
-#include "models/pool.h"
+#include "core/pool.h"
 
 namespace nigemizu::models::entity {
 
 namespace impl {
 
-namespace kbd = nigemizu::models::keyboard;
+namespace kbd = nigemizu::interfaces::keyboard;
 namespace math = nigemizu::models::math;
 
 // DEBUG
-namespace pool = nigemizu::models::pool;
+namespace pool = nigemizu::core::pool;
 
 }  // namespace impl
 
@@ -269,12 +269,12 @@ public:
 };
 
 // DEBUG
-class EntityPool : public pool::ObjectPool<Entity> {
+class EntityPool : public impl::pool::ObjectPool<Entity> {
 public:
     EntityPool(size_t size,
                const math::Plotter& plotter,
                const math::ColorSetter& color_setter)
-        : pool::ObjectPool<Entity>(size),
+        : impl::pool::ObjectPool<Entity>(size),
           plotter_(plotter),
           color_setter_(color_setter) {}
 

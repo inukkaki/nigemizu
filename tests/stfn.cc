@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "models/singleton.h"
+#include "core/singleton.h"
 
 class A {
 public:
@@ -19,7 +19,7 @@ public:
 };
 
 int main() {
-    using nigemizu::models::singleton::impl::SingletonFinalizer;
+    using nigemizu::core::singleton::impl::SingletonFinalizer;
 
     A a; a.DoSomething();
     B b; b.DoSomething();

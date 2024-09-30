@@ -1,7 +1,7 @@
 #include "models/entity.h"
 
+#include "interfaces/keyboard.h"
 #include "models/config.h"
-#include "models/keyboard.h"
 #include "models/math.h"
 
 namespace nigemizu::models::entity {
@@ -9,7 +9,7 @@ namespace nigemizu::models::entity {
 namespace impl {
 
 namespace config = nigemizu::models::config;
-namespace kbd = nigemizu::models::keyboard;
+namespace kbd = nigemizu::interfaces::keyboard;
 namespace math = nigemizu::models::math;
 
 }  // namespace impl

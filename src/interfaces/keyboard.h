@@ -1,5 +1,5 @@
-#ifndef NIGEMIZU_MODELS_KEYBOARD_H_
-#define NIGEMIZU_MODELS_KEYBOARD_H_
+#ifndef NIGEMIZU_INTERFACES_KEYBOARD_H_
+#define NIGEMIZU_INTERFACES_KEYBOARD_H_
 
 #include <array>
 #include <string>
@@ -7,7 +7,7 @@
 
 #include "SDL2/SDL.h"
 
-namespace nigemizu::models::keyboard {
+namespace nigemizu::interfaces::keyboard {
 
 enum class KeyCode : unsigned char {
     kW,
@@ -64,6 +64,6 @@ private:
     impl::KeyArray pressed_;
 };
 
-}  // namespace nigemizu::models::keyboard
+}  // namespace nigemizu::interfaces::keyboard
 
-#endif  // NIGEMIZU_MODELS_KEYBOARD_H_
+#endif  // NIGEMIZU_INTERFACES_KEYBOARD_H_
