@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#include "models/pool.h"
+#include "core/pool.h"
 
 int gDebugNum = -1;
 
@@ -36,7 +36,7 @@ private:
 };
 
 int main() {
-    using nigemizu::models::pool::ObjectPool;
+    using nigemizu::core::pool::ObjectPool;
 
     ObjectPool<A> pool(5);
 

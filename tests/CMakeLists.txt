@@ -2,7 +2,7 @@
 add_executable(pool
     pool.cc
 
-    ${PROJECT_SOURCE_DIR}/src/models/pool.cc
+    ${PROJECT_SOURCE_DIR}/src/core/pool.cc
 )
 target_compile_features(pool PUBLIC cxx_std_23)
 target_include_directories(pool
