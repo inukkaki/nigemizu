@@ -1,11 +1,11 @@
-#include "interfaces/modal.h"
+#include "meta/modal.h"
 
 #include <iostream>
 #include <string>
 
 #include "SDL2/SDL.h"
 
-namespace nigemizu::interfaces::modal {
+namespace nigemizu::meta::modal {
 
 void ShowErrorMessage(const char* title, const char* message) {
     std::cerr << message << std::endl;
@@ -22,4 +22,4 @@ void ShowErrorMessage(
         SDL_MESSAGEBOX_ERROR, title, full_message.c_str(), nullptr);
 }
 
-}  // namespace nigemizu::interfaces::modal
+}  // namespace nigemizu::meta::modal

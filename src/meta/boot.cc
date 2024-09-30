@@ -1,15 +1,15 @@
-#include "interfaces/boot.h"
+#include "meta/boot.h"
 
 #include "SDL2/SDL.h"
 
-#include "interfaces/modal.h"
+#include "meta/modal.h"
 #include "models/config.h"
 
-namespace nigemizu::interfaces::boot {
+namespace nigemizu::meta::boot {
 
 namespace impl {
 
-namespace modal = nigemizu::interfaces::modal;
+namespace modal = nigemizu::meta::modal;
 
 }  // namespace impl
 
@@ -77,4 +77,4 @@ void CloseGui(SDL_Window*& window, SDL_Renderer*& renderer) {
     SDL_Quit();
 }
 
-}  // namespace nigemizu::interfaces::boot
+}  // namespace nigemizu::meta::boot

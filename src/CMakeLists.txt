@@ -8,9 +8,10 @@ add_executable(nigemizu
 
     controllers/loop.cc
 
-    interfaces/boot.cc
     interfaces/framerate.cc
-    interfaces/modal.cc
+
+    meta/boot.cc
+    meta/modal.cc
 
     models/config.cc
     models/entity.cc
