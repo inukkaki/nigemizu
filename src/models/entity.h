@@ -4,7 +4,7 @@
 #include <cassert>
 #include <memory>
 
-#include "models/keyboard.h"
+#include "interfaces/keyboard.h"
 #include "models/math.h"
 
 // DEBUG
@@ -15,7 +15,7 @@ namespace nigemizu::models::entity {
 
 namespace impl {
 
-namespace kbd = nigemizu::models::keyboard;
+namespace kbd = nigemizu::interfaces::keyboard;
 namespace math = nigemizu::models::math;
 
 // DEBUG

@@ -12,13 +12,13 @@ add_executable(nigemizu
     core/singleton.cc
 
     interfaces/framerate.cc
+    interfaces/keyboard.cc
 
     meta/boot.cc
     meta/modal.cc
 
     models/config.cc
     models/entity.cc
-    models/keyboard.cc
     models/math.cc
     models/timer.cc
 )
