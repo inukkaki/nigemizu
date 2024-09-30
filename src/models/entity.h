@@ -7,12 +7,19 @@
 #include "models/keyboard.h"
 #include "models/math.h"
 
+// DEBUG
+#include <cstddef>
+#include "models/pool.h"
+
 namespace nigemizu::models::entity {
 
 namespace impl {
 
 namespace kbd = nigemizu::models::keyboard;
 namespace math = nigemizu::models::math;
+
+// DEBUG
+namespace pool = nigemizu::models::pool;
 
 }  // namespace impl
 
@@ -259,6 +266,23 @@ public:
                 std::make_unique<impl::math::Circle2D>(8.0f)
             ));
     }
+};
+
+// DEBUG
+class EntityPool : public pool::ObjectPool<Entity> {
+public:
+    EntityPool(size_t size,
+               const math::Plotter& plotter,
+               const math::ColorSetter& color_setter)
+        : pool::ObjectPool<Entity>(size),
+          plotter_(plotter),
+          color_setter_(color_setter) {}
+
+private:
+    const math::Plotter& plotter_;
+    const math::ColorSetter& color_setter_;
+
+    void Process() const override;
 };
 
 }  // namespace nigemizu::models::entity

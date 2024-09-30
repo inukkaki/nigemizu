@@ -171,4 +171,17 @@ void Playable::Control(
     Transfer(kbd, kc);
 }
 
+// DEBUG
+void EntityPool::Process() const {
+    // DEBUG
+    Entity& entity = focus();
+    entity.GetGravity({});
+    entity.GetDrag(1.0f);
+    entity.UpdateA();
+    float frame_duration = config::GetFrameDuration();
+    entity.UpdateV(frame_duration);
+    entity.UpdateR(frame_duration);
+    entity.RenderDebugInfo(plotter_, color_setter_);
+}
+
 }  // namespace nigemizu::models::entity

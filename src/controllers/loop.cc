@@ -120,6 +120,26 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
 
+    using nigemizu::models::entity::EntityPool;
+    EntityPool ep(5, plotter, color_setter);
+    base_data.r = Vector2D(400.0f, 240.0f);
+    base_data.boundary.reset(new Circle2D(4.0f));
+    for (int i = 0; i < 6; ++i) {
+        std::shared_ptr<entity::Entity> entity
+            = ep.Create(std::make_unique<entity::Entity>());
+        if (!entity) { continue; }
+        base_data.r += Vector2D(12.0f, 0.0f);
+        base_data.v += Vector2D(0.0f, 16.0f);
+        entity->Init(
+            std::make_unique<entity::Data>(base_data),
+            entity::kAddExternalForce,
+            entity::kNotGetGravity,
+            entity::kCanGetDrag,
+            entity::kApplyExternalForceToA,
+            entity::kAddAToV,
+            entity::kAddVToR);
+    }
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {
@@ -164,6 +184,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         dp.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
         e3.RenderDebugInfo(plotter, color_setter);
+
+        ep.Update();
 
         SDL_RenderPresent(renderer);
 
