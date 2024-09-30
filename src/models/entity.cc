@@ -51,6 +51,7 @@ void Entity::Init(
         const UpdateVDelegate& update_v,
         const UpdateRDelegate& update_r) {
     assert(data);
+    Activate();
     data_ = std::move(data);
     modify_external_force_ = &modify_external_force;
     get_gravity_ = &get_gravity;
