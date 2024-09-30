@@ -1,6 +1,7 @@
 #ifndef NIGEMIZU_MODELS_POOL_H_
 #define NIGEMIZU_MODELS_POOL_H_
 
+#include <cassert>
 #include <cstddef>
 #include <deque>
 #include <memory>
@@ -12,9 +13,6 @@ namespace impl {
 
 template <typename T>
 concept Deactivatable = requires (T& x) {
-    x.Activate();
-    x.Deactivate();
-
     x.IsActivated();
 };
 
@@ -27,12 +25,14 @@ public:
         : size_(size), objects_(size_), buf_size_(size_) {}
     virtual ~ObjectPool() = default;
 
-    std::shared_ptr<T>& focus() const { return focus_; }
+    T& focus() const {
+        assert(focus_);
+        return *focus_;
+    }
 
     std::shared_ptr<T> Create(std::unique_ptr<T>&& object) {
         std::shared_ptr<T> result;
         if (buf_.size() < buf_size_) {
-            object->Activate();
             result = buf_.emplace_back(std::move(object));
         }
         return result;
