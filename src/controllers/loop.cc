@@ -81,24 +81,35 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::Circle2D;
-    entity::DebugPlayer db;
-    entity::Entity e2(
-        std::make_unique<entity::Data>(
-            1.0f,
-            Vector2D(320.0f, 240.0f),
-            Vector2D(),
-            Vector2D(),
-            Vector2D(),
-            1.0f,
-            std::make_unique<Circle2D>(16.0f)
-        ),
+    entity::DebugPlayer dp;
+    dp.Init();
+    entity::Data base_data(
+        1.0f,
+        Vector2D(320.0f, 240.0f),
+        Vector2D(),
+        Vector2D(),
+        Vector2D(),
+        1.0f,
+        std::make_unique<Circle2D>(16.0f));
+    entity::Entity e2, e3;
+    e2.Init(
+        std::make_unique<entity::Data>(base_data),
         entity::kAddExternalForce,
         entity::kNotGetGravity,
         entity::kCanGetDrag,
         entity::kApplyExternalForceToA,
         entity::kAddAToV,
-        entity::kAddVToR
-    );
+        entity::kAddVToR);
+    base_data.r += Vector2D(10.0f, 5.0f);
+    base_data.boundary.reset(new Circle2D(24.0f));
+    e3.Init(
+        std::make_unique<entity::Data>(base_data),
+        entity::kAddExternalForce,
+        entity::kNotGetGravity,
+        entity::kCanGetDrag,
+        entity::kApplyExternalForceToA,
+        entity::kAddAToV,
+        entity::kAddVToR);
 
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
@@ -109,6 +120,26 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
 
+    using nigemizu::models::entity::EntityPool;
+    EntityPool ep(5, plotter, color_setter);
+    base_data.r = Vector2D(400.0f, 240.0f);
+    base_data.boundary.reset(new Circle2D(4.0f));
+    for (int i = 0; i < 6; ++i) {
+        std::shared_ptr<entity::Entity> entity
+            = ep.Create(std::make_unique<entity::Entity>());
+        if (!entity) { continue; }
+        base_data.r += Vector2D(12.0f, 0.0f);
+        base_data.v += Vector2D(0.0f, 16.0f);
+        entity->Init(
+            std::make_unique<entity::Data>(base_data),
+            entity::kAddExternalForce,
+            entity::kNotGetGravity,
+            entity::kCanGetDrag,
+            entity::kApplyExternalForceToA,
+            entity::kAddAToV,
+            entity::kAddVToR);
+    }
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {
@@ -118,15 +149,16 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         // DEBUG
-        db.Control(kbd, kc);
+        dp.Control(kbd, kc);
 
-        db.GetGravity({0.0f, 16*9.8f});
-        db.GetDrag(1.0f);
-        db.UpdateA();
-        db.UpdateV(frame_duration);
-        db.UpdateR(frame_duration);
+        dp.GetGravity({0.0f, 16*9.8f});
+        dp.GetDrag(1.0f);
+        dp.UpdateA();
+        dp.UpdateV(frame_duration);
+        dp.UpdateR(frame_duration);
 
-        db.CollideWith(e2);
+        dp.CollideWith(e2);
+        dp.CollideWith(e3);
 
         e2.GetGravity({0.0f, 16*9.8f});
         e2.GetDrag(1.0f);
@@ -134,13 +166,26 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e2.UpdateV(frame_duration);
         e2.UpdateR(frame_duration);
 
-        e2.CollideWith(db);
+        e2.CollideWith(dp);
+        e2.CollideWith(e3);
+
+        e3.GetGravity({0.0f, 16*9.8f});
+        e3.GetDrag(1.0f);
+        e3.UpdateA();
+        e3.UpdateV(frame_duration);
+        e3.UpdateR(frame_duration);
+
+        e3.CollideWith(dp);
+        e3.CollideWith(e2);
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
-        db.RenderDebugInfo(plotter, color_setter);
+        dp.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
+        e3.RenderDebugInfo(plotter, color_setter);
+
+        ep.Update();
 
         SDL_RenderPresent(renderer);
 

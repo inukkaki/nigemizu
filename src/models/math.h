@@ -2,6 +2,7 @@
 #define NIGEMIZU_MODELS_MATH_H_
 
 #include <functional>
+#include <memory>
 
 namespace nigemizu::models::math {
 
@@ -11,6 +12,7 @@ struct Vector2D {
 
     Vector2D() : x(0.0f), y(0.0f) {}
     Vector2D(float x, float y) : x(x), y(y) {}
+    Vector2D(const Vector2D&) = default;
 
     void Zero();
     void Set(float x, float y);
@@ -63,6 +65,8 @@ struct Shape2D {
 
     virtual void Render(
         const Vector2D& offset, const Plotter& plotter) const = 0;
+
+    virtual std::unique_ptr<Shape2D> Clone() const = 0;
 };
 
 struct Circle2D : public Shape2D {
@@ -72,6 +76,7 @@ struct Circle2D : public Shape2D {
     Circle2D() : r(0.0f) {}
     Circle2D(float r) : r(r) {}
     Circle2D(const Vector2D& c, float r) : c(c), r(r) {}
+    Circle2D(const Circle2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }
 
@@ -79,6 +84,8 @@ struct Circle2D : public Shape2D {
         const Shape2D& other, const Vector2D& offset) const override;
 
     void Render(const Vector2D& offset, const Plotter& plotter) const override;
+
+    std::unique_ptr<Shape2D> Clone() const override;
 };
 
 }  // namespace nigemizu::models::math

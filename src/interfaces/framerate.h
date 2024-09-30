@@ -25,8 +25,8 @@ public:
     void Balance();
 
 private:
-    int frame_rate_;                 // s-1
-    double milliseconds_per_frame_;  // ms
+    int frame_rate_;         // s-1
+    double frame_duration_;  // ms
 
     impl::timer::SimpleTimer timer_;
 };

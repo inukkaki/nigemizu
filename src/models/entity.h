@@ -7,12 +7,19 @@
 #include "models/keyboard.h"
 #include "models/math.h"
 
+// DEBUG
+#include <cstddef>
+#include "models/pool.h"
+
 namespace nigemizu::models::entity {
 
 namespace impl {
 
 namespace kbd = nigemizu::models::keyboard;
 namespace math = nigemizu::models::math;
+
+// DEBUG
+namespace pool = nigemizu::models::pool;
 
 }  // namespace impl
 
@@ -43,6 +50,16 @@ struct Data {
           external_force(external_force),
           drag_factor(drag_factor),
           boundary(std::move(boundary)) {
+        assert(this->boundary);
+    }
+    Data(const Data& other)
+        : mass(other.mass),
+          r(other.r),
+          v(other.v),
+          a(other.a),
+          external_force(other.external_force),
+          drag_factor(other.drag_factor),
+          boundary(other.boundary ? other.boundary->Clone() : nullptr) {
         assert(this->boundary);
     }
 };
@@ -165,28 +182,27 @@ inline constexpr AddVToR kAddVToR;
 
 class Entity {
 public:
-    Entity(std::unique_ptr<Data>&& data,
-           const ModifyExternalForceDelegate& modify_external_force,
-           const GetGravityDelegate& get_gravity,
-           const GetDragDelegate& get_drag,
-           const UpdateADelegate& update_a,
-           const UpdateVDelegate& update_v,
-           const UpdateRDelegate& update_r)
-        : data_(std::move(data)),
-          modify_external_force_(&modify_external_force),
-          get_gravity_(&get_gravity),
-          get_drag_(&get_drag),
-          update_a_(&update_a),
-          update_v_(&update_v),
-          update_r_(&update_r) {
-        assert(data_);
-    }
+    Entity() : activated_(false) {}
     virtual ~Entity() = default;
 
     const Data& data() const {
         assert(data_);
         return *data_;
     }
+
+    void Activate()   { activated_ = true; }
+    void Deactivate() { activated_ = false; }
+
+    bool IsActivated() const { return activated_; }
+
+    void Init(
+        std::unique_ptr<Data>&& data,
+        const ModifyExternalForceDelegate& modify_external_force,
+        const GetGravityDelegate& get_gravity,
+        const GetDragDelegate& get_drag,
+        const UpdateADelegate& update_a,
+        const UpdateVDelegate& update_v,
+        const UpdateRDelegate& update_r);
 
     void ModifyExternalForce(const impl::math::Vector2D& force);
 
@@ -207,6 +223,8 @@ public:
 private:
     std::unique_ptr<Data> data_;
 
+    bool activated_;
+
     const ModifyExternalForceDelegate* modify_external_force_;
 
     const GetGravityDelegate* get_gravity_;
@@ -219,16 +237,10 @@ private:
 
 class Playable : public Entity {
 public:
-    Playable(std::unique_ptr<Data>&& data)
-        : Entity(
-            std::move(data),
-            kAddExternalForce,
-            kNotGetGravity,
-            kCanGetDrag,
-            kApplyExternalForceToA,
-            kAddAToV,
-            kAddVToR) {}
+    Playable() {}
     virtual ~Playable() = default;
+
+    void Init(std::unique_ptr<Data>&& data);
 
     virtual void Transfer(
         const impl::kbd::Keyboard& kbd, const impl::kbd::KeyConfig& kc);
@@ -240,8 +252,10 @@ public:
 // DEBUG
 class DebugPlayer : public Playable {
 public:
-    DebugPlayer()
-        : Playable(
+    DebugPlayer() {}
+
+    void Init() {
+        Playable::Init(
             std::make_unique<Data>(
                 4.0f,
                 impl::math::Vector2D(),
@@ -250,7 +264,25 @@ public:
                 impl::math::Vector2D(),
                 3.0f,
                 std::make_unique<impl::math::Circle2D>(8.0f)
-            )) {}
+            ));
+    }
+};
+
+// DEBUG
+class EntityPool : public pool::ObjectPool<Entity> {
+public:
+    EntityPool(size_t size,
+               const math::Plotter& plotter,
+               const math::ColorSetter& color_setter)
+        : pool::ObjectPool<Entity>(size),
+          plotter_(plotter),
+          color_setter_(color_setter) {}
+
+private:
+    const math::Plotter& plotter_;
+    const math::ColorSetter& color_setter_;
+
+    void Process() const override;
 };
 
 }  // namespace nigemizu::models::entity

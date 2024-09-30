@@ -1,6 +1,8 @@
 #ifndef NIGEMIZU_MODELS_TIMER_H_
 #define NIGEMIZU_MODELS_TIMER_H_
 
+#include <cstdint>
+
 #include "SDL2/SDL.h"
 
 namespace nigemizu::models::timer {
@@ -10,10 +12,10 @@ public:
     SimpleTimer() : start_time_(0ull) {}
 
     void Set();
-    unsigned long long int GetElapsedTime() const;
+    uint64_t GetElapsedTime() const;
 
 private:
-    Uint64 start_time_;
+    uint64_t start_time_;
 };
 
 }  // namespace nigemizu::models::timer
