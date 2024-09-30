@@ -3,8 +3,8 @@
 #include "SDL2/SDL.h"
 
 #include "controllers/loop.h"
+#include "core/singleton.h"
 #include "meta/boot.h"
-#include "models/singleton.h"
 
 int main(int argc, char* argv[]) {
     namespace boot = nigemizu::meta::boot;
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         loop::MainLoop(window, renderer);
     }
 
-    using nigemizu::models::singleton::Singleton;
+    using nigemizu::core::singleton::Singleton;
     Singleton::Finalize();
 
     boot::CloseGui(window, renderer);

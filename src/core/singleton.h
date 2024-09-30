@@ -1,5 +1,5 @@
-#ifndef NIGEMIZU_MODELS_SINGLETON_H_
-#define NIGEMIZU_MODELS_SINGLETON_H_
+#ifndef NIGEMIZU_CORE_SINGLETON_H_
+#define NIGEMIZU_CORE_SINGLETON_H_
 
 #include <functional>
 #include <memory>
@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace nigemizu::models::singleton {
+namespace nigemizu::core::singleton {
 
 namespace impl {
 
@@ -64,6 +64,6 @@ public:
     static void Finalize();
 };
 
-}  // namespace nigemizu::models::singleton
+}  // namespace nigemizu::core::singleton
 
-#endif  // NIGEMIZU_MODELS_SINGLETON_H_
+#endif  // NIGEMIZU_CORE_SINGLETON_H_

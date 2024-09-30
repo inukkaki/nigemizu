@@ -7,11 +7,11 @@
 // DEBUG
 #include <iostream>
 #include <memory>
+#include "core/singleton.h"
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/entity.h"
 #include "models/math.h"
-#include "models/singleton.h"
 
 namespace nigemizu::controllers::loop {
 
@@ -50,7 +50,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
 
-    using nigemizu::models::singleton::Singleton;
+    using nigemizu::core::singleton::Singleton;
     using nigemizu::models::keyboard::Keyboard;
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
