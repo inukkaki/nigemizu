@@ -17,6 +17,7 @@ add_executable(nigemizu
 
     meta/boot.cc
     meta/modal.cc
+    meta/winfunc.cc
 
     models/config.cc
     models/entity.cc
