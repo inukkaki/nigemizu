@@ -1,6 +1,7 @@
 #include "meta/boot.h"
 
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 #include "meta/modal.h"
 #include "models/config.h"
@@ -57,13 +58,27 @@ bool CreateRenderer(SDL_Window*& window, SDL_Renderer*& renderer) {
     return succeeds;
 }
 
+bool InitSdlImage(int flags) {
+    bool succeeds = true;
+    if (!(IMG_Init(flags) & flags)) {
+        succeeds = false;
+        impl::modal::ShowErrorMessage(
+            "Initialization Error",
+            "Could not initialize SDL_image",
+            IMG_GetError());
+    }
+    return succeeds;
+}
+
 }  // namespace
 
 bool InitGui(SDL_Window*& window, SDL_Renderer*& renderer) {
     bool succeeds = false;
     if (InitSdl(SDL_INIT_VIDEO)) {
         if (CreateWindow(window) && CreateRenderer(window, renderer)) {
-            succeeds = true;
+            if (InitSdlImage(IMG_INIT_PNG)) {
+                succeeds = true;
+            }
         }
     }
     return succeeds;
