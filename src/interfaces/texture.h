@@ -10,6 +10,12 @@ namespace nigemizu::interfaces::texture {
 class Texture {
 public:
     Texture() : texture_(nullptr) {}
+    ~Texture() {
+        FreeTexture();
+    }
+
+    bool LoadTexture(SDL_Renderer* renderer, const char* file_path);
+    void FreeTexture();
 
 private:
     SDL_Texture* texture_;

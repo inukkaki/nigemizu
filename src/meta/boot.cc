@@ -64,7 +64,7 @@ bool InitSdlImage(int flags) {
         succeeds = false;
         impl::modal::ShowErrorMessage(
             "Initialization Error",
-            "Could not initialize SDL_image",
+            "Could not initialize SDL_image.",
             IMG_GetError());
     }
     return succeeds;

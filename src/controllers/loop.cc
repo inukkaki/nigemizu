@@ -9,6 +9,7 @@
 #include <memory>
 #include "core/singleton.h"
 #include "interfaces/framerate.h"
+#include "interfaces/texture.h"
 #include "models/config.h"
 #include "models/entity.h"
 #include "models/math.h"
@@ -49,6 +50,12 @@ bool HandleEvents(impl::kbd::Keyboard& kbd) {
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
+
+    using nigemizu::interfaces::texture::Texture;
+    Texture t1;
+    t1.LoadTexture(renderer, "./data/img/this_img_does_not_exist.png");
+    t1.LoadTexture(renderer, "./data/img/test.png");
+    t1.FreeTexture();
 
     using nigemizu::core::singleton::Singleton;
     using nigemizu::interfaces::keyboard::Keyboard;
