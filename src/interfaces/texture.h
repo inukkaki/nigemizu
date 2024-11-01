@@ -7,6 +7,15 @@
 
 namespace nigemizu::interfaces::texture {
 
+struct RenderRect {
+    int u;
+    int v;
+    int w;
+    int h;
+    int x_offset;
+    int y_offset;
+};
+
 class Texture {
 public:
     Texture() : texture_(nullptr) {}
@@ -16,6 +25,10 @@ public:
 
     bool LoadTexture(SDL_Renderer* renderer, const char* file_path);
     void FreeTexture();
+
+    void Render(
+        SDL_Renderer* renderer, float x, float y,
+        const RenderRect& rrect) const;
 
 private:
     SDL_Texture* texture_;

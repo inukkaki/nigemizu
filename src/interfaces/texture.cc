@@ -48,4 +48,17 @@ void Texture::FreeTexture() {
     }
 }
 
+void Texture::Render(
+        SDL_Renderer* renderer, float x, float y,
+        const RenderRect& rrect) const {
+    SDL_Rect srcrect = {rrect.u, rrect.v, rrect.w, rrect.h};
+    SDL_Rect dstrect = {
+        static_cast<int>(x + 0.5f) + rrect.x_offset,
+        static_cast<int>(y + 0.5f) + rrect.y_offset,
+        rrect.w,
+        rrect.h
+    };
+    SDL_RenderCopy(renderer, texture_, &srcrect, &dstrect);
+}
+
 }  // namespace nigemizu::interfaces::texture

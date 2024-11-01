@@ -53,9 +53,9 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     using nigemizu::interfaces::texture::Texture;
     Texture t1;
-    t1.LoadTexture(renderer, "./data/img/this_img_does_not_exist.png");
     t1.LoadTexture(renderer, "./data/img/test.png");
-    t1.FreeTexture();
+    using nigemizu::interfaces::texture::RenderRect;
+    RenderRect rrect = {0, 0, 64, 64, 0, 0};
 
     using nigemizu::core::singleton::Singleton;
     using nigemizu::interfaces::keyboard::Keyboard;
@@ -188,6 +188,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
+        t1.Render(renderer, 8.0f, 4.0f, rrect);
+
         dp.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
         e3.RenderDebugInfo(plotter, color_setter);
@@ -203,6 +205,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         kbd.Update();
         frb.Balance();
     }
+
+    t1.FreeTexture();
 }
 
 }  // namespace nigemizu::controllers::loop
