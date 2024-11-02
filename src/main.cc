@@ -6,7 +6,16 @@
 #include "core/singleton.h"
 #include "meta/boot.h"
 
+#if (defined(__WIN32) || defined(__WIN64))
+#include "meta/winfunc.h"
+#endif
+
 int main(int argc, char* argv[]) {
+    #if (defined(__WIN32) || defined(__WIN64))
+    using nigemizu::meta::winfunc::ResolveBlurriness;
+    ResolveBlurriness();
+    #endif
+
     namespace boot = nigemizu::meta::boot;
     namespace loop = nigemizu::controllers::loop;
 

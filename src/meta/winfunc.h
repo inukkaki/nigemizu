@@ -3,7 +3,7 @@
 
 namespace nigemizu::meta::winfunc {
 
-// ...
+void ResolveBlurriness();
 
 }  // namespace nigemizu::meta::winfunc
 
