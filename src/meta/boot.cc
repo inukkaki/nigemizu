@@ -11,6 +11,7 @@ namespace nigemizu::meta::boot {
 namespace impl {
 
 namespace modal = nigemizu::meta::modal;
+namespace config = nigemizu::models::config;
 
 }  // namespace impl
 
@@ -30,10 +31,11 @@ bool InitSdl(Uint32 flags) {
 
 bool CreateWindow(SDL_Window*& window) {
     bool succeeds = true;
-    namespace config = nigemizu::models::config;
+    int window_width = impl::config::GetWindowWidth();
+    int window_height = impl::config::GetWindowHeight();
     window = SDL_CreateWindow(
-        config::kTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        config::kWindowWidth, config::kWindowHeight, SDL_WINDOW_SHOWN);
+        impl::config::kTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        window_width, window_height, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         succeeds = false;
         impl::modal::ShowErrorMessage(
@@ -54,6 +56,9 @@ bool CreateRenderer(SDL_Window*& window, SDL_Renderer*& renderer) {
             "Initialization Error",
             "Could not create a renderer.",
             SDL_GetError());
+    } else {
+        float window_scale = impl::config::GetWindowScale();
+        SDL_RenderSetScale(renderer, window_scale, window_scale);
     }
     return succeeds;
 }
