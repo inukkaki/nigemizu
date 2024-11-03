@@ -35,3 +35,4 @@ The executable is generated in the project directory.
 To execute the output, make sure to locate the following shared library in the
 directory the output sits on:
 -   SDL2.dll
+-   SDL2_image.dll

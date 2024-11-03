@@ -6,23 +6,36 @@
 #include "core/singleton.h"
 #include "meta/boot.h"
 
+#if (defined(__WIN32) || defined(__WIN64))
+#include "meta/winfunc.h"
+#endif
+
+namespace impl {
+
+namespace loop = nigemizu::controllers::loop;
+namespace singleton = nigemizu::core::singleton;
+namespace boot = nigemizu::meta::boot;
+
+}  // namespace impl
+
 int main(int argc, char* argv[]) {
-    namespace boot = nigemizu::meta::boot;
-    namespace loop = nigemizu::controllers::loop;
+    #if (defined(__WIN32) || defined(__WIN64))
+    using nigemizu::meta::winfunc::ResolveBlurriness;
+    ResolveBlurriness();
+    #endif
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
 
-    bool initialized = boot::InitGui(window, renderer);
+    bool initialized = impl::boot::InitGui(window, renderer);
 
     if (initialized) {
-        loop::MainLoop(window, renderer);
+        impl::loop::MainLoop(window, renderer);
     }
 
-    using nigemizu::core::singleton::Singleton;
-    Singleton::Finalize();
+    impl::singleton::Singleton::Finalize();
 
-    boot::CloseGui(window, renderer);
+    impl::boot::CloseGui(window, renderer);
 
     return 0;
 }

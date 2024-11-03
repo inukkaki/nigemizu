@@ -13,9 +13,11 @@ add_executable(nigemizu
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
+    interfaces/texture.cc
 
     meta/boot.cc
     meta/modal.cc
+    meta/winfunc.cc
 
     models/config.cc
     models/entity.cc

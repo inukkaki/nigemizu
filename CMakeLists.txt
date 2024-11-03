@@ -12,9 +12,13 @@ set(PATH_TO_SDL2
 set(SDL2_LIBS)
 if(WIN32)
     list(APPEND SDL2_LIBS
+        # SDL
         mingw32
         SDL2main
         SDL2
+
+        # SDL_image
+        SDL2_image
     )
 endif()
 
