@@ -5,7 +5,13 @@
 namespace nigemizu::models::entity_new {
     // TODO: Replace 'entity_new' with 'entity' later.
 
-// ...
+class Entity {
+public:
+    Entity() {}
+
+private:
+    // ...
+};
 
 }  // namespace nigemizu::models::entity_new
 
