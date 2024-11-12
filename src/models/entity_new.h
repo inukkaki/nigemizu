@@ -21,12 +21,19 @@ struct Positional {
     impl::math::Vector2D f;  // Sum of external forces; kg px s-2
 };
 
+struct PhysicalProperty {
+    float mass;  // kg
+};
+
 class Entity {
 public:
     Entity() {}
 
+    const PhysicalProperty& phys() const { return phys_; }
+
 private:
-    Positional p_;
+    Positional pos_;
+    PhysicalProperty phys_;
 };
 
 }  // namespace nigemizu::models::entity_new
