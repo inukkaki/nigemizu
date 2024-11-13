@@ -11,6 +11,7 @@
 #include "interfaces/framerate.h"
 #include "interfaces/texture.h"
 #include "models/config.h"
+#include "models/entity_new.h"
 #include "models/entity.h"
 #include "models/math.h"
 
@@ -84,6 +85,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     FrameRateMeasurer frm;
 
     double measured_frame_rate = 0.0;
+
+    //
+    namespace entnew = nigemizu::models::entity_new;
+    entnew::Entity enew;
+    //
 
     namespace entity = nigemizu::models::entity;
     using nigemizu::models::math::Vector2D;
@@ -193,6 +199,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         dp.RenderDebugInfo(plotter, color_setter);
         e2.RenderDebugInfo(plotter, color_setter);
         e3.RenderDebugInfo(plotter, color_setter);
+
+        //
+        enew.RenderDebugInfo(plotter, color_setter);
+        //
 
         ep.Update();
 

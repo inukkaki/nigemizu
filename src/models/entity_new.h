@@ -31,6 +31,10 @@ public:
 
     const PhysicalProperty& phys() const { return phys_; }
 
+    void RenderDebugInfo(
+        const impl::math::Plotter& plotter,
+        const impl::math::ColorSetter& color_setter) const;
+
 private:
     Positional pos_;
     PhysicalProperty phys_;
