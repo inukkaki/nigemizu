@@ -88,11 +88,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     namespace eent = nigemizu::entity::entity;
-    eent::Entity enew;
+    namespace dlgt = nigemizu::entity::delegate;
+    eent::Entity enew(
+        std::make_unique<dlgt::AddVToR>()
+    );
+    using nigemizu::models::math::Vector2D;
+    enew.pos().v = Vector2D(4.0f, 2.0f);
     //
 
     namespace entity = nigemizu::models::entity;
-    using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::Circle2D;
     entity::DebugPlayer dp;
     dp.Init();
@@ -201,7 +205,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
-        enew.pos().r += Vector2D(0.5f, 0.2f);
+        float dt = config::GetFrameDuration();
+        enew.UpdateR(dt);
         enew.RenderDebugInfo(plotter, color_setter);
         //
 

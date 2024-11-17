@@ -1,20 +1,31 @@
 #ifndef NIGEMIZU_ENTITY_ENTITY_H_
 #define NIGEMIZU_ENTITY_ENTITY_H_
 
+#include <memory>
+
 #include "entity/base.h"
+#include "entity/delegate.h"
 
 namespace nigemizu::entity::entity {
 
 namespace impl {
 
 namespace base = nigemizu::entity::base;
+namespace dlgt = nigemizu::entity::delegate;
 
 }  // namespace impl
 
 class Entity : public impl::base::BaseEntity {
 public:
-    Entity() {}
+    explicit Entity(
+        std::unique_ptr<impl::dlgt::UpdateRDelegate>&& update_r)
+        : update_r_(std::move(update_r)) {}
     virtual ~Entity() = default;
+
+    void UpdateR(float dt);
+
+private:
+    std::unique_ptr<impl::dlgt::UpdateRDelegate> update_r_;
 };
 
 }  // namespace nigemizu::entity::entity
