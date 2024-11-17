@@ -12,6 +12,7 @@ add_executable(nigemizu
     core/singleton.cc
 
     entity/base.cc
+    entity/delegate.cc
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
