@@ -201,6 +201,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
+        enew.pos().r += Vector2D(0.5f, 0.2f);
         enew.RenderDebugInfo(plotter, color_setter);
         //
 

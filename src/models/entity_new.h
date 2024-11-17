@@ -29,6 +29,9 @@ class Entity {
 public:
     Entity() {}
 
+    const Positional& pos() const { return pos_; }
+    Positional&       pos()       { return pos_; }
+
     const PhysicalProperty& phys() const { return phys_; }
 
     void RenderDebugInfo(
