@@ -48,7 +48,7 @@ void RenderEntityA(
 
 }  // namespace
 
-void Entity::RenderDebugInfo(
+void BaseEntity::RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const {
     // TODO: Render the boundary of this entity here in the future.

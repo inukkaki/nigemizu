@@ -88,7 +88,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     namespace entnew = nigemizu::entity::base;
-    entnew::Entity enew;
+    entnew::BaseEntity enew;
     //
 
     namespace entity = nigemizu::models::entity;

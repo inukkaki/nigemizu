@@ -23,9 +23,9 @@ struct PhysicalProperty {
     float mass;  // kg
 };
 
-class Entity {
+class BaseEntity {
 public:
-    Entity() {}
+    BaseEntity() {}
 
     const Positional& pos() const { return pos_; }
     Positional&       pos()       { return pos_; }
