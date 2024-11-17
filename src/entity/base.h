@@ -26,6 +26,7 @@ struct PhysicalProperty {
 class BaseEntity {
 public:
     BaseEntity() {}
+    virtual ~BaseEntity() = default;
 
     const Positional& pos() const { return pos_; }
     Positional&       pos()       { return pos_; }
