@@ -11,6 +11,30 @@ namespace base = nigemizu::entity::base;
 
 }  // namespace impl
 
+class UpdateADelegate {
+public:
+    UpdateADelegate() {}
+    virtual ~UpdateADelegate() = default;
+
+    virtual void UpdateA(impl::base::BaseEntity& self) const = 0;
+};
+
+class NotUpdateA final : public UpdateADelegate {
+public:
+    NotUpdateA() {}
+
+    void UpdateA(impl::base::BaseEntity& self) const override {
+        /* NO-OP */
+    }
+};
+
+class ApplyFToA final : public UpdateADelegate {
+public:
+    ApplyFToA() {}
+
+    void UpdateA(impl::base::BaseEntity& self) const override;
+};
+
 class UpdateVDelegate {
 public:
     UpdateVDelegate() {}
