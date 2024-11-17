@@ -13,6 +13,7 @@ add_executable(nigemizu
 
     entity/base.cc
     entity/delegate.cc
+    entity/entity.cc
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
