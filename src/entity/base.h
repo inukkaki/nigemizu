@@ -1,11 +1,9 @@
-#ifndef NIGEMIZU_MODELS_ENTITY_NEW_H_
-    // TODO: Replace 'ENTITY_NEW' in this macro with 'ENTITY' later.
-#define NIGEMIZU_MODELS_ENTITY_NEW_H_
+#ifndef NIGEMIZU_ENTITY_BASE_H_
+#define NIGEMIZU_ENTITY_BASE_H_
 
 #include "models/math.h"
 
-namespace nigemizu::models::entity_new {
-    // TODO: Replace 'entity_new' with 'entity' later.
+namespace nigemizu::entity::base {
 
 namespace impl {
 
@@ -43,6 +41,6 @@ private:
     PhysicalProperty phys_;
 };
 
-}  // namespace nigemizu::models::entity_new
+}  // namespace nigemizu::entity::base
 
-#endif  // NIGEMIZU_MODELS_ENTITY_NEW_H_
+#endif  // NIGEMIZU_ENTITY_BASE_H_

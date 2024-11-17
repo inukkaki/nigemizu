@@ -1,10 +1,9 @@
-#include "models/entity_new.h"
+#include "entity/base.h"
 
 #include "models/config.h"
 #include "models/math.h"
 
-namespace nigemizu::models::entity_new {
-    // TODO: Replace 'entity_new' with 'entity' later.
+namespace nigemizu::entity::base {
 
 namespace impl {
 
@@ -17,7 +16,7 @@ namespace {
 
 constexpr int kRenderEntityRSize = 8;
 constexpr float kRenderEntityVSize = 0.5f;
-constexpr float kRenderEntityASize = 8.0f/config::kDefaultFrameRate;
+constexpr float kRenderEntityASize = 8.0f/impl::config::kDefaultFrameRate;
 
 void RenderEntityR(
         const Positional& pos, const impl::math::Plotter& plotter,
@@ -59,4 +58,4 @@ void Entity::RenderDebugInfo(
     RenderEntityA(pos_, plotter, color_setter);
 }
 
-}  // namespace nigemizu::models::entity_new
+}  // namespace nigemizu::entity::base

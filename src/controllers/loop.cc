@@ -8,10 +8,10 @@
 #include <iostream>
 #include <memory>
 #include "core/singleton.h"
+#include "entity/base.h"
 #include "interfaces/framerate.h"
 #include "interfaces/texture.h"
 #include "models/config.h"
-#include "models/entity_new.h"
 #include "models/entity.h"
 #include "models/math.h"
 
@@ -87,7 +87,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     double measured_frame_rate = 0.0;
 
     //
-    namespace entnew = nigemizu::models::entity_new;
+    namespace entnew = nigemizu::entity::base;
     entnew::Entity enew;
     //
 
