@@ -18,16 +18,20 @@ namespace dlgt = nigemizu::entity::delegate;
 class Entity : public impl::base::BaseEntity {
 public:
     Entity(
+        std::unique_ptr<impl::dlgt::UpdateADelegate>&& update_a,
         std::unique_ptr<impl::dlgt::UpdateVDelegate>&& update_v,
         std::unique_ptr<impl::dlgt::UpdateRDelegate>&& update_r)
-        : update_v_(std::move(update_v)),
+        : update_a_(std::move(update_a)),
+          update_v_(std::move(update_v)),
           update_r_(std::move(update_r)) {}
     virtual ~Entity() = default;
 
+    void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
 
 private:
+    std::unique_ptr<impl::dlgt::UpdateADelegate> update_a_;
     std::unique_ptr<impl::dlgt::UpdateVDelegate> update_v_;
     std::unique_ptr<impl::dlgt::UpdateRDelegate> update_r_;
 };
