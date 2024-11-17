@@ -10,6 +10,11 @@ namespace base = nigemizu::entity::base;
 
 }  // namespace impl
 
+void AddAToV::UpdateV(impl::base::BaseEntity& self, float dt) const {
+    impl::base::Positional& pos = self.pos();
+    pos.v += pos.a*dt;
+}
+
 void AddVToR::UpdateR(impl::base::BaseEntity& self, float dt) const {
     impl::base::Positional& pos = self.pos();
     pos.r += pos.v*dt;
