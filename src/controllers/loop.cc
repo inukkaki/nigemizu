@@ -91,9 +91,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     eent::Entity enew;
     using nigemizu::models::math::Vector2D;
     enew.phys().mass = 4.0f;
-    enew.pos().f = Vector2D(0.0f, 1024.0f);
-    enew.pos().v = Vector2D(8.0f, 0.0f);
-    enew.pos().r = Vector2D(50.0f, 50.0f);
+    enew.AssignV({10.0f, 0.0f});
+    enew.AssignR({150.0f, 100.0f});
     //
 
     namespace entity = nigemizu::models::entity;

@@ -35,11 +35,13 @@ public:
     virtual ~BaseEntity() = default;
 
     const Positional& pos() const { return pos_; }
-    Positional&       pos()       { return pos_; }
 
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
     void phys(const PhysicalProperty& phys) { phys_ = phys; }
+
+    void AssignV(const impl::math::Vector2D& v);
+    void AssignR(const impl::math::Vector2D& r);
 
     void AddForce(const impl::math::Vector2D& force);
 
