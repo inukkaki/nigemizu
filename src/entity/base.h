@@ -34,14 +34,13 @@ struct PhysicalProperty {
 
 class BaseEntity {
 public:
-    BaseEntity() {}
+    BaseEntity() = default;
     virtual ~BaseEntity() = default;
 
     const Positional& pos() const { return pos_; }
 
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
-    void phys(const PhysicalProperty& phys) { phys_ = phys; }
 
     void AddForce(const impl::math::Vector2D& force);
 
