@@ -93,6 +93,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     enew.phys().mass = 4.0f;
     enew.pos().f = Vector2D(0.0f, 1024.0f);
     enew.pos().v = Vector2D(8.0f, 0.0f);
+    enew.pos().r = Vector2D(50.0f, 50.0f);
     //
 
     namespace entity = nigemizu::models::entity;
@@ -205,6 +206,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         //
         float dt = config::GetFrameDuration();
+        Vector2D l = Vector2D(150, 150) - enew.pos().r;
+        float l_len = l.Length();
+        Vector2D force;
+        if (l_len > 10) {
+            force = 200000.0f/(l_len*l_len*l_len)*l;
+        }
+        enew.AddForce(force);
         enew.UpdateA();
         enew.UpdateV(dt);
         enew.UpdateR(dt);

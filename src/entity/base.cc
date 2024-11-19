@@ -12,6 +12,10 @@ namespace math = nigemizu::models::math;
 
 }  // namespace impl
 
+void BaseEntity::AddForce(const impl::math::Vector2D& force) {
+    pos_.f += force;
+}
+
 void BaseEntity::UpdateA() {
     pos_.a = pos_.f/phys_.mass;
     pos_.f.Zero();

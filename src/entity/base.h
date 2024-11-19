@@ -41,6 +41,8 @@ public:
     PhysicalProperty&       phys()       { return phys_; }
     void phys(const PhysicalProperty& phys) { phys_ = phys; }
 
+    void AddForce(const impl::math::Vector2D& force);
+
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
