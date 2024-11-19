@@ -156,6 +156,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
             entity::kAddVToR);
     }
 
+    int test_count = 0;
+
     frb.SetTimer();
     frm.SetTimer();
     while (running) {
@@ -210,6 +212,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         Vector2D force;
         if (l_len > 10) {
             force = 200000.0f/(l_len*l_len*l_len)*l;
+        }
+        ++test_count;
+        if (test_count < 30) {
+            enew.AddR({1.0f, 0.0f});
+        } else if (test_count < 60) {
+            enew.AddR({-1.0f, 0.0f});
+        } else {
+            test_count = 0;
         }
         enew.AddForce(force);
         enew.UpdateA();

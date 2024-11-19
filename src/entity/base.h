@@ -40,10 +40,12 @@ public:
     PhysicalProperty&       phys()       { return phys_; }
     void phys(const PhysicalProperty& phys) { phys_ = phys; }
 
+    void AddForce(const impl::math::Vector2D& force);
+
     void AssignV(const impl::math::Vector2D& v);
     void AssignR(const impl::math::Vector2D& r);
 
-    void AddForce(const impl::math::Vector2D& force);
+    void AddR(const impl::math::Vector2D& dr);
 
     void UpdateA();
     void UpdateV(float dt);
