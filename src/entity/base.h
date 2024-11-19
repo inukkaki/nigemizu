@@ -28,8 +28,6 @@ struct PhysicalProperty {
     PhysicalProperty() = default;
     explicit PhysicalProperty(float mass) : mass(mass) {}
     PhysicalProperty(const PhysicalProperty&) = default;
-
-    PhysicalProperty& operator=(const PhysicalProperty&) = default;
 };
 
 class BaseEntity {
