@@ -12,6 +12,19 @@ namespace math = nigemizu::models::math;
 
 }  // namespace impl
 
+void BaseEntity::UpdateA() {
+    pos_.a = pos_.f/phys_.mass;
+    pos_.f.Zero();
+}
+
+void BaseEntity::UpdateV(float dt) {
+    pos_.v += pos_.a*dt;
+}
+
+void BaseEntity::UpdateR(float dt) {
+    pos_.r += pos_.v*dt;
+}
+
 namespace {
 
 constexpr int kRenderEntityRSize = 8;

@@ -88,12 +88,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     namespace eent = nigemizu::entity::entity;
-    namespace dlgt = nigemizu::entity::delegate;
-    eent::Entity enew(
-        std::make_unique<dlgt::ApplyFToA>(),
-        std::make_unique<dlgt::AddAToV>(),
-        std::make_unique<dlgt::AddVToR>()
-    );
+    eent::Entity enew;
     using nigemizu::models::math::Vector2D;
     enew.phys().mass = 4.0f;
     enew.pos().f = Vector2D(0.0f, 1024.0f);
@@ -209,10 +204,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
-        // float dt = config::GetFrameDuration();
-        // enew.UpdateA();
-        // enew.UpdateV(dt);
-        // enew.UpdateR(dt);
+        float dt = config::GetFrameDuration();
+        enew.UpdateA();
+        enew.UpdateV(dt);
+        enew.UpdateR(dt);
         enew.RenderDebugInfo(plotter, color_setter);
         //
 

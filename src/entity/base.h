@@ -41,6 +41,10 @@ public:
     PhysicalProperty&       phys()       { return phys_; }
     void phys(const PhysicalProperty& phys) { phys_ = phys; }
 
+    void UpdateA();
+    void UpdateV(float dt);
+    void UpdateR(float dt);
+
     void RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const;
