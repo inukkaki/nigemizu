@@ -26,10 +26,6 @@ public:
           update_r_(std::move(update_r)) {}
     virtual ~Entity() = default;
 
-    void UpdateA();
-    void UpdateV(float dt);
-    void UpdateR(float dt);
-
 private:
     std::unique_ptr<impl::dlgt::UpdateADelegate> update_a_;
     std::unique_ptr<impl::dlgt::UpdateVDelegate> update_v_;

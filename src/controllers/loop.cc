@@ -209,10 +209,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
-        float dt = config::GetFrameDuration();
-        enew.UpdateA();
-        enew.UpdateV(dt);
-        enew.UpdateR(dt);
+        // float dt = config::GetFrameDuration();
+        // enew.UpdateA();
+        // enew.UpdateV(dt);
+        // enew.UpdateR(dt);
         enew.RenderDebugInfo(plotter, color_setter);
         //
 
