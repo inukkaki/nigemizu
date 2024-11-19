@@ -17,6 +17,9 @@ struct Positional {
     impl::math::Vector2D a;  // px s-2
 
     impl::math::Vector2D f;  // Sum of external forces; kg px s-2
+
+    Positional() = default;
+    Positional(const Positional&) = default;
 };
 
 struct PhysicalProperty {
