@@ -94,7 +94,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
     namespace dlgt = nigemizu::entity::delegate;
     plyb::Playable eply(
-        std::make_unique<dlgt::NoMotion>(),
+        std::make_unique<dlgt::GeneralMotion>(),
         pkc);
     eply.phys().mass = 4.0f;
     eply.AssignR({16.0f, 16.0f});
