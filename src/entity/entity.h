@@ -24,6 +24,8 @@ public:
 
     void UpdatePosition();
 
+    void Move();
+
 private:
     std::unique_ptr<impl::dlgt::MoveDelegate> move_;
 };

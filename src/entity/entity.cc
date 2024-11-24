@@ -1,5 +1,6 @@
 #include "entity/entity.h"
 
+#include "meta/assert.h"
 #include "models/config.h"
 
 namespace nigemizu::entity::entity {
@@ -16,6 +17,11 @@ void Entity::UpdatePosition() {
     UpdateA();
     UpdateV(dt);
     UpdateR(dt);
+}
+
+void Entity::Move() {
+    NIGEMIZU_ASSERT(move_);
+    move_->Move(*this);
 }
 
 }  // namespace nigemizu::entity::entity
