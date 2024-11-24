@@ -9,6 +9,7 @@
 #include <memory>
 #include "core/singleton.h"
 #include "entity/entity.h"
+#include "entity/playable.h"
 #include "interfaces/framerate.h"
 #include "interfaces/texture.h"
 #include "models/config.h"
@@ -93,6 +94,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     enew.phys().mass = 4.0f;
     enew.AssignV({10.0f, 0.0f});
     enew.AssignR({150.0f, 100.0f});
+    namespace plyb = nigemizu::entity::playable;
+    plyb::Playable eply;
+    eply.phys().mass = 4.0f;
+    eply.AssignR({16.0f, 16.0f});
     //
 
     namespace entity = nigemizu::models::entity;
@@ -226,6 +231,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         enew.UpdateV(dt);
         enew.UpdateR(dt);
         enew.RenderDebugInfo(plotter, color_setter);
+
+        eply.RenderDebugInfo(plotter, color_setter);
         //
 
         ep.Update();

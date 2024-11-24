@@ -13,7 +13,7 @@ namespace base = nigemizu::entity::base;
 
 class Entity : public impl::base::BaseEntity {
 public:
-    Entity() {}
+    Entity() = default;
     virtual ~Entity() = default;
 };
 
