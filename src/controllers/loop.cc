@@ -88,6 +88,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
             KeyCode::kD,
             KeyCode::kS));
     player.AssignR({16.0f, 16.0f});
+
+    using nigemizu::entity::entity::Entity;
+    Entity debug_entity(
+        PhysicalProperty(4.0f, 4.0f),
+        std::make_unique<Circle2D>(16.0f),
+        std::make_unique<dlgt::NoMotion>());
+    debug_entity.AssignR({200.0f, 150.0f});
     //
 
     using nigemizu::models::math::Plotter;
@@ -116,6 +123,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         player.Control(kbd);
         player.Move();
         player.RenderDebugInfo(plotter, color_setter);
+
+        if (player.CollidesWith(debug_entity)) {
+            std::cout << "Collided!" << std::endl;
+        }
+
+        debug_entity.RenderDebugInfo(plotter, color_setter);
         //
 
         SDL_RenderPresent(renderer);

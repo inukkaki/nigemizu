@@ -69,6 +69,8 @@ public:
     void UpdateV(float dt);
     void UpdateR(float dt);
 
+    bool CollidesWith(const BaseEntity& other) const;
+
     void RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const;

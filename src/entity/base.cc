@@ -52,6 +52,13 @@ void BaseEntity::UpdateR(float dt) {
     pos_.r += pos_.v*dt;
 }
 
+bool BaseEntity::CollidesWith(const BaseEntity& other) const {
+    NIGEMIZU_ASSERT(boundary_);
+    NIGEMIZU_ASSERT(other.boundary_);
+    impl::math::Vector2D diff = other.pos_.r - pos_.r;
+    return boundary_->CollidesWith(*other.boundary_, diff);
+}
+
 namespace {
 
 constexpr int kRenderEntityRSize = 8;
