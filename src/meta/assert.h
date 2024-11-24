@@ -1,0 +1,6 @@
+#ifndef NIGEMIZU_META_ASSERT_H_
+#define NIGEMIZU_META_ASSERT_H_
+
+// ...
+
+#endif  // NIGEMIZU_META_ASSERT_H_

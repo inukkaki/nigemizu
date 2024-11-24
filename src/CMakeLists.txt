@@ -19,6 +19,7 @@ add_executable(nigemizu
     interfaces/keyboard.cc
     interfaces/texture.cc
 
+    meta/assert.cc
     meta/boot.cc
     meta/modal.cc
     meta/winfunc.cc
