@@ -25,8 +25,14 @@ struct Positional {
 struct PhysicalProperty {
     float mass;  // kg
 
+    float drag_factor;
+
     PhysicalProperty() = default;
-    explicit PhysicalProperty(float mass) : mass(mass) {}
+    PhysicalProperty(
+        float mass,
+        float drag_factor)
+        : mass(mass),
+          drag_factor(drag_factor) {}
     PhysicalProperty(const PhysicalProperty&) = default;
 };
 
