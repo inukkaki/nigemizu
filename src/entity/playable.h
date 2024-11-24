@@ -36,6 +36,8 @@ public:
     explicit Playable(const KeyConfig& kc) : kc_(kc) {}
     virtual ~Playable() = default;
 
+    void Control(const impl::kbd::Keyboard& kbd);
+
 private:
     KeyConfig kc_;
 };

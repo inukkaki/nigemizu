@@ -233,6 +233,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         enew.UpdateR(dt);
         enew.RenderDebugInfo(plotter, color_setter);
 
+        eply.Control(kbd);
         eply.RenderDebugInfo(plotter, color_setter);
         //
 
