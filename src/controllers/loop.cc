@@ -212,6 +212,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
+        eply.AddForce(eply.CalcGravity({0.0f, 16*9.8f}));
+
         eply.Control(kbd);
         eply.Move();
         eply.RenderDebugInfo(plotter, color_setter);

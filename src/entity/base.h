@@ -46,6 +46,8 @@ public:
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
 
+    impl::math::Vector2D CalcGravity(const impl::math::Vector2D& g);
+
     void AddForce(const impl::math::Vector2D& force);
 
     void AssignV(const impl::math::Vector2D& v);

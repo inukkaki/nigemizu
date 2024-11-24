@@ -12,6 +12,10 @@ namespace math = nigemizu::models::math;
 
 }  // namespace impl
 
+impl::math::Vector2D BaseEntity::CalcGravity(const impl::math::Vector2D& g) {
+    return phys_.mass*g;
+}
+
 void BaseEntity::AddForce(const impl::math::Vector2D& force) {
     pos_.f += force;
 }
