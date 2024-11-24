@@ -40,11 +40,6 @@ struct KeyConfig {
 class Playable : public impl::eent::Entity {
 public:
     Playable(
-        std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
-        const KeyConfig& kc)
-        : impl::eent::Entity(std::move(move)),
-          kc_(kc) {}
-    Playable(
         const impl::base::PhysicalProperty& phys,
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
         const KeyConfig& kc)

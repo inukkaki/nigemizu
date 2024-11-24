@@ -212,8 +212,6 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
-        float dt = config::GetFrameDuration();
-
         eply.Control(kbd);
         eply.Move();
         eply.RenderDebugInfo(plotter, color_setter);

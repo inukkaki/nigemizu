@@ -38,7 +38,6 @@ struct PhysicalProperty {
 
 class BaseEntity {
 public:
-    BaseEntity() = default;
     explicit BaseEntity(const PhysicalProperty& phys) : phys_(phys) {}
     virtual ~BaseEntity() = default;
 
