@@ -7,6 +7,11 @@
 #include <utility>
 #include <vector>
 
+/*  References:
+ *      @alphya.
+ *      https://wandbox.org/permlink/psHuS4l6uTzDAAXo,
+ *      (accessed 2024-11-24).
+ */
 namespace nigemizu::core::singleton {
 
 namespace impl {

@@ -1,3 +1,16 @@
+# Target: assert_cui
+add_executable(assert_cui
+    assert_cui.cc
+
+    ${PROJECT_SOURCE_DIR}/src/meta/assert.cc
+)
+target_compile_features(assert_cui PUBLIC cxx_std_23)
+target_include_directories(assert_cui
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
+
+
 # Target: pool
 add_executable(pool
     pool.cc

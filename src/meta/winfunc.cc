@@ -51,7 +51,7 @@ impl::FuncType2 GetSetProcessDpiAwareness() {
 }  // namespace
 
 /*  References:
- *      Eric Wasylishen,
+ *      Eric Wasylishen.
  *      https://discourse.libsdl.org/t/sdl-getdesktopdisplaymode-resolution-
  *      reported-in-windows-10-when-using-app-scaling/22389/4,
  *      (accessed 2024-11-02).

@@ -11,16 +11,21 @@ add_executable(nigemizu
     core/pool.cc
     core/singleton.cc
 
+    entity/base.cc
+    entity/delegate.cc
+    entity/entity.cc
+    entity/playable.cc
+
     interfaces/framerate.cc
     interfaces/keyboard.cc
     interfaces/texture.cc
 
+    meta/assert.cc
     meta/boot.cc
     meta/modal.cc
     meta/winfunc.cc
 
     models/config.cc
-    models/entity.cc
     models/math.cc
     models/timer.cc
 )

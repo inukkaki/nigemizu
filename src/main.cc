@@ -2,6 +2,8 @@
 
 #include "SDL2/SDL.h"
 
+#define NIGEMIZU_USE_GUI_ASSERT
+
 #include "controllers/loop.h"
 #include "core/singleton.h"
 #include "meta/boot.h"
