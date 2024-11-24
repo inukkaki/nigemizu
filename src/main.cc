@@ -2,6 +2,8 @@
 
 #include "SDL2/SDL.h"
 
+#define NIGEMIZU_USE_GUI_ASSERT
+
 #include "controllers/loop.h"
 #include "core/singleton.h"
 #include "meta/boot.h"
@@ -9,6 +11,9 @@
 #if (defined(__WIN32) || defined(__WIN64))
 #include "meta/winfunc.h"
 #endif
+
+// DEBUG
+#include "meta/assert.h"
 
 namespace impl {
 
@@ -23,6 +28,9 @@ int main(int argc, char* argv[]) {
     using nigemizu::meta::winfunc::ResolveBlurriness;
     ResolveBlurriness();
     #endif
+
+    // DEBUG
+    NIGEMIZU_ASSERT(1 == 0);
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
