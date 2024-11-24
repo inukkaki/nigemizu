@@ -88,12 +88,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     double measured_frame_rate = 0.0;
 
     //
-    namespace eent = nigemizu::entity::entity;
-    eent::Entity enew;
     using nigemizu::models::math::Vector2D;
-    enew.phys().mass = 4.0f;
-    enew.AssignV({10.0f, 0.0f});
-    enew.AssignR({150.0f, 100.0f});
     namespace plyb = nigemizu::entity::playable;
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
     plyb::Playable eply(pkc);
@@ -213,27 +208,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         //
         float dt = config::GetFrameDuration();
-        Vector2D l = Vector2D(150, 150) - enew.pos().r;
-        float l_len = l.Length();
-        Vector2D force;
-        if (l_len > 10) {
-            force = 200000.0f/(l_len*l_len*l_len)*l;
-        }
-        ++test_count;
-        if (test_count < 30) {
-            enew.AddR({1.0f, 0.0f});
-        } else if (test_count < 60) {
-            enew.AddR({-1.0f, 0.0f});
-        } else {
-            test_count = 0;
-        }
-        enew.AddForce(force);
-        enew.UpdateA();
-        enew.UpdateV(dt);
-        enew.UpdateR(dt);
-        enew.RenderDebugInfo(plotter, color_setter);
 
         eply.Control(kbd);
+        eply.UpdateA();
+        eply.UpdateV(dt);
+        eply.UpdateR(dt);
         eply.RenderDebugInfo(plotter, color_setter);
         //
 
