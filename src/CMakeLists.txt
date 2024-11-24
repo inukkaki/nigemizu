@@ -26,7 +26,6 @@ add_executable(nigemizu
     meta/winfunc.cc
 
     models/config.cc
-    models/entity.cc
     models/math.cc
     models/timer.cc
 )
