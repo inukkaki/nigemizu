@@ -1,6 +1,9 @@
 #ifndef NIGEMIZU_ENTITY_BASE_H_
 #define NIGEMIZU_ENTITY_BASE_H_
 
+#include <memory>
+
+#include "meta/assert.h"
 #include "models/math.h"
 
 namespace nigemizu::entity::base {
@@ -38,7 +41,13 @@ struct PhysicalProperty {
 
 class BaseEntity {
 public:
-    explicit BaseEntity(const PhysicalProperty& phys) : phys_(phys) {}
+    BaseEntity(
+        const PhysicalProperty& phys,
+        std::unique_ptr<impl::math::Shape2D>&& boundary)
+        : phys_(phys),
+          boundary_(std::move(boundary)) {
+        NIGEMIZU_ASSERT(boundary_);
+    }
     virtual ~BaseEntity() = default;
 
     const Positional& pos() const { return pos_; }
@@ -67,6 +76,8 @@ public:
 private:
     Positional pos_;
     PhysicalProperty phys_;
+
+    std::unique_ptr<impl::math::Shape2D> boundary_;
 };
 
 }  // namespace nigemizu::entity::base

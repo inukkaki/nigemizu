@@ -7,6 +7,7 @@
 #include "entity/delegate.h"
 #include "entity/entity.h"
 #include "interfaces/keyboard.h"
+#include "models/math.h"
 
 namespace nigemizu::entity::playable {
 
@@ -16,6 +17,7 @@ namespace base = nigemizu::entity::base;
 namespace dlgt = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace kbd = nigemizu::interfaces::keyboard;
+namespace math = nigemizu::models::math;
 
 }  // namespace impl
 
@@ -41,9 +43,13 @@ class Playable : public impl::eent::Entity {
 public:
     Playable(
         const impl::base::PhysicalProperty& phys,
+        std::unique_ptr<impl::math::Shape2D>&& boundary,
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
         const KeyConfig& kc)
-        : impl::eent::Entity(phys, std::move(move)),
+        : impl::eent::Entity(
+            phys,
+            std::move(boundary),
+            std::move(move)),
           kc_(kc) {}
     virtual ~Playable() = default;
 

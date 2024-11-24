@@ -94,15 +94,16 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     namespace plyb = nigemizu::entity::playable;
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
     namespace dlgt = nigemizu::entity::delegate;
+    using nigemizu::models::math::Circle2D;
     plyb::Playable eply(
         base::PhysicalProperty(4.0f, 4.0f),
+        std::make_unique<Circle2D>(8.0f),
         std::make_unique<dlgt::GeneralMotion>(),
         pkc);
     eply.AssignR({16.0f, 16.0f});
     //
 
     namespace entity = nigemizu::models::entity;
-    using nigemizu::models::math::Circle2D;
     entity::DebugPlayer dp;
     dp.Init();
     entity::Data base_data(

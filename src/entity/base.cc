@@ -1,5 +1,6 @@
 #include "entity/base.h"
 
+#include "meta/assert.h"
 #include "models/config.h"
 #include "models/math.h"
 
@@ -89,8 +90,9 @@ void RenderEntityA(
 void BaseEntity::RenderDebugInfo(
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter) const {
-    // TODO: Render the boundary of this entity here in the future.
-    // ...
+    NIGEMIZU_ASSERT(boundary_);
+    color_setter(0xFF, 0xFF, 0xFF, 0xFF);
+    boundary_->Render(pos_.r, plotter);
     RenderEntityR(pos_, plotter, color_setter);
     RenderEntityV(pos_, plotter, color_setter);
     RenderEntityA(pos_, plotter, color_setter);
