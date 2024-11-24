@@ -18,12 +18,26 @@ struct KeyConfig {
     impl::kbd::KeyCode transfer_left;
     impl::kbd::KeyCode transfer_right;
     impl::kbd::KeyCode transfer_down;
+
+    KeyConfig(
+        impl::kbd::KeyCode transfer_up,
+        impl::kbd::KeyCode transfer_left,
+        impl::kbd::KeyCode transfer_right,
+        impl::kbd::KeyCode transfer_down)
+        : transfer_up(transfer_up),
+          transfer_left(transfer_left),
+          transfer_right(transfer_right),
+          transfer_down(transfer_down) {}
+    KeyConfig(const KeyConfig&) = default;
 };
 
 class Playable : public impl::eent::Entity {
 public:
-    Playable() = default;
+    explicit Playable(const KeyConfig& kc) : kc_(kc) {}
     virtual ~Playable() = default;
+
+private:
+    KeyConfig kc_;
 };
 
 }  // namespace nigemizu::entity::playable

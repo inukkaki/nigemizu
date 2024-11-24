@@ -95,7 +95,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     enew.AssignV({10.0f, 0.0f});
     enew.AssignR({150.0f, 100.0f});
     namespace plyb = nigemizu::entity::playable;
-    plyb::Playable eply;
+    plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
+    plyb::Playable eply(pkc);
     eply.phys().mass = 4.0f;
     eply.AssignR({16.0f, 16.0f});
     //
