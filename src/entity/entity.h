@@ -5,6 +5,7 @@
 
 #include "entity/base.h"
 #include "entity/delegate.h"
+#include "meta/assert.h"
 
 namespace nigemizu::entity::entity {
 
@@ -21,7 +22,9 @@ public:
         const impl::base::PhysicalProperty& phys,
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move)
         : impl::base::BaseEntity(phys),
-          move_(std::move(move)) {}
+          move_(std::move(move)) {
+        NIGEMIZU_ASSERT(move_);
+    }
     virtual ~Entity() = default;
 
     void Move();
