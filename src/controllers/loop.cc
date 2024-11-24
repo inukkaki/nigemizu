@@ -95,7 +95,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
     namespace dlgt = nigemizu::entity::delegate;
     plyb::Playable eply(
-        base::PhysicalProperty(4.0f, 1.0f),
+        base::PhysicalProperty(4.0f, 4.0f),
         std::make_unique<dlgt::GeneralMotion>(),
         pkc);
     eply.AssignR({16.0f, 16.0f});
@@ -212,7 +212,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         e3.RenderDebugInfo(plotter, color_setter);
 
         //
-        eply.AddForce(eply.CalcGravity({0.0f, 16*9.8f}));
+        eply.AddForce(eply.CalcDrag(1.0f));
 
         eply.Control(kbd);
         eply.Move();

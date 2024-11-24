@@ -16,6 +16,11 @@ impl::math::Vector2D BaseEntity::CalcGravity(const impl::math::Vector2D& g) {
     return phys_.mass*g;
 }
 
+impl::math::Vector2D BaseEntity::CalcDrag(float fluid_factor) {
+    float drag_coeff = phys_.drag_factor*fluid_factor;
+    return -drag_coeff*pos_.v;
+}
+
 void BaseEntity::AddForce(const impl::math::Vector2D& force) {
     pos_.f += force;
 }
