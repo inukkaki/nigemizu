@@ -1,6 +1,6 @@
 #include "models/config.h"
 
-#include <cassert>
+#include "meta/assert.h"
 
 namespace nigemizu::models::config {
 
@@ -21,7 +21,7 @@ float GetWindowScale() {
 }
 
 void SetWindowScale(float window_scale) {
-    assert(window_scale > 0.0f);
+    NIGEMIZU_ASSERT(window_scale > 0.0f);
     gWindowScale = window_scale;
     gWindowWidth = static_cast<int>(gWindowScale*kWindowBaseWidth);
     gWindowHeight = static_cast<int>(gWindowScale*kWindowBaseHeight);
@@ -40,7 +40,7 @@ int GetFrameRate() {
 }
 
 void SetFrameRate(int frame_rate) {
-    assert(frame_rate > 0);
+    NIGEMIZU_ASSERT(frame_rate > 0);
     gFrameRate = frame_rate;
     gFrameDuration = 1.0f/gFrameRate;
 }

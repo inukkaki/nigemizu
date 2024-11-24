@@ -1,11 +1,12 @@
 #ifndef NIGEMIZU_CORE_POOL_H_
 #define NIGEMIZU_CORE_POOL_H_
 
-#include <cassert>
 #include <cstddef>
 #include <deque>
 #include <memory>
 #include <vector>
+
+#include "meta/assert.h"
 
 namespace nigemizu::core::pool {
 
@@ -26,7 +27,7 @@ public:
     virtual ~ObjectPool() = default;
 
     T& focus() const {
-        assert(focus_);
+        NIGEMIZU_ASSERT(focus_);
         return *focus_;
     }
 

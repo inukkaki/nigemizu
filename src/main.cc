@@ -12,9 +12,6 @@
 #include "meta/winfunc.h"
 #endif
 
-// DEBUG
-#include "meta/assert.h"
-
 namespace impl {
 
 namespace loop = nigemizu::controllers::loop;
@@ -28,9 +25,6 @@ int main(int argc, char* argv[]) {
     using nigemizu::meta::winfunc::ResolveBlurriness;
     ResolveBlurriness();
     #endif
-
-    // DEBUG
-    NIGEMIZU_ASSERT(1 == 0);
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
