@@ -20,6 +20,11 @@ public:
     explicit Entity(
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move)
         : move_(std::move(move)) {}
+    Entity(
+        const impl::base::PhysicalProperty& phys,
+        std::unique_ptr<impl::dlgt::MoveDelegate>&& move)
+        : impl::base::BaseEntity(phys),
+          move_(std::move(move)) {}
     virtual ~Entity() = default;
 
     void Move();

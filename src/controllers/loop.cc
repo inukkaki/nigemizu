@@ -90,13 +90,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     using nigemizu::models::math::Vector2D;
+    namespace base = nigemizu::entity::base;
     namespace plyb = nigemizu::entity::playable;
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
     namespace dlgt = nigemizu::entity::delegate;
     plyb::Playable eply(
+        base::PhysicalProperty(4.0f),
         std::make_unique<dlgt::GeneralMotion>(),
         pkc);
-    eply.phys().mass = 4.0f;
     eply.AssignR({16.0f, 16.0f});
     //
 

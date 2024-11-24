@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "entity/base.h"
 #include "entity/delegate.h"
 #include "entity/entity.h"
 #include "interfaces/keyboard.h"
@@ -11,6 +12,7 @@ namespace nigemizu::entity::playable {
 
 namespace impl {
 
+namespace base = nigemizu::entity::base;
 namespace dlgt = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace kbd = nigemizu::interfaces::keyboard;
@@ -41,6 +43,12 @@ public:
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
         const KeyConfig& kc)
         : impl::eent::Entity(std::move(move)),
+          kc_(kc) {}
+    Playable(
+        const impl::base::PhysicalProperty& phys,
+        std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
+        const KeyConfig& kc)
+        : impl::eent::Entity(phys, std::move(move)),
           kc_(kc) {}
     virtual ~Playable() = default;
 
