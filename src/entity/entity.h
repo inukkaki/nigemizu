@@ -22,8 +22,6 @@ public:
         : move_(std::move(move)) {}
     virtual ~Entity() = default;
 
-    void UpdatePosition();
-
     void Move();
 
 private:
