@@ -1,6 +1,9 @@
 #ifndef NIGEMIZU_ENTITY_PLAYABLE_H_
 #define NIGEMIZU_ENTITY_PLAYABLE_H_
 
+#include <memory>
+
+#include "entity/delegate.h"
 #include "entity/entity.h"
 #include "interfaces/keyboard.h"
 
@@ -8,6 +11,7 @@ namespace nigemizu::entity::playable {
 
 namespace impl {
 
+namespace dlgt = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace kbd = nigemizu::interfaces::keyboard;
 
@@ -33,7 +37,11 @@ struct KeyConfig {
 
 class Playable : public impl::eent::Entity {
 public:
-    explicit Playable(const KeyConfig& kc) : kc_(kc) {}
+    Playable(
+        std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
+        const KeyConfig& kc)
+        : impl::eent::Entity(std::move(move)),
+          kc_(kc) {}
     virtual ~Playable() = default;
 
     virtual void Transfer(const impl::kbd::Keyboard& kbd);

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <memory>
 #include "core/singleton.h"
+#include "entity/delegate.h"
 #include "entity/entity.h"
 #include "entity/playable.h"
 #include "interfaces/framerate.h"
@@ -91,7 +92,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::models::math::Vector2D;
     namespace plyb = nigemizu::entity::playable;
     plyb::KeyConfig pkc(KeyCode::kW, KeyCode::kA, KeyCode::kD, KeyCode::kS);
-    plyb::Playable eply(pkc);
+    namespace dlgt = nigemizu::entity::delegate;
+    plyb::Playable eply(
+        std::make_unique<dlgt::NoMotion>(),
+        pkc);
     eply.phys().mass = 4.0f;
     eply.AssignR({16.0f, 16.0f});
     //
