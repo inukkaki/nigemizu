@@ -210,9 +210,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         float dt = config::GetFrameDuration();
 
         eply.Control(kbd);
-        eply.UpdateA();
-        eply.UpdateV(dt);
-        eply.UpdateR(dt);
+        eply.UpdatePosition();
         eply.RenderDebugInfo(plotter, color_setter);
         //
 

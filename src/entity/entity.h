@@ -15,6 +15,8 @@ class Entity : public impl::base::BaseEntity {
 public:
     Entity() = default;
     virtual ~Entity() = default;
+
+    void UpdatePosition();
 };
 
 }  // namespace nigemizu::entity::entity
