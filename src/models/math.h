@@ -120,6 +120,7 @@ bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2);
 bool DetectCollision(
     const LineSegment2D& ls1, const LineSegment2D& ls2,
     const Vector2D& offset);
+bool DetectCollision(const LineSegment2D& ls, const Circle2D& c);
 
 bool DetectCollision(const Circle2D& c1, const Circle2D& c2);
 bool DetectCollision(

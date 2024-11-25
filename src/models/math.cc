@@ -162,17 +162,17 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
 bool LineSegment2D::CollidesWith(
         const Shape2D& other, const Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
-    bool result = false;
+    bool collides = false;
     switch (other.Type()) {
     case ShapeType::kLineSegment2D:
-        result = DetectCollision(
+        collides = DetectCollision(
             *this, static_cast<const LineSegment2D&>(other), offset);
         break;
     // TODO: Add more sections.
     default:
         break;
     }
-    return result;
+    return collides;
 }
 
 void LineSegment2D::Render(
@@ -191,17 +191,17 @@ Vector2D LineSegment2D::GetEndPoint() const {
 bool Circle2D::CollidesWith(
         const Shape2D& other, const Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
-    bool result = false;
+    bool collides = false;
     switch (other.Type()) {
     case ShapeType::kCircle2D:
-        result = DetectCollision(
+        collides = DetectCollision(
             *this, static_cast<const Circle2D&>(other), offset);
         break;
     // TODO: Add more sections.
     default:
         break;
     }
-    return result;
+    return collides;
 }
 
 void Circle2D::Render(const Vector2D& offset, const Plotter& plotter) const {
@@ -232,6 +232,21 @@ bool DetectCollision(
         const LineSegment2D& ls1, const LineSegment2D& ls2,
         const Vector2D& offset) {
     return DetectCollision(ls1, LineSegment2D(ls2.s + offset, ls2.d));
+}
+
+bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
+    bool collides = false;
+    Vector2D v1 = c.c - ls.s;
+    Vector2D v2 = c.c - ls.GetEndPoint();
+    float dist = std::abs(Cross(ls.d, v1))/ls.d.Length();
+    if (dist < c.r) {  // NOTE: Lenient detection.
+        collides = (
+            (Dot(ls.d, v1)*Dot(ls.d, v2) < 0.0f)  // NOTE: Lenient detection.
+            || (v1.Length() < c.r)  // NOTE: Lenient detection.
+            || (v2.Length() < c.r)  // NOTE: Lenient detection.
+        );
+    }
+    return collides;
 }
 
 bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
