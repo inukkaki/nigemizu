@@ -90,12 +90,7 @@ struct LineSegment2D : public Shape2D {
 
     void Render(const Vector2D& offset, const Plotter& plotter) const override;
 
-    std::unique_ptr<Shape2D> Clone() const override
-    {
-        // TODO: Define this function in models/math.cc.
-        // DEBUG
-        return std::make_unique<LineSegment2D>();
-    }
+    std::unique_ptr<Shape2D> Clone() const override;
 };
 
 struct Circle2D : public Shape2D {

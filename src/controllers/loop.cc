@@ -98,9 +98,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     //
 
     //
+    using nigemizu::models::math::Shape2D;
     using nigemizu::models::math::LineSegment2D;
     LineSegment2D ls1;
     LineSegment2D ls2({100.0f, 100.0f}, {103.0f, 102.0f});
+    std::unique_ptr<Shape2D> ls3 = ls2.Clone();
     //
 
     using nigemizu::models::math::Plotter;
@@ -138,8 +140,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         color_setter(0xFF, 0xFF, 0xFF, 0xFF);
         ls1.Render({}, plotter);
-        ls1.Render({50.0f, 100.0f}, plotter);
         ls2.Render({}, plotter);
+        ls3->Render({50.0f, 100.0f}, plotter);
         //
 
         SDL_RenderPresent(renderer);

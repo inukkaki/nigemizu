@@ -152,6 +152,10 @@ void LineSegment2D::Render(
     RenderLine(u + offset, v + offset, plotter);
 }
 
+std::unique_ptr<Shape2D> LineSegment2D::Clone() const {
+    return std::make_unique<LineSegment2D>(*this);
+}
+
 namespace {
 
 bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {
