@@ -161,11 +161,15 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
 
 void LineSegment2D::Render(
         const Vector2D& offset, const Plotter& plotter) const {
-    RenderLine(u + offset, v + offset, plotter);
+    RenderLine(u + offset, GetEndPoint() + offset, plotter);
 }
 
 std::unique_ptr<Shape2D> LineSegment2D::Clone() const {
     return std::make_unique<LineSegment2D>(*this);
+}
+
+Vector2D LineSegment2D::GetEndPoint() const {
+    return u + v;
 }
 
 namespace {

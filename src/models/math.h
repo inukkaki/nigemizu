@@ -78,8 +78,8 @@ struct Shape2D {
 };
 
 struct LineSegment2D : public Shape2D {
-    Vector2D u;  // start point
-    Vector2D v;  // end point
+    Vector2D u;  // Start point
+    Vector2D v;  // Direction (extends to the end point)
 
     LineSegment2D() = default;
     LineSegment2D(const Vector2D& u, const Vector2D& v) : u(u), v(v) {}
@@ -98,11 +98,13 @@ struct LineSegment2D : public Shape2D {
     void Render(const Vector2D& offset, const Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
+
+    Vector2D GetEndPoint() const;
 };
 
 struct Circle2D : public Shape2D {
-    Vector2D c;  // center
-    float r;     // radius
+    Vector2D c;  // Center
+    float r;     // Radius
 
     Circle2D() : r(0.0f) {}
     Circle2D(float r) : r(r) {}
