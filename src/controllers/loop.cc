@@ -100,9 +100,16 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     //
     using nigemizu::models::math::Shape2D;
     using nigemizu::models::math::LineSegment2D;
-    LineSegment2D ls1;
-    LineSegment2D ls2({100.0f, 100.0f}, {3.0f, 2.0f});
-    std::unique_ptr<Shape2D> ls3 = ls2.Clone();
+    LineSegment2D ls1({100.0f, 100.0f}, { 25.0f, -20.0f});
+    LineSegment2D ls2({105.0f,  80.0f}, { 20.0f,  15.0f});
+    LineSegment2D ls3({105.0f,  80.0f}, {  5.0f,   8.0f});
+    LineSegment2D ls4({125.0f,  95.0f}, {-20.0f, -15.0f});
+
+    std::cout << ls1.CollidesWith(ls1, {}) << std::endl;
+    std::cout << ls1.CollidesWith(ls2, {}) << std::endl;
+    std::cout << ls1.CollidesWith(ls3, {}) << std::endl;
+    std::cout << ls1.CollidesWith(ls3, {5.0f, 5.0f}) << std::endl;
+    std::cout << ls1.CollidesWith(ls4, {}) << std::endl;
     //
 
     using nigemizu::models::math::Plotter;
@@ -143,7 +150,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         color_setter(0xFF, 0x00, 0x00, 0xFF);
         ls2.Render({}, plotter);
         color_setter(0x00, 0xFF, 0x00, 0xFF);
-        ls3->Render({50.0f, 100.0f}, plotter);
+        ls3.Render({}, plotter);
+        ls3.Render({5.0f, 5.0f}, plotter);
+        color_setter(0xFF, 0xFF, 0x00, 0xFF);
+        ls4.Render({}, plotter);
         //
 
         SDL_RenderPresent(renderer);

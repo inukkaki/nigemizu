@@ -88,12 +88,7 @@ struct LineSegment2D : public Shape2D {
     ShapeType Type() const override { return ShapeType::kLineSegment2D; }
 
     bool CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const override
-    {
-        // TODO: Define this function in models/math.cc.
-        // DEBUG
-        return false;
-    }
+        const Shape2D& other, const Vector2D& offset) const override;
 
     void Render(const Vector2D& offset, const Plotter& plotter) const override;
 

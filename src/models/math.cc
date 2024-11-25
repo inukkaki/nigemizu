@@ -159,6 +159,50 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
     RenderCircle(c.x, c.y, r, plotter);
 }
 
+namespace {
+
+bool DetectCollisionBetween(
+        const LineSegment2D& ls1, const LineSegment2D& ls2) {
+    bool result = false;
+    if (!ls1.v.IsParallelTo(ls2.v)) {
+        Vector2D u = ls2.u - ls1.u;
+        float cross_u_v1 = Cross(u, ls1.v);
+        float cross_u_v2 = Cross(u, ls2.v);
+        float cross_v1_v2 = Cross(ls1.v, ls2.v);
+        float t1 = cross_u_v2/cross_v1_v2;
+        float t2 = cross_u_v1/cross_v1_v2;
+        result = ((0.0f < t1) && (t1 < 1.0f)) && ((0.0f < t2) && (t2 < 1.0f));
+            // NOTE: Lenient detection.
+    }
+    return result;
+}
+
+bool DetectCollisionBetween(
+        const LineSegment2D& ls1, const LineSegment2D& ls2,
+        const Vector2D& offset) {
+    return DetectCollisionBetween(
+        ls1, LineSegment2D(ls2.u + offset, ls2.v + offset));
+}
+
+}  // namespace
+
+bool LineSegment2D::CollidesWith(
+        const Shape2D& other, const Vector2D& offset) const {
+    // WARN: This function includes explicit downcasts.
+    bool result = false;
+    switch (other.Type()) {
+    case ShapeType::kLineSegment2D:
+        // DEBUG
+        result = DetectCollisionBetween(
+            *this, static_cast<const LineSegment2D&>(other), offset);
+        break;
+    // TODO: Add more sections.
+    default:
+        break;
+    }
+    return result;
+}
+
 void LineSegment2D::Render(
         const Vector2D& offset, const Plotter& plotter) const {
     RenderLine(u + offset, GetEndPoint() + offset, plotter);
@@ -195,6 +239,7 @@ bool Circle2D::CollidesWith(
         result = DetectCollisionBetween(
             *this, static_cast<const Circle2D&>(other), offset);
         break;
+    // TODO: Add more sections.
     default:
         break;
     }
