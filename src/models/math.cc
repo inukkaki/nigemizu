@@ -181,7 +181,7 @@ bool DetectCollisionBetween(
         const LineSegment2D& ls1, const LineSegment2D& ls2,
         const Vector2D& offset) {
     return DetectCollisionBetween(
-        ls1, LineSegment2D(ls2.u + offset, ls2.v + offset));
+        ls1, LineSegment2D(ls2.u + offset, ls2.v));
 }
 
 }  // namespace
