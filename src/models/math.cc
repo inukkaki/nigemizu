@@ -192,8 +192,7 @@ bool LineSegment2D::CollidesWith(
     bool result = false;
     switch (other.Type()) {
     case ShapeType::kLineSegment2D:
-        // DEBUG
-        result = DetectCollisionBetween(
+        result = DetectCollision(
             *this, static_cast<const LineSegment2D&>(other), offset);
         break;
     // TODO: Add more sections.
@@ -237,7 +236,7 @@ bool Circle2D::CollidesWith(
     bool result = false;
     switch (other.Type()) {
     case ShapeType::kCircle2D:
-        result = DetectCollisionBetween(
+        result = DetectCollision(
             *this, static_cast<const Circle2D&>(other), offset);
         break;
     // TODO: Add more sections.
@@ -253,6 +252,38 @@ void Circle2D::Render(const Vector2D& offset, const Plotter& plotter) const {
 
 std::unique_ptr<Shape2D> Circle2D::Clone() const {
     return std::make_unique<Circle2D>(*this);
+}
+
+bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2) {
+    bool collides = false;
+    if (!ls1.d.IsParallelTo(ls2.d)) {
+        Vector2D s = ls2.s - ls1.s;
+        float cross_s_d1 = Cross(s, ls1.d);
+        float cross_s_d2 = Cross(s, ls2.d);
+        float cross_d1_d2 = Cross(ls1.d, ls2.d);
+        float t1 = cross_s_d2/cross_d1_d2;
+        float t2 = cross_s_d1/cross_d1_d2;
+        collides = (
+            ((0.0f < t1) && (t1 < 1.0f)) && ((0.0f < t2) && (t2 < 1.0f))
+        );  // NOTE: Lenient detection.
+    }
+    return collides;
+}
+
+bool DetectCollision(
+        const LineSegment2D& ls1, const LineSegment2D& ls2,
+        const Vector2D& offset) {
+    return DetectCollision(ls1, LineSegment2D(ls2.s + offset, ls2.d));
+}
+
+bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
+    float r = c1.r + c2.r;
+    return Dot(c1.c - c2.c) < r*r;  // NOTE: Lenient detection.
+}
+
+bool DetectCollision(
+        const Circle2D& c1, const Circle2D& c2, const Vector2D& offset) {
+    return DetectCollision(c1, Circle2D(c2.c + offset, c2.r));
 }
 
 }  // namespace nigemizu::models::math
