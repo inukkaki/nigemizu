@@ -168,7 +168,10 @@ bool LineSegment2D::CollidesWith(
         collides = DetectCollision(
             *this, static_cast<const LineSegment2D&>(other), offset);
         break;
-    // TODO: Add more sections.
+    case ShapeType::kCircle2D:
+        collides = DetectCollision(
+            *this, static_cast<const Circle2D&>(other), offset);
+        break;
     default:
         break;
     }
@@ -193,11 +196,14 @@ bool Circle2D::CollidesWith(
     // WARN: This function includes explicit downcasts.
     bool collides = false;
     switch (other.Type()) {
+    case ShapeType::kLineSegment2D:
+        collides = DetectCollision(
+            *this, static_cast<const LineSegment2D&>(other), offset);
+        break;
     case ShapeType::kCircle2D:
         collides = DetectCollision(
             *this, static_cast<const Circle2D&>(other), offset);
         break;
-    // TODO: Add more sections.
     default:
         break;
     }
@@ -228,12 +234,6 @@ bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2) {
     return collides;
 }
 
-bool DetectCollision(
-        const LineSegment2D& ls1, const LineSegment2D& ls2,
-        const Vector2D& offset) {
-    return DetectCollision(ls1, LineSegment2D(ls2.s, offset));
-}
-
 bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
     bool collides = false;
     Vector2D v1 = c.c - ls.s;
@@ -249,14 +249,25 @@ bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
     return collides;
 }
 
+bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
+    float r = c1.r + c2.r;
+    return Dot(c1.c - c2.c) < r*r;  // NOTE: Lenient detection.
+}
+
+bool DetectCollision(
+        const LineSegment2D& ls1, const LineSegment2D& ls2,
+        const Vector2D& offset) {
+    return DetectCollision(ls1, LineSegment2D(ls2.s, offset));
+}
+
 bool DetectCollision(
         const LineSegment2D& ls, const Circle2D& c, const Vector2D& offset) {
     return DetectCollision(ls, Circle2D(c, offset));
 }
 
-bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
-    float r = c1.r + c2.r;
-    return Dot(c1.c - c2.c) < r*r;  // NOTE: Lenient detection.
+bool DetectCollision(
+        const Circle2D& c, const LineSegment2D& ls, const Vector2D& offset) {
+    return DetectCollision(LineSegment2D(ls, offset), c);
 }
 
 bool DetectCollision(

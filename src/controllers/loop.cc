@@ -90,20 +90,19 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     player.AssignR({16.0f, 16.0f});
 
     using nigemizu::entity::entity::Entity;
-    Entity debug_entity(
+    Entity circle(
         PhysicalProperty(4.0f, 4.0f),
         std::make_unique<Circle2D>(16.0f),
         std::make_unique<dlgt::NoMotion>());
-    debug_entity.AssignR({200.0f, 150.0f});
-    //
+    circle.AssignR({200.0f, 150.0f});
 
-    //
+    using nigemizu::models::math::Vector2D;
     using nigemizu::models::math::LineSegment2D;
-    LineSegment2D ls1({ 60.0f, 100.0f}, {10.0f,  0.0f});
-    LineSegment2D ls2({130.0f,  60.0f}, {-5.0f, 8.66f});
-    using nigemizu::models::math::Circle2D;
-    Circle2D c1({110.0f, 90.0f}, 20.0f);
-    int count = 0;
+    Entity line_segment(
+        PhysicalProperty(4.0f, 4.0f),
+        std::make_unique<LineSegment2D>(Vector2D(-10.0f, 50.0f)),
+        std::make_unique<dlgt::NoMotion>());
+    line_segment.AssignR({250.0f, 60.0f});
     //
 
     using nigemizu::models::math::Plotter;
@@ -133,32 +132,15 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         player.Move();
         player.RenderDebugInfo(plotter, color_setter);
 
-        if (player.CollidesWith(debug_entity)) {
-            std::cout << "Collided!" << std::endl;
+        if (player.CollidesWith(circle)) {
+            std::cout << "Circle > Collided!" << std::endl;
+        }
+        if (player.CollidesWith(line_segment)) {
+            std::cout << "Line segment > Collided!" << std::endl;
         }
 
-        debug_entity.RenderDebugInfo(plotter, color_setter);
-
-        color_setter(0xFF, 0xFF, 0xFF, 0xFF);
-        ls1.Render({}, plotter);
-        color_setter(0xFF, 0x00, 0x00, 0xFF);
-        ls2.Render({}, plotter);
-        color_setter(0xFF, 0xFF, 0xFF, 0xFF);
-        c1.Render({5.0f, 5.0f}, plotter);
-
-        ++count;
-        if (count < 100) {
-            ls1.s += ls1.d*0.1f;
-            ls2.s += ls2.d*0.1f;
-        } else {
-            ls1.s.Set( 60.0f, 100.0f);
-            ls2.s.Set(130.0f,  60.0f);
-            count = 0;
-        }
-        using nigemizu::models::math::DetectCollision;
-        std::cout
-            << "l1: " << DetectCollision(ls1, c1, {5.0f, 5.0f}) << ", "
-            << "l2: " << DetectCollision(ls2, c1, {5.0f, 5.0f}) << std::endl;
+        circle.RenderDebugInfo(plotter, color_setter);
+        line_segment.RenderDebugInfo(plotter, color_setter);
         //
 
         SDL_RenderPresent(renderer);
