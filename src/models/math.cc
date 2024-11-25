@@ -159,33 +159,6 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
     RenderCircle(c.x, c.y, r, plotter);
 }
 
-namespace {
-
-bool DetectCollisionBetween(
-        const LineSegment2D& ls1, const LineSegment2D& ls2) {
-    bool result = false;
-    if (!ls1.d.IsParallelTo(ls2.d)) {
-        Vector2D s = ls2.s - ls1.s;
-        float cross_s_d1 = Cross(s, ls1.d);
-        float cross_s_d2 = Cross(s, ls2.d);
-        float cross_d1_d2 = Cross(ls1.d, ls2.d);
-        float t1 = cross_s_d2/cross_d1_d2;
-        float t2 = cross_s_d1/cross_d1_d2;
-        result = ((0.0f < t1) && (t1 < 1.0f)) && ((0.0f < t2) && (t2 < 1.0f));
-            // NOTE: Lenient detection.
-    }
-    return result;
-}
-
-bool DetectCollisionBetween(
-        const LineSegment2D& ls1, const LineSegment2D& ls2,
-        const Vector2D& offset) {
-    return DetectCollisionBetween(
-        ls1, LineSegment2D(ls2.s + offset, ls2.d));
-}
-
-}  // namespace
-
 bool LineSegment2D::CollidesWith(
         const Shape2D& other, const Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
@@ -214,21 +187,6 @@ std::unique_ptr<Shape2D> LineSegment2D::Clone() const {
 Vector2D LineSegment2D::GetEndPoint() const {
     return s + d;
 }
-
-namespace {
-
-bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {
-    float r = c1.r + c2.r;
-    return Dot(c1.c - c2.c) < r*r;
-        // NOTE: Lenient detection.
-}
-
-bool DetectCollisionBetween(
-        const Circle2D& c1, const Circle2D& c2, const Vector2D& offset) {
-    return DetectCollisionBetween(c1, Circle2D(c2.c + offset, c2.r));
-}
-
-}  // namespace
 
 bool Circle2D::CollidesWith(
         const Shape2D& other, const Vector2D& offset) const {
