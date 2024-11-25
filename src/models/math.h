@@ -83,6 +83,8 @@ struct LineSegment2D : public Shape2D {
 
     LineSegment2D() = default;
     LineSegment2D(const Vector2D& s, const Vector2D& d) : s(s), d(d) {}
+    LineSegment2D(const LineSegment2D& other, const Vector2D& offset)
+        : s(other.s + offset), d(other.d) {}
     LineSegment2D(const LineSegment2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kLineSegment2D; }
@@ -104,6 +106,8 @@ struct Circle2D : public Shape2D {
     Circle2D() : r(0.0f) {}
     Circle2D(float r) : r(r) {}
     Circle2D(const Vector2D& c, float r) : c(c), r(r) {}
+    Circle2D(const Circle2D& other, const Vector2D& offset)
+        : c(other.c + offset), r(other.r) {}
     Circle2D(const Circle2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }
@@ -121,6 +125,8 @@ bool DetectCollision(
     const LineSegment2D& ls1, const LineSegment2D& ls2,
     const Vector2D& offset);
 bool DetectCollision(const LineSegment2D& ls, const Circle2D& c);
+bool DetectCollision(
+    const LineSegment2D& ls, const Circle2D& c, const Vector2D& offset);
 
 bool DetectCollision(const Circle2D& c1, const Circle2D& c2);
 bool DetectCollision(

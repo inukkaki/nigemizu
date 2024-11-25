@@ -144,7 +144,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         color_setter(0xFF, 0x00, 0x00, 0xFF);
         ls2.Render({}, plotter);
         color_setter(0xFF, 0xFF, 0xFF, 0xFF);
-        c1.Render({}, plotter);
+        c1.Render({5.0f, 5.0f}, plotter);
 
         ++count;
         if (count < 100) {
@@ -157,8 +157,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
         using nigemizu::models::math::DetectCollision;
         std::cout
-            << "l1: " << DetectCollision(ls1, c1) << ", "
-            << "l2: " << DetectCollision(ls2, c1) << std::endl;
+            << "l1: " << DetectCollision(ls1, c1, {5.0f, 5.0f}) << ", "
+            << "l2: " << DetectCollision(ls2, c1, {5.0f, 5.0f}) << std::endl;
         //
 
         SDL_RenderPresent(renderer);

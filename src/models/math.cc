@@ -231,7 +231,7 @@ bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2) {
 bool DetectCollision(
         const LineSegment2D& ls1, const LineSegment2D& ls2,
         const Vector2D& offset) {
-    return DetectCollision(ls1, LineSegment2D(ls2.s + offset, ls2.d));
+    return DetectCollision(ls1, LineSegment2D(ls2.s, offset));
 }
 
 bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
@@ -249,6 +249,11 @@ bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
     return collides;
 }
 
+bool DetectCollision(
+        const LineSegment2D& ls, const Circle2D& c, const Vector2D& offset) {
+    return DetectCollision(ls, Circle2D(c, offset));
+}
+
 bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
     float r = c1.r + c2.r;
     return Dot(c1.c - c2.c) < r*r;  // NOTE: Lenient detection.
@@ -256,7 +261,7 @@ bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
 
 bool DetectCollision(
         const Circle2D& c1, const Circle2D& c2, const Vector2D& offset) {
-    return DetectCollision(c1, Circle2D(c2.c + offset, c2.r));
+    return DetectCollision(c1, Circle2D(c2, offset));
 }
 
 }  // namespace nigemizu::models::math
