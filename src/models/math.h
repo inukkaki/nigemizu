@@ -88,11 +88,7 @@ struct LineSegment2D : public Shape2D {
         return false;
     }
 
-    void Render(const Vector2D& offset, const Plotter& plotter) const override
-    {
-        // TODO: Define this function in models/math.cc.
-        // ...
-    }
+    void Render(const Vector2D& offset, const Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override
     {

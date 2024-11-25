@@ -147,6 +147,11 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
     RenderCircle(c.x, c.y, r, plotter);
 }
 
+void LineSegment2D::Render(
+        const Vector2D& offset, const Plotter& plotter) const {
+    RenderLine(u + offset, v + offset, plotter);
+}
+
 namespace {
 
 bool DetectCollisionBetween(const Circle2D& c1, const Circle2D& c2) {

@@ -100,7 +100,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     //
     using nigemizu::models::math::LineSegment2D;
     LineSegment2D ls1;
-    LineSegment2D ls2({100.0f, 100.0f}, {120.0f, 110.0f});
+    LineSegment2D ls2({100.0f, 100.0f}, {103.0f, 102.0f});
     //
 
     using nigemizu::models::math::Plotter;
@@ -135,6 +135,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
 
         debug_entity.RenderDebugInfo(plotter, color_setter);
+
+        color_setter(0xFF, 0xFF, 0xFF, 0xFF);
+        ls1.Render({}, plotter);
+        ls1.Render({50.0f, 100.0f}, plotter);
+        ls2.Render({}, plotter);
         //
 
         SDL_RenderPresent(renderer);
