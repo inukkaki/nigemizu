@@ -6,6 +6,11 @@
 
 namespace nigemizu::models::math {
 
+inline constexpr float kFloatTolerance = 1e-6;
+
+bool EqualsZero(float x);
+bool Equals(float x, float y);
+
 struct Vector2D {
     float x;
     float y;

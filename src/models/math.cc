@@ -6,6 +6,14 @@
 
 namespace nigemizu::models::math {
 
+bool EqualsZero(float x) {
+    return (-kFloatTolerance < x) && (x < kFloatTolerance);
+}
+
+bool Equals(float x, float y) {
+    return EqualsZero(x - y);
+}
+
 void Vector2D::Zero() {
     x = 0.0f;
     y = 0.0f;

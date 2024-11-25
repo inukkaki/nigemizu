@@ -105,6 +105,21 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     std::unique_ptr<Shape2D> ls3 = ls2.Clone();
     //
 
+    //
+    using nigemizu::models::math::EqualsZero;
+    std::cout << EqualsZero( 0.0f)         << std::endl;
+    std::cout << EqualsZero( 0.00000001f)  << std::endl;
+    std::cout << EqualsZero(-0.000000999f) << std::endl;
+    std::cout << EqualsZero( 0.000001f)    << std::endl;
+    std::cout << EqualsZero(-0.000001f)    << std::endl;
+
+    using nigemizu::models::math::Equals;
+    std::cout << Equals(6.00000099f, 6.0f) << std::endl;
+    std::cout << Equals(6.0f, 6.00000099f) << std::endl;
+    std::cout << Equals(6.000001f, 6.0f) << std::endl;
+    std::cout << Equals(6.0f, 6.000001f) << std::endl;
+    //
+
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
     Plotter plotter = [renderer](int x, int y) -> void {
