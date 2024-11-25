@@ -106,18 +106,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     //
 
     //
-    using nigemizu::models::math::EqualsZero;
-    std::cout << EqualsZero( 0.0f)         << std::endl;
-    std::cout << EqualsZero( 0.00000001f)  << std::endl;
-    std::cout << EqualsZero(-0.000000999f) << std::endl;
-    std::cout << EqualsZero( 0.000001f)    << std::endl;
-    std::cout << EqualsZero(-0.000001f)    << std::endl;
-
-    using nigemizu::models::math::Equals;
-    std::cout << Equals(6.00000099f, 6.0f) << std::endl;
-    std::cout << Equals(6.0f, 6.00000099f) << std::endl;
-    std::cout << Equals(6.000001f, 6.0f) << std::endl;
-    std::cout << Equals(6.0f, 6.000001f) << std::endl;
+    using nigemizu::models::math::Vector2D;
+    Vector2D vec1(1.0f, 1.5f);
+    Vector2D vec2 = 1.4387f*vec1;
+    Vector2D vec3(-1.0f, -1.5f);
+    Vector2D vec4(1.01f, 1.5f);
+    std::cout << vec1.IsParallelTo(vec2) << std::endl;
+    std::cout << vec1.IsParallelTo(vec3) << std::endl;
+    std::cout << vec1.IsParallelTo(vec4) << std::endl;
     //
 
     using nigemizu::models::math::Plotter;
@@ -157,6 +153,19 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         ls1.Render({}, plotter);
         ls2.Render({}, plotter);
         ls3->Render({50.0f, 100.0f}, plotter);
+        //
+
+        //
+        using nigemizu::models::math::RenderLine;
+        Vector2D offset(200.0f, 100.0f);
+        color_setter(0xFF, 0xFF, 0xFF, 0xFF);
+        RenderLine(offset, 20.0f*vec1 + offset, plotter);
+        color_setter(0xFF, 0x00, 0x00, 0xFF);
+        RenderLine(offset, 20.0f*vec2 + offset, plotter);
+        color_setter(0xFF, 0xFF, 0x00, 0xFF);
+        RenderLine(offset, 20.0f*vec3 + offset, plotter);
+        color_setter(0x00, 0xFF, 0x00, 0xFF);
+        RenderLine(offset, 20.0f*vec4 + offset, plotter);
         //
 
         SDL_RenderPresent(renderer);

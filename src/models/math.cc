@@ -28,6 +28,10 @@ float Vector2D::Length() const {
     return std::sqrt(x*x + y*y);
 }
 
+bool Vector2D::IsParallelTo(const Vector2D& other) const {
+    return EqualsZero(Cross(*this, other));
+}
+
 Vector2D& Vector2D::operator=(const Vector2D& rhs) {
     x = rhs.x;
     y = rhs.y;

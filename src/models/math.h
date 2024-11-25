@@ -24,6 +24,8 @@ struct Vector2D {
 
     float Length() const;
 
+    bool IsParallelTo(const Vector2D& other) const;
+
     Vector2D& operator=(const Vector2D& rhs);
 
     Vector2D& operator+=(const Vector2D& rhs);
