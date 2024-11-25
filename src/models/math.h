@@ -6,7 +6,7 @@
 
 namespace nigemizu::models::math {
 
-inline constexpr float kFloatTolerance = 1e-6;
+inline constexpr float kFloatTolerance = 1e-6f;
 
 bool EqualsZero(float x);
 bool Equals(float x, float y);
@@ -78,11 +78,11 @@ struct Shape2D {
 };
 
 struct LineSegment2D : public Shape2D {
-    Vector2D u;  // Start point
-    Vector2D v;  // Direction (extends to the end point)
+    Vector2D s;  // Start point
+    Vector2D d;  // Direction (extends to the end point)
 
     LineSegment2D() = default;
-    LineSegment2D(const Vector2D& u, const Vector2D& v) : u(u), v(v) {}
+    LineSegment2D(const Vector2D& s, const Vector2D& d) : s(s), d(d) {}
     LineSegment2D(const LineSegment2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kLineSegment2D; }
