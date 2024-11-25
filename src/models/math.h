@@ -54,6 +54,7 @@ void RenderCircle(
 void RenderCircle(const Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
+    kLineSegment2D,
     kCircle2D,
 };
 
@@ -67,6 +68,38 @@ struct Shape2D {
         const Vector2D& offset, const Plotter& plotter) const = 0;
 
     virtual std::unique_ptr<Shape2D> Clone() const = 0;
+};
+
+struct LineSegment2D : public Shape2D {
+    Vector2D u;  // start point
+    Vector2D v;  // end point
+
+    LineSegment2D() = default;
+    LineSegment2D(const Vector2D& u, const Vector2D& v) : u(u), v(v) {}
+    LineSegment2D(const LineSegment2D&) = default;
+
+    ShapeType Type() const override { return ShapeType::kLineSegment2D; }
+
+    bool CollidesWith(
+        const Shape2D& other, const Vector2D& offset) const override
+    {
+        // TODO: Define this function in models/math.cc.
+        // DEBUG
+        return false;
+    }
+
+    void Render(const Vector2D& offset, const Plotter& plotter) const override
+    {
+        // TODO: Define this function in models/math.cc.
+        // ...
+    }
+
+    std::unique_ptr<Shape2D> Clone() const override
+    {
+        // TODO: Define this function in models/math.cc.
+        // DEBUG
+        return std::make_unique<LineSegment2D>();
+    }
 };
 
 struct Circle2D : public Shape2D {

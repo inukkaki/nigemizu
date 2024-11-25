@@ -97,6 +97,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     debug_entity.AssignR({200.0f, 150.0f});
     //
 
+    //
+    using nigemizu::models::math::LineSegment2D;
+    LineSegment2D ls1;
+    LineSegment2D ls2({100.0f, 100.0f}, {120.0f, 110.0f});
+    //
+
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
     Plotter plotter = [renderer](int x, int y) -> void {
