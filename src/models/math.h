@@ -61,6 +61,7 @@ void RenderCircle(
 void RenderCircle(const Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
+    kNoShape2D,
     kLineSegment2D,
     kCircle2D,
 };
@@ -75,6 +76,25 @@ struct Shape2D {
         const Vector2D& offset, const Plotter& plotter) const = 0;
 
     virtual std::unique_ptr<Shape2D> Clone() const = 0;
+};
+
+struct NoShape2D : public Shape2D {
+    NoShape2D() = default;
+    NoShape2D(const NoShape2D&) = default;
+
+    ShapeType Type() const override { return ShapeType::kNoShape2D; }
+
+    bool CollidesWith(
+            const Shape2D& other, const Vector2D& offset) const override {
+        return false;
+    }
+
+    void Render(
+            const Vector2D& offset, const Plotter& plotter) const override {
+        /* NO-OP */
+    }
+
+    std::unique_ptr<Shape2D> Clone() const override;
 };
 
 struct LineSegment2D : public Shape2D {

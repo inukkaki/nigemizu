@@ -159,6 +159,10 @@ void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
     RenderCircle(c.x, c.y, r, plotter);
 }
 
+std::unique_ptr<Shape2D> NoShape2D::Clone() const {
+    return std::make_unique<NoShape2D>(*this);
+}
+
 bool LineSegment2D::CollidesWith(
         const Shape2D& other, const Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.

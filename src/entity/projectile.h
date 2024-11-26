@@ -52,11 +52,7 @@ private:
 };
 
 // DEBUG
-class TestBulletPool final : public impl::pool::DynamicPool<TestBullet> {
-public:
-    TestBulletPool() = default;
-    TestBulletPool(size_t size) : impl::pool::DynamicPool<TestBullet>(size) {}
-};
+using TestBulletPool = impl::pool::DynamicPool<TestBullet>;
 
 }  // namespace nigemizu::entity::projectile
 

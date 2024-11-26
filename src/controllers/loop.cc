@@ -76,12 +76,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::entity::playable::Playable;
     using nigemizu::entity::base::PhysicalProperty;
     using nigemizu::models::math::Circle2D;
+        using nigemizu::models::math::NoShape2D;
     namespace dlgt = nigemizu::entity::delegate;
     using nigemizu::entity::playable::KeyConfig;
     using nigemizu::interfaces::keyboard::KeyCode;
     Playable player(
         PhysicalProperty(4.0f, 4.0f),
-        std::make_unique<Circle2D>(8.0f),
+        // std::make_unique<Circle2D>(8.0f),
+        std::make_unique<NoShape2D>(),
         std::make_unique<dlgt::GeneralMotion>(),
         KeyConfig(
             KeyCode::kUp,
