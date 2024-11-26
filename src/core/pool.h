@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include "meta/assert.h"
+
 namespace nigemizu::core::pool {
 
 namespace impl {
@@ -19,11 +21,27 @@ concept Poolable = requires (T& x, Args&&... args) {
 
 }  // namespace impl
 
+class InitFlag {
+public:
+    InitFlag() : initialized_(false) {}
+
+    explicit operator bool() const noexcept { return initialized_; }
+    void Set() { initialized_ = true; }
+
+private:
+    bool initialized_;
+};
+
 template <impl::Poolable T>
 class DynamicPool {
 public:
+    DynamicPool() {
+        NIGEMIZU_ASSERT(initialized_);
+    }
     explicit DynamicPool(size_t size)
-        : size_(size), objects_(size_), buf_size_(size_) {}
+        : size_(size), objects_(size_), buf_size_(size_) {
+        initialized_.Set();
+    }
     virtual ~DynamicPool() = default;
 
     bool HasVacancy() const { return buf_.size() < buf_size_; }
@@ -55,6 +73,8 @@ public:
     }
 
 private:
+    InitFlag initialized_;
+
     size_t size_;
     std::vector<std::shared_ptr<T>> objects_;
 

@@ -11,6 +11,20 @@ target_include_directories(assert_cui
 )
 
 
+# Target: dpool_st
+add_executable(dpool_st
+    dpool_st.cc
+
+    ${PROJECT_SOURCE_DIR}/src/core/pool.cc
+    ${PROJECT_SOURCE_DIR}/src/core/singleton.cc
+)
+target_compile_features(dpool_st PUBLIC cxx_std_23)
+target_include_directories(dpool_st
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
+)
+
+
 # Target: dpool
 add_executable(dpool
     dpool.cc
