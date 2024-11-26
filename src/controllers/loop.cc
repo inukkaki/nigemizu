@@ -84,10 +84,10 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         std::make_unique<Circle2D>(8.0f),
         std::make_unique<dlgt::GeneralMotion>(),
         KeyConfig(
-            KeyCode::kW,
-            KeyCode::kA,
-            KeyCode::kD,
-            KeyCode::kS));
+            KeyCode::kUp,
+            KeyCode::kLeft,
+            KeyCode::kRight,
+            KeyCode::kDown));
     player.AssignR({16.0f, 16.0f});
 
     using nigemizu::entity::entity::Entity;

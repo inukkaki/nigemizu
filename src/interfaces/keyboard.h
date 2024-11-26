@@ -10,11 +10,11 @@
 namespace nigemizu::interfaces::keyboard {
 
 enum class KeyCode : unsigned char {
-    kW,
-    kA,
-    kS,
-    kD,
     kZ,
+    kUp,
+    kLeft,
+    kRight,
+    kDown,
     kMax,
 };
 

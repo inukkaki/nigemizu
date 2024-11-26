@@ -10,11 +10,11 @@ namespace nigemizu::interfaces::keyboard {
 void Keyboard::SetKeyMap() {
     key_map_.clear();
     std::unordered_map<SDL_KeyCode, KeyCode> code_pairs = {
-        {SDLK_w, KeyCode::kW},
-        {SDLK_a, KeyCode::kA},
-        {SDLK_s, KeyCode::kS},
-        {SDLK_d, KeyCode::kD},
-        {SDLK_z, KeyCode::kZ},
+        {SDLK_z,     KeyCode::kZ},
+        {SDLK_UP,    KeyCode::kUp},
+        {SDLK_LEFT,  KeyCode::kLeft},
+        {SDLK_RIGHT, KeyCode::kRight},
+        {SDLK_DOWN,  KeyCode::kDown},
     };
     for (const auto& [key, value] : code_pairs) {
         key_map_.insert({key, static_cast<int>(value)});
