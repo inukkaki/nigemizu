@@ -6,8 +6,6 @@
 #include <memory>
 #include <vector>
 
-#include "meta/assert.h"
-
 namespace nigemizu::core::pool {
 
 namespace impl {
@@ -29,11 +27,6 @@ public:
     virtual ~ObjectPool() = default;
 
     bool HasVacancy() const { return buf_.size() < buf_size_; }
-
-    T& focus() const {
-        NIGEMIZU_ASSERT(focus_);
-        return *focus_;
-    }
 
     std::shared_ptr<T> Create(std::unique_ptr<T>&& object) {
         std::shared_ptr<T> result;
@@ -64,7 +57,6 @@ public:
 private:
     size_t size_;
     std::vector<std::shared_ptr<T>> objects_;
-    std::shared_ptr<T> focus_;
 
     size_t buf_size_;
     std::deque<std::shared_ptr<T>> buf_;
