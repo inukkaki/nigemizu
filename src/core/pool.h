@@ -26,6 +26,8 @@ public:
         : size_(size), objects_(size_), buf_size_(size_) {}
     virtual ~ObjectPool() = default;
 
+    bool HasVacancy() const { return buf_.size() < buf_size_; }
+
     T& focus() const {
         NIGEMIZU_ASSERT(focus_);
         return *focus_;
@@ -33,14 +35,14 @@ public:
 
     std::shared_ptr<T> Create(std::unique_ptr<T>&& object) {
         std::shared_ptr<T> result;
-        if (buf_.size() < buf_size_) {
+        if (HasVacancy()) {
             result = buf_.emplace_back(std::move(object));
         }
         return result;
     }
 
     void Update() {
-        buf_size_ = 0ll;
+        buf_size_ = 0ull;
         for (std::shared_ptr<T>& obj : objects_) {
             if (obj) {
                 if (obj->IsActivated()) {

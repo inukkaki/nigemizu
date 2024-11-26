@@ -117,7 +117,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     using nigemizu::entity::projectile::TestBulletPool;
-    TestBulletPool tbpool(10, plotter, color_setter);
+    TestBulletPool tbpool(10ull, plotter, color_setter);
     int elapsed_frames = 0;
     int count = 0;
     //
@@ -152,15 +152,17 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         //
 
         //
-        if (elapsed_frames % 30 == 0) {
-            using nigemizu::entity::projectile::TestBullet;
-            std::unique_ptr<TestBullet>
-                bullet = std::make_unique<TestBullet>();
-            bullet->AssignR({50.0f, 50.0f + 12.0f*count});
-            bullet->AddForce({500.0f*(1 + count), 0.0f});
-            tbpool.Create(std::move(bullet));
-            ++count;
-            if (count >= 10) { count = 0; }
+        if (elapsed_frames % 10 == 0) {
+            if (tbpool.HasVacancy()) {
+                using nigemizu::entity::projectile::TestBullet;
+                std::unique_ptr<TestBullet>
+                    bullet = std::make_unique<TestBullet>();
+                bullet->AssignR({50.0f, 50.0f + 12.0f*count});
+                bullet->AddForce({500.0f*(1 + count), 0.0f});
+                tbpool.Create(std::move(bullet));
+                ++count;
+            }
+            if (count > 9) { count = 0; }
         }
         ++elapsed_frames;
         if (elapsed_frames >= 300) { elapsed_frames = 0; }
