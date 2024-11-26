@@ -13,11 +13,12 @@ namespace math = nigemizu::models::math;
 
 }  // namespace impl
 
-impl::math::Vector2D BaseEntity::CalcGravity(const impl::math::Vector2D& g) {
+impl::math::Vector2D
+        BaseEntity::CalcGravity(const impl::math::Vector2D& g) const {
     return phys_.mass*g;
 }
 
-impl::math::Vector2D BaseEntity::CalcDrag(float fluid_factor) {
+impl::math::Vector2D BaseEntity::CalcDrag(float fluid_factor) const {
     float drag_coeff = phys_.drag_factor*fluid_factor;
     return -drag_coeff*pos_.v;
 }
@@ -49,6 +50,13 @@ void BaseEntity::UpdateV(float dt) {
 
 void BaseEntity::UpdateR(float dt) {
     pos_.r += pos_.v*dt;
+}
+
+bool BaseEntity::CollidesWith(const BaseEntity& other) const {
+    NIGEMIZU_ASSERT(boundary_);
+    NIGEMIZU_ASSERT(other.boundary_);
+    impl::math::Vector2D diff = other.pos_.r - pos_.r;
+    return boundary_->CollidesWith(*other.boundary_, diff);
 }
 
 namespace {

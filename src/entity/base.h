@@ -55,8 +55,8 @@ public:
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
 
-    impl::math::Vector2D CalcGravity(const impl::math::Vector2D& g);
-    impl::math::Vector2D CalcDrag(float fluid_factor);
+    impl::math::Vector2D CalcGravity(const impl::math::Vector2D& g) const;
+    impl::math::Vector2D CalcDrag(float fluid_factor) const;
 
     void AddForce(const impl::math::Vector2D& force);
 
@@ -68,6 +68,8 @@ public:
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
+
+    bool CollidesWith(const BaseEntity& other) const;
 
     void RenderDebugInfo(
         const impl::math::Plotter& plotter,

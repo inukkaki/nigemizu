@@ -12,41 +12,55 @@ namespace nigemizu::core::pool {
 
 namespace impl {
 
-template <typename T>
-concept Deactivatable = requires (T& x) {
+template <typename T, typename... Args>
+concept Poolable = requires (T& x, Args&&... args) {
     x.IsActivated();
+
+    x.Update(args...);
 };
 
 }  // namespace impl
 
-template <impl::Deactivatable T>
-class ObjectPool {
+class InitFlag {
 public:
-    explicit ObjectPool(size_t size)
-        : size_(size), objects_(size_), buf_size_(size_) {}
-    virtual ~ObjectPool() = default;
+    InitFlag() : initialized_(false) {}
 
-    T& focus() const {
-        NIGEMIZU_ASSERT(focus_);
-        return *focus_;
+    explicit operator bool() const noexcept { return initialized_; }
+    void Set() { initialized_ = true; }
+
+private:
+    bool initialized_;
+};
+
+template <impl::Poolable T>
+class DynamicPool {
+public:
+    DynamicPool() {
+        NIGEMIZU_ASSERT(initialized_);
     }
+    explicit DynamicPool(size_t size)
+        : size_(size), objects_(size_), buf_size_(size_) {
+        initialized_.Set();
+    }
+    virtual ~DynamicPool() = default;
+
+    bool HasVacancy() const { return buf_.size() < buf_size_; }
 
     std::shared_ptr<T> Create(std::unique_ptr<T>&& object) {
         std::shared_ptr<T> result;
-        if (buf_.size() < buf_size_) {
+        if (HasVacancy()) {
             result = buf_.emplace_back(std::move(object));
         }
         return result;
     }
 
-    void Update() {
-        buf_size_ = 0ll;
+    template <typename... Args>
+    void Update(Args&&... args) {
+        buf_size_ = 0ull;
         for (std::shared_ptr<T>& obj : objects_) {
             if (obj) {
                 if (obj->IsActivated()) {
-                    focus_ = obj;
-                    Process();
-                    focus_.reset();
+                    obj->Update(std::forward<Args>(args)...);
                 } else {
                     obj.reset();
                 }
@@ -59,14 +73,13 @@ public:
     }
 
 private:
+    InitFlag initialized_;
+
     size_t size_;
     std::vector<std::shared_ptr<T>> objects_;
-    std::shared_ptr<T> focus_;
 
     size_t buf_size_;
     std::deque<std::shared_ptr<T>> buf_;
-
-    virtual void Process() const { /* NO-OP */ }
 };
 
 }  // namespace nigemizu::core::pool

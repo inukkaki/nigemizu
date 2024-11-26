@@ -55,6 +55,9 @@ public:
 
     virtual void Transfer(const impl::kbd::Keyboard& kbd);
 
+    // DEBUG
+    void Attack(const impl::kbd::Keyboard& kbd);
+
     void Control(const impl::kbd::Keyboard& kbd);
 
 private:
