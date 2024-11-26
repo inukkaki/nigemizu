@@ -153,6 +153,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         //
         bullet.Move();
+        bullet.DoSomething();
         bullet.RenderDebugInfo(plotter, color_setter);
         //
 
