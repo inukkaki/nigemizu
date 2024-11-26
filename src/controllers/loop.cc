@@ -159,6 +159,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
                     bullet = std::make_unique<TestBullet>();
                 bullet->AssignR({50.0f, 50.0f + 12.0f*count});
                 bullet->AddForce({500.0f*(1 + count), 0.0f});
+                bullet->Activated();
                 tbpool.Create(std::move(bullet));
                 ++count;
             }

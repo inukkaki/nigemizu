@@ -33,13 +33,10 @@ public:
         : impl::eent::Entity(
             impl::base::PhysicalProperty(1.0f, 0.0f),
             std::make_unique<impl::math::Circle2D>(4.0f),
-            std::make_unique<impl::dlgt::GeneralMotion>()),
-          activated_(true) {
+            std::make_unique<impl::dlgt::GeneralMotion>()) {
         timer_.Set();
     }
     virtual ~TestBullet() = default;
-
-    bool IsActivated() const { return activated_; }
 
     void DoSomething();
 
@@ -51,7 +48,6 @@ public:
         const impl::math::ColorSetter& color_setter);
 
 private:
-    bool activated_;
     impl::timer::SimpleTimer timer_;
 };
 

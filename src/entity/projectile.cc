@@ -10,7 +10,7 @@ namespace nigemizu::entity::projectile {
 void TestBullet::DoSomething() {
     uint64_t elapsed_time = timer_.GetElapsedTime();
     if (elapsed_time > 3000ull) {
-        activated_ = false;
+        Deactivated();
         std::cout << "TestBullet > Deactivated!" << std::endl;
     }
 }

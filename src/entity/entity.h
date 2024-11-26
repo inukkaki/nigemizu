@@ -25,14 +25,22 @@ public:
         std::unique_ptr<impl::math::Shape2D>&& boundary,
         std::unique_ptr<impl::dlgt::MoveDelegate>&& move)
         : impl::base::BaseEntity(phys, std::move(boundary)),
+          activated_(false),
           move_(std::move(move)) {
         NIGEMIZU_ASSERT(move_);
     }
     virtual ~Entity() = default;
 
+    bool IsActivated() const { return activated_; }
+
+    void Activated()   { activated_ = true; }
+    void Deactivated() { activated_ = false; }
+
     void Move();
 
 private:
+    bool activated_;
+
     std::unique_ptr<impl::dlgt::MoveDelegate> move_;
 };
 
