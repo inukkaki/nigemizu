@@ -15,6 +15,7 @@ add_executable(nigemizu
     entity/delegate.cc
     entity/entity.cc
     entity/playable.cc
+    entity/projectile.cc
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
