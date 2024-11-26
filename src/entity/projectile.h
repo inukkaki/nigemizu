@@ -43,8 +43,12 @@ public:
 
     void DoSomething();
 
-    // DEBUG
     virtual void Update() { /* NO-OP */ }
+        // NOTE: This overload is somehow required to satisfy the constraints
+        // of Poolable...
+    virtual void Update(
+        const impl::math::Plotter& plotter,
+        const impl::math::ColorSetter& color_setter);
 
 private:
     bool activated_;
@@ -65,8 +69,6 @@ public:
 private:
     impl::math::Plotter plotter_;
     impl::math::ColorSetter color_setter_;
-
-    void Process() const override;
 };
 
 }  // namespace nigemizu::entity::projectile

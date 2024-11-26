@@ -166,7 +166,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
         ++elapsed_frames;
         if (elapsed_frames >= 300) { elapsed_frames = 0; }
-        tbpool.Update();
+        tbpool.Update(plotter, color_setter);
         //
 
         SDL_RenderPresent(renderer);

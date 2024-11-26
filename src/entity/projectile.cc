@@ -16,11 +16,12 @@ void TestBullet::DoSomething() {
 }
 
 // DEBUG
-void TestBulletPool::Process() const {
-    TestBullet& obj = focus();
-    obj.Move();
-    obj.DoSomething();
-    obj.RenderDebugInfo(plotter_, color_setter_);
+void TestBullet::Update(
+        const impl::math::Plotter& plotter,
+        const impl::math::ColorSetter& color_setter) {
+    Move();
+    DoSomething();
+    RenderDebugInfo(plotter, color_setter);
 }
 
 }  // namespace nigemizu::entity::projectile

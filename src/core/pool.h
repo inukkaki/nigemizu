@@ -49,11 +49,7 @@ public:
         for (std::shared_ptr<T>& obj : objects_) {
             if (obj) {
                 if (obj->IsActivated()) {
-                    focus_ = obj;
-                    Process();
-                        // DEBUG
-                        obj->Update(std::forward<Args>(args)...);
-                    focus_.reset();
+                    obj->Update(std::forward<Args>(args)...);
                 } else {
                     obj.reset();
                 }
@@ -72,8 +68,6 @@ private:
 
     size_t buf_size_;
     std::deque<std::shared_ptr<T>> buf_;
-
-    virtual void Process() const { /* NO-OP */ }
 };
 
 }  // namespace nigemizu::core::pool
