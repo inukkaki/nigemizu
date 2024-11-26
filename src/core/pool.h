@@ -20,11 +20,11 @@ concept Poolable = requires (T& x, Args&&... args) {
 }  // namespace impl
 
 template <impl::Poolable T>
-class ObjectPool {
+class DynamicPool {
 public:
-    explicit ObjectPool(size_t size)
+    explicit DynamicPool(size_t size)
         : size_(size), objects_(size_), buf_size_(size_) {}
-    virtual ~ObjectPool() = default;
+    virtual ~DynamicPool() = default;
 
     bool HasVacancy() const { return buf_.size() < buf_size_; }
 

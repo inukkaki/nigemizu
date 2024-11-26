@@ -56,13 +56,13 @@ private:
 };
 
 // DEBUG
-class TestBulletPool final : public impl::pool::ObjectPool<TestBullet> {
+class TestBulletPool final : public impl::pool::DynamicPool<TestBullet> {
 public:
     TestBulletPool(
         size_t size,
         const impl::math::Plotter& plotter,
         const impl::math::ColorSetter& color_setter)
-        : impl::pool::ObjectPool<TestBullet>(size),
+        : impl::pool::DynamicPool<TestBullet>(size),
           plotter_(plotter),
           color_setter_(color_setter) {}
 

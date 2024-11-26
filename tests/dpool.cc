@@ -1,4 +1,4 @@
-// Test for ObjectPool
+// Test for DynamicPool
 
 #include <iostream>
 #include <memory>
@@ -44,9 +44,9 @@ private:
 };
 
 int main() {
-    using nigemizu::core::pool::ObjectPool;
+    using nigemizu::core::pool::DynamicPool;
 
-    ObjectPool<A> pool(5);
+    DynamicPool<A> pool(5);
 
     //pool.PrintObjects();
     //pool.PrintBuf();
