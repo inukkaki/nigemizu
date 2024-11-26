@@ -14,6 +14,7 @@ enum class KeyCode : unsigned char {
     kA,
     kS,
     kD,
+    kZ,
     kMax,
 };
 

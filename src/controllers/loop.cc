@@ -117,7 +117,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
     //
     using nigemizu::entity::projectile::TestBulletPool;
-    TestBulletPool tbpool(10ull, plotter, color_setter);
+    TestBulletPool& tbpool = Singleton::GetInstance<TestBulletPool>(100ull);
     int elapsed_frames = 0;
     int count = 0;
     //

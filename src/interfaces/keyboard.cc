@@ -14,6 +14,7 @@ void Keyboard::SetKeyMap() {
         {SDLK_a, KeyCode::kA},
         {SDLK_s, KeyCode::kS},
         {SDLK_d, KeyCode::kD},
+        {SDLK_z, KeyCode::kZ},
     };
     for (const auto& [key, value] : code_pairs) {
         key_map_.insert({key, static_cast<int>(value)});

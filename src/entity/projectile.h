@@ -54,17 +54,8 @@ private:
 // DEBUG
 class TestBulletPool final : public impl::pool::DynamicPool<TestBullet> {
 public:
-    TestBulletPool(
-        size_t size,
-        const impl::math::Plotter& plotter,
-        const impl::math::ColorSetter& color_setter)
-        : impl::pool::DynamicPool<TestBullet>(size),
-          plotter_(plotter),
-          color_setter_(color_setter) {}
-
-private:
-    impl::math::Plotter plotter_;
-    impl::math::ColorSetter color_setter_;
+    TestBulletPool() = default;
+    TestBulletPool(size_t size) : impl::pool::DynamicPool<TestBullet>(size) {}
 };
 
 }  // namespace nigemizu::entity::projectile
