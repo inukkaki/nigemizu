@@ -27,7 +27,7 @@ namespace timer = nigemizu::models::timer;
 }  // namespace impl
 
 // DEBUG
-class TestBullet final : public impl::eent::Entity {
+class TestBullet : public impl::eent::Entity {
 public:
     TestBullet()
         : impl::eent::Entity(
@@ -37,10 +37,14 @@ public:
           activated_(true) {
         timer_.Set();
     }
+    virtual ~TestBullet() = default;
 
     bool IsActivated() const { return activated_; }
 
     void DoSomething();
+
+    // DEBUG
+    virtual void Update() { /* NO-OP */ }
 
 private:
     bool activated_;

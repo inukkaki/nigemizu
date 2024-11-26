@@ -31,6 +31,14 @@ public:
         return result;
     }
 
+    void Update() {
+        std::cout << "A::Update()" << std::endl;
+    }
+
+    void Update(int a) {
+        std::cout << "A::Update(int)  a = " << a << std::endl;
+    }
+
 private:
     int num_;
 };
@@ -106,6 +114,7 @@ int main() {
 
     ChangeDebugNum(3);
     pool.Update();
+    pool.Update(5);  // Test for Poolable::Update(Args&&...)
 
     //pool.PrintObjects();
     //pool.PrintBuf();

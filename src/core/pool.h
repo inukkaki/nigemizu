@@ -12,9 +12,11 @@ namespace nigemizu::core::pool {
 
 namespace impl {
 
-template <typename T>
-concept Poolable = requires (T& x) {
+template <typename T, typename... Args>
+concept Poolable = requires (T& x, Args&&... args) {
     x.IsActivated();
+
+    x.Update(args...);
 };
 
 }  // namespace impl
@@ -41,13 +43,16 @@ public:
         return result;
     }
 
-    void Update() {
+    template <typename... Args>
+    void Update(Args&&... args) {
         buf_size_ = 0ull;
         for (std::shared_ptr<T>& obj : objects_) {
             if (obj) {
                 if (obj->IsActivated()) {
                     focus_ = obj;
                     Process();
+                        // DEBUG
+                        obj->Update(std::forward<Args>(args)...);
                     focus_.reset();
                 } else {
                     obj.reset();
