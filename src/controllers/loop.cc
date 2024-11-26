@@ -11,6 +11,7 @@
 #include "entity/delegate.h"
 #include "entity/entity.h"
 #include "entity/playable.h"
+#include "entity/projectile.h"
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/math.h"
@@ -105,6 +106,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     line_segment.AssignR({250.0f, 60.0f});
     //
 
+    //
+    using nigemizu::entity::projectile::TestBullet;
+    TestBullet bullet;
+    bullet.AssignR({50.0f, 50.0f});
+    bullet.AddForce({1000.0f, 0.0f});
+    //
+
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
     Plotter plotter = [renderer](int x, int y) -> void {
@@ -141,6 +149,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         circle.RenderDebugInfo(plotter, color_setter);
         line_segment.RenderDebugInfo(plotter, color_setter);
+        //
+
+        //
+        bullet.Move();
+        bullet.RenderDebugInfo(plotter, color_setter);
         //
 
         SDL_RenderPresent(renderer);
