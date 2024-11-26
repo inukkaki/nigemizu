@@ -13,13 +13,13 @@ namespace nigemizu::core::pool {
 namespace impl {
 
 template <typename T>
-concept Deactivatable = requires (T& x) {
+concept Poolable = requires (T& x) {
     x.IsActivated();
 };
 
 }  // namespace impl
 
-template <impl::Deactivatable T>
+template <impl::Poolable T>
 class ObjectPool {
 public:
     explicit ObjectPool(size_t size)
