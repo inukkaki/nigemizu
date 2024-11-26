@@ -106,13 +106,6 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     line_segment.AssignR({250.0f, 60.0f});
     //
 
-    //
-    using nigemizu::entity::projectile::TestBullet;
-    TestBullet bullet;
-    bullet.AssignR({50.0f, 50.0f});
-    bullet.AddForce({1000.0f, 0.0f});
-    //
-
     using nigemizu::models::math::Plotter;
     using nigemizu::models::math::ColorSetter;
     Plotter plotter = [renderer](int x, int y) -> void {
@@ -121,6 +114,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     ColorSetter color_setter = [renderer](int r, int g, int b, int a) -> void {
         SDL_SetRenderDrawColor(renderer, r, g, b, g);
     };
+
+    //
+    using nigemizu::entity::projectile::TestBulletPool;
+    TestBulletPool tbpool(10, plotter, color_setter);
+    int elapsed_frames = 0;
+    int count = 0;
+    //
 
     frb.SetTimer();
     frm.SetTimer();
@@ -152,9 +152,19 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         //
 
         //
-        bullet.Move();
-        bullet.DoSomething();
-        bullet.RenderDebugInfo(plotter, color_setter);
+        if (elapsed_frames % 30 == 0) {
+            using nigemizu::entity::projectile::TestBullet;
+            std::unique_ptr<TestBullet>
+                bullet = std::make_unique<TestBullet>();
+            bullet->AssignR({50.0f, 50.0f + 12.0f*count});
+            bullet->AddForce({500.0f*(1 + count), 0.0f});
+            tbpool.Create(std::move(bullet));
+            ++count;
+            if (count >= 10) { count = 0; }
+        }
+        ++elapsed_frames;
+        if (elapsed_frames >= 300) { elapsed_frames = 0; }
+        tbpool.Update();
         //
 
         SDL_RenderPresent(renderer);
