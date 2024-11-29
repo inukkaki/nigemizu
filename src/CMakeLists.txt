@@ -18,10 +18,10 @@ add_executable(nigemizu
     entity/projectile.cc
 
     graphics/render.cc
+    graphics/texture.cc
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
-    interfaces/texture.cc
 
     meta/assert.cc
     meta/boot.cc
