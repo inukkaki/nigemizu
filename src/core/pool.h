@@ -6,11 +6,14 @@
 #include <memory>
 #include <vector>
 
+#include "core/utils.h"
 #include "meta/assert.h"
 
 namespace nigemizu::core::pool {
 
 namespace impl {
+
+namespace utils = nigemizu::core::utils;
 
 template <typename T, typename... Args>
 concept Poolable = requires (T& x, Args&&... args) {
@@ -20,17 +23,6 @@ concept Poolable = requires (T& x, Args&&... args) {
 };
 
 }  // namespace impl
-
-class InitFlag {
-public:
-    InitFlag() : initialized_(false) {}
-
-    explicit operator bool() const noexcept { return initialized_; }
-    void Set() { initialized_ = true; }
-
-private:
-    bool initialized_;
-};
 
 template <impl::Poolable T>
 class DynamicPool {
@@ -73,7 +65,7 @@ public:
     }
 
 private:
-    InitFlag initialized_;
+    impl::utils::InitFlag initialized_;
 
     size_t size_;
     std::vector<std::shared_ptr<T>> objects_;

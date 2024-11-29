@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "core/pool.h"
+#include "core/utils.h"
 #include "core/singleton.h"
 
 class A {
@@ -22,7 +23,7 @@ public:
 };
 
 int main() {
-    using nigemizu::core::pool::InitFlag;
+    using nigemizu::core::utils::InitFlag;
     using nigemizu::core::pool::DynamicPool;
     using nigemizu::core::singleton::Singleton;
 
