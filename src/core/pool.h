@@ -13,7 +13,7 @@ namespace nigemizu::core::pool {
 
 namespace impl {
 
-namespace utils = nigemizu::core::utils;
+namespace cutl = nigemizu::core::utils;
 
 template <typename T, typename... Args>
 concept Poolable = requires (T& x, Args&&... args) {
@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    impl::utils::InitFlag initialized_;
+    impl::cutl::InitFlag initialized_;
 
     size_t size_;
     std::vector<std::shared_ptr<T>> objects_;

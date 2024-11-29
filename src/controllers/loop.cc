@@ -60,6 +60,12 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     Keyboard& kbd = Singleton::GetInstance<Keyboard>();
     kbd.Clear();
 
+    //
+    using nigemizu::graphics::render::Renderer;
+    Renderer& r1 = Singleton::GetInstance<Renderer>(renderer);
+    Renderer& r2 = Singleton::GetInstance<Renderer>();
+    //
+
     namespace config = nigemizu::models::config;
     // config::SetFrameRate(30);
     int frame_rate = config::GetFrameRate();
