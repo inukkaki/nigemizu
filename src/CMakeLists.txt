@@ -10,6 +10,7 @@ add_executable(nigemizu
 
     core/pool.cc
     core/singleton.cc
+    core/utils.cc
 
     entity/base.cc
     entity/delegate.cc
