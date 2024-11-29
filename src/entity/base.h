@@ -5,7 +5,7 @@
 
 #include "graphics/render.h"
 #include "meta/assert.h"
-#include "models/math.h"
+#include "models/shape.h"
 #include "models/vector.h"
 
 namespace nigemizu::entity::base {
@@ -13,7 +13,7 @@ namespace nigemizu::entity::base {
 namespace impl {
 
 namespace rndr = nigemizu::graphics::render;
-namespace math = nigemizu::models::math;
+namespace shape = nigemizu::models::shape;
 namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
@@ -47,7 +47,7 @@ class BaseEntity {
 public:
     BaseEntity(
         const PhysicalProperty& phys,
-        std::unique_ptr<impl::math::Shape2D>&& boundary)
+        std::unique_ptr<impl::shape::Shape2D>&& boundary)
         : phys_(phys),
           boundary_(std::move(boundary)) {
         NIGEMIZU_ASSERT(boundary_);
@@ -83,7 +83,7 @@ private:
     Positional pos_;
     PhysicalProperty phys_;
 
-    std::unique_ptr<impl::math::Shape2D> boundary_;
+    std::unique_ptr<impl::shape::Shape2D> boundary_;
 };
 
 }  // namespace nigemizu::entity::base

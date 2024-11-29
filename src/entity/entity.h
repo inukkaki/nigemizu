@@ -6,7 +6,7 @@
 #include "entity/base.h"
 #include "entity/delegate.h"
 #include "meta/assert.h"
-#include "models/math.h"
+#include "models/shape.h"
 
 namespace nigemizu::entity::entity {
 
@@ -14,7 +14,7 @@ namespace impl {
 
 namespace ebas = nigemizu::entity::base;
 namespace edlg = nigemizu::entity::delegate;
-namespace math = nigemizu::models::math;
+namespace shape = nigemizu::models::shape;
 
 }  // namespace impl
 
@@ -22,7 +22,7 @@ class Entity : public impl::ebas::BaseEntity {
 public:
     Entity(
         const impl::ebas::PhysicalProperty& phys,
-        std::unique_ptr<impl::math::Shape2D>&& boundary,
+        std::unique_ptr<impl::shape::Shape2D>&& boundary,
         std::unique_ptr<impl::edlg::MoveDelegate>&& move)
         : impl::ebas::BaseEntity(phys, std::move(boundary)),
           activated_(false),

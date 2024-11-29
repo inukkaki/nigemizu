@@ -29,7 +29,7 @@ add_executable(nigemizu
     meta/winfunc.cc
 
     models/config.cc
-    models/math.cc
+    models/shape.cc
     models/timer.cc
     models/vector.cc
 )

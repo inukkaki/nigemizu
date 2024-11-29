@@ -1,12 +1,12 @@
-#ifndef NIGEMIZU_MODELS_MATH_H_
-#define NIGEMIZU_MODELS_MATH_H_
+#ifndef NIGEMIZU_MODELS_SHAPE_H_
+#define NIGEMIZU_MODELS_SHAPE_H_
 
 #include <memory>
 
 #include "graphics/render.h"
 #include "models/vector.h"
 
-namespace nigemizu::models::math {
+namespace nigemizu::models::shape {
 
 namespace impl {
 
@@ -126,6 +126,6 @@ bool DetectCollision(
     const Circle2D& c1, const Circle2D& c2,
     const impl::vctr::Vector2D& offset);
 
-}  // namespace nigemizu::models::math
+}  // namespace nigemizu::models::shape
 
-#endif  // NIGEMIZU_MODELS_MATH_H_
+#endif  // NIGEMIZU_MODELS_SHAPE_H_

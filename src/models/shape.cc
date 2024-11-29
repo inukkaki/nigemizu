@@ -1,11 +1,11 @@
-#include "models/math.h"
+#include "models/shape.h"
 
 #include <memory>
 
 #include "graphics/render.h"
 #include "models/vector.h"
 
-namespace nigemizu::models::math {
+namespace nigemizu::models::shape {
 
 namespace impl {
 
@@ -140,4 +140,4 @@ bool DetectCollision(
     return DetectCollision(c1, Circle2D(c2, offset));
 }
 
-}  // namespace nigemizu::models::math
+}  // namespace nigemizu::models::shape

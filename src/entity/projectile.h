@@ -10,7 +10,7 @@
 #include "entity/delegate.h"
 #include "entity/entity.h"
 #include "graphics/render.h"
-#include "models/math.h"
+#include "models/shape.h"
 #include "models/timer.h"
 
 namespace nigemizu::entity::projectile {
@@ -23,7 +23,7 @@ namespace ebas = nigemizu::entity::base;
 namespace edlg = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace rndr = nigemizu::graphics::render;
-namespace math = nigemizu::models::math;
+namespace shape = nigemizu::models::shape;
 namespace timer = nigemizu::models::timer;
 
 }  // namespace impl
@@ -34,7 +34,7 @@ public:
     TestBullet()
         : impl::eent::Entity(
             impl::ebas::PhysicalProperty(1.0f, 0.0f),
-            std::make_unique<impl::math::Circle2D>(4.0f),
+            std::make_unique<impl::shape::Circle2D>(4.0f),
             std::make_unique<impl::edlg::GeneralMotion>()) {
         timer_.Set();
     }
