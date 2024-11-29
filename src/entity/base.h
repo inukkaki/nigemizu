@@ -5,21 +5,23 @@
 
 #include "meta/assert.h"
 #include "models/math.h"
+#include "models/vector.h"
 
 namespace nigemizu::entity::base {
 
 namespace impl {
 
 namespace math = nigemizu::models::math;
+namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
 
 struct Positional {
-    impl::math::Vector2D r;  // px
-    impl::math::Vector2D v;  // px s-1
-    impl::math::Vector2D a;  // px s-2
+    impl::vctr::Vector2D r;  // px
+    impl::vctr::Vector2D v;  // px s-1
+    impl::vctr::Vector2D a;  // px s-2
 
-    impl::math::Vector2D f;  // Sum of external forces; kg px s-2
+    impl::vctr::Vector2D f;  // Sum of external forces; kg px s-2
 
     Positional() = default;
     Positional(const Positional&) = default;
@@ -55,15 +57,15 @@ public:
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
 
-    impl::math::Vector2D CalcGravity(const impl::math::Vector2D& g) const;
-    impl::math::Vector2D CalcDrag(float fluid_factor) const;
+    impl::vctr::Vector2D CalcGravity(const impl::vctr::Vector2D& g) const;
+    impl::vctr::Vector2D CalcDrag(float fluid_factor) const;
 
-    void AddForce(const impl::math::Vector2D& force);
+    void AddForce(const impl::vctr::Vector2D& force);
 
-    void AssignV(const impl::math::Vector2D& v);
-    void AssignR(const impl::math::Vector2D& r);
+    void AssignV(const impl::vctr::Vector2D& v);
+    void AssignR(const impl::vctr::Vector2D& r);
 
-    void AddR(const impl::math::Vector2D& dr);
+    void AddR(const impl::vctr::Vector2D& dr);
 
     void UpdateA();
     void UpdateV(float dt);

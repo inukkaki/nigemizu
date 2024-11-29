@@ -15,6 +15,7 @@
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/math.h"
+#include "models/vector.h"
 
 namespace nigemizu::controllers::loop {
 
@@ -76,14 +77,14 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     using nigemizu::entity::playable::Playable;
     using nigemizu::entity::base::PhysicalProperty;
     using nigemizu::models::math::Circle2D;
-        using nigemizu::models::math::NoShape2D;
+    // using nigemizu::models::math::NoShape2D;
     namespace dlgt = nigemizu::entity::delegate;
     using nigemizu::entity::playable::KeyConfig;
     using nigemizu::interfaces::keyboard::KeyCode;
     Playable player(
         PhysicalProperty(4.0f, 4.0f),
-        // std::make_unique<Circle2D>(8.0f),
-        std::make_unique<NoShape2D>(),
+        std::make_unique<Circle2D>(8.0f),
+        // std::make_unique<NoShape2D>(),
         std::make_unique<dlgt::GeneralMotion>(),
         KeyConfig(
             KeyCode::kUp,
@@ -99,7 +100,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         std::make_unique<dlgt::NoMotion>());
     circle.AssignR({200.0f, 150.0f});
 
-    using nigemizu::models::math::Vector2D;
+    using nigemizu::models::vector::Vector2D;
     using nigemizu::models::math::LineSegment2D;
     Entity line_segment(
         PhysicalProperty(4.0f, 4.0f),

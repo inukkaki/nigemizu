@@ -1,7 +1,7 @@
 #include "entity/playable.h"
 
 #include "interfaces/keyboard.h"
-#include "models/math.h"
+#include "models/vector.h"
 
 // DEBUG
 #include <memory>
@@ -13,7 +13,7 @@ namespace nigemizu::entity::playable {
 namespace impl {
 
 namespace kbd = nigemizu::interfaces::keyboard;
-namespace math = nigemizu::models::math;
+namespace vctr = nigemizu::models::vector;
 
 // DEBUG
 namespace sngl = nigemizu::core::singleton;
@@ -22,7 +22,7 @@ namespace eprj = nigemizu::entity::projectile;
 }  // namespace impl
 
 void Playable::Transfer(const impl::kbd::Keyboard& kbd) {
-    impl::math::Vector2D force;
+    impl::vctr::Vector2D force;
     if (kbd.Pressing(kc_.transfer_up))    { force.y -= 1.0f; }
     if (kbd.Pressing(kc_.transfer_left))  { force.x -= 1.0f; }
     if (kbd.Pressing(kc_.transfer_right)) { force.x += 1.0f; }

@@ -75,7 +75,7 @@ target_include_directories(stfn
 add_executable(vector
     vector.cc
 
-    ${PROJECT_SOURCE_DIR}/src/models/math.cc
+    ${PROJECT_SOURCE_DIR}/src/models/vector.cc
 )
 target_compile_features(vector PUBLIC cxx_std_23)
 target_include_directories(vector

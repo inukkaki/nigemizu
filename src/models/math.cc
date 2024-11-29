@@ -4,110 +4,15 @@
 #include <functional>
 #include <memory>
 
+#include "models/vector.h"
+
 namespace nigemizu::models::math {
 
-bool EqualsZero(float x) {
-    return (-kFloatTolerance < x) && (x < kFloatTolerance);
-}
+namespace impl {
 
-bool Equals(float x, float y) {
-    return EqualsZero(x - y);
-}
+namespace vctr = nigemizu::models::vector;
 
-void Vector2D::Zero() {
-    x = 0.0f;
-    y = 0.0f;
-}
-
-void Vector2D::Set(float x, float y) {
-    this->x = x;
-    this->y = y;
-}
-
-float Vector2D::Length() const {
-    return std::sqrt(x*x + y*y);
-}
-
-bool Vector2D::IsParallelTo(const Vector2D& other) const {
-    return EqualsZero(Cross(*this, other));
-}
-
-Vector2D& Vector2D::operator=(const Vector2D& rhs) {
-    x = rhs.x;
-    y = rhs.y;
-    return *this;
-}
-
-Vector2D& Vector2D::operator+=(const Vector2D& rhs) {
-    x += rhs.x;
-    y += rhs.y;
-    return *this;
-}
-
-Vector2D& Vector2D::operator-=(const Vector2D& rhs) {
-    x -= rhs.x;
-    y -= rhs.y;
-    return *this;
-}
-
-Vector2D& Vector2D::operator*=(float rhs) {
-    x *= rhs;
-    y *= rhs;
-    return *this;
-}
-
-Vector2D& Vector2D::operator/=(float rhs) {
-    x /= rhs;
-    y /= rhs;
-    return *this;
-}
-
-Vector2D operator+(const Vector2D& v) {
-    Vector2D tmp(+v.x, +v.y);
-    return tmp;
-}
-
-Vector2D operator-(const Vector2D& v) {
-    Vector2D tmp(-v.x, -v.y);
-    return tmp;
-}
-
-Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs) {
-    Vector2D tmp(lhs.x + rhs.x, lhs.y + rhs.y);
-    return tmp;
-}
-
-Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs) {
-    Vector2D tmp(lhs.x - rhs.x, lhs.y - rhs.y);
-    return tmp;
-}
-
-Vector2D operator*(float lhs, const Vector2D& rhs) {
-    Vector2D tmp(lhs*rhs.x, lhs*rhs.y);
-    return tmp;
-}
-
-Vector2D operator*(const Vector2D& lhs, float rhs) {
-    Vector2D tmp(lhs.x*rhs, lhs.y*rhs);
-    return tmp;
-}
-
-Vector2D operator/(const Vector2D& lhs, float rhs) {
-    Vector2D tmp(lhs.x/rhs, lhs.y/rhs);
-    return tmp;
-}
-
-float Dot(const Vector2D& v) {
-    return v.x*v.x + v.y*v.y;
-}
-
-float Dot(const Vector2D& lhs, const Vector2D& rhs) {
-    return lhs.x*rhs.x + lhs.y*rhs.y;
-}
-
-float Cross(const Vector2D& lhs, const Vector2D& rhs) {
-    return lhs.x*rhs.y - lhs.y*rhs.x;
-}
+}  // namespace impl
 
 void RenderLine(
         float x0, float y0, float x1, float y1, const Plotter& plotter) {
@@ -131,7 +36,8 @@ void RenderLine(
 }
 
 void RenderLine(
-        const Vector2D& p0, const Vector2D& p1, const Plotter& plotter) {
+        const impl::vctr::Vector2D& p0, const impl::vctr::Vector2D& p1,
+        const Plotter& plotter) {
     RenderLine(p0.x, p0.y, p1.x, p1.y, plotter);
 }
 
@@ -155,7 +61,8 @@ void RenderCircle(
     } while (x < 0);
 }
 
-void RenderCircle(const Vector2D& c, float r, const Plotter& plotter) {
+void RenderCircle(
+        const impl::vctr::Vector2D& c, float r, const Plotter& plotter) {
     RenderCircle(c.x, c.y, r, plotter);
 }
 
@@ -164,7 +71,7 @@ std::unique_ptr<Shape2D> NoShape2D::Clone() const {
 }
 
 bool LineSegment2D::CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const {
+        const Shape2D& other, const impl::vctr::Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
     bool collides = false;
     switch (other.Type()) {
@@ -183,7 +90,7 @@ bool LineSegment2D::CollidesWith(
 }
 
 void LineSegment2D::Render(
-        const Vector2D& offset, const Plotter& plotter) const {
+        const impl::vctr::Vector2D& offset, const Plotter& plotter) const {
     RenderLine(s + offset, GetEndPoint() + offset, plotter);
 }
 
@@ -191,12 +98,12 @@ std::unique_ptr<Shape2D> LineSegment2D::Clone() const {
     return std::make_unique<LineSegment2D>(*this);
 }
 
-Vector2D LineSegment2D::GetEndPoint() const {
+impl::vctr::Vector2D LineSegment2D::GetEndPoint() const {
     return s + d;
 }
 
 bool Circle2D::CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const {
+        const Shape2D& other, const impl::vctr::Vector2D& offset) const {
     // WARN: This function includes explicit downcasts.
     bool collides = false;
     switch (other.Type()) {
@@ -214,7 +121,8 @@ bool Circle2D::CollidesWith(
     return collides;
 }
 
-void Circle2D::Render(const Vector2D& offset, const Plotter& plotter) const {
+void Circle2D::Render(
+        const impl::vctr::Vector2D& offset, const Plotter& plotter) const {
     RenderCircle(c + offset, r, plotter);
 }
 
@@ -225,7 +133,7 @@ std::unique_ptr<Shape2D> Circle2D::Clone() const {
 bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2) {
     bool collides = false;
     if (!ls1.d.IsParallelTo(ls2.d)) {
-        Vector2D s = ls2.s - ls1.s;
+        impl::vctr::Vector2D s = ls2.s - ls1.s;
         float cross_s_d1 = Cross(s, ls1.d);
         float cross_s_d2 = Cross(s, ls2.d);
         float cross_d1_d2 = Cross(ls1.d, ls2.d);
@@ -240,8 +148,8 @@ bool DetectCollision(const LineSegment2D& ls1, const LineSegment2D& ls2) {
 
 bool DetectCollision(const LineSegment2D& ls, const Circle2D& c) {
     bool collides = false;
-    Vector2D v1 = c.c - ls.s;
-    Vector2D v2 = c.c - ls.GetEndPoint();
+    impl::vctr::Vector2D v1 = c.c - ls.s;
+    impl::vctr::Vector2D v2 = c.c - ls.GetEndPoint();
     float dist = std::abs(Cross(ls.d, v1))/ls.d.Length();
     if (dist < c.r) {  // NOTE: Lenient detection.
         collides = (
@@ -260,22 +168,25 @@ bool DetectCollision(const Circle2D& c1, const Circle2D& c2) {
 
 bool DetectCollision(
         const LineSegment2D& ls1, const LineSegment2D& ls2,
-        const Vector2D& offset) {
+        const impl::vctr::Vector2D& offset) {
     return DetectCollision(ls1, LineSegment2D(ls2.s, offset));
 }
 
 bool DetectCollision(
-        const LineSegment2D& ls, const Circle2D& c, const Vector2D& offset) {
+        const LineSegment2D& ls, const Circle2D& c,
+        const impl::vctr::Vector2D& offset) {
     return DetectCollision(ls, Circle2D(c, offset));
 }
 
 bool DetectCollision(
-        const Circle2D& c, const LineSegment2D& ls, const Vector2D& offset) {
+        const Circle2D& c, const LineSegment2D& ls,
+        const impl::vctr::Vector2D& offset) {
     return DetectCollision(LineSegment2D(ls, offset), c);
 }
 
 bool DetectCollision(
-        const Circle2D& c1, const Circle2D& c2, const Vector2D& offset) {
+        const Circle2D& c1, const Circle2D& c2,
+        const impl::vctr::Vector2D& offset) {
     return DetectCollision(c1, Circle2D(c2, offset));
 }
 

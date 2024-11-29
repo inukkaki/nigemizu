@@ -4,49 +4,15 @@
 #include <functional>
 #include <memory>
 
+#include "models/vector.h"
+
 namespace nigemizu::models::math {
 
-inline constexpr float kFloatTolerance = 1e-6f;
+namespace impl {
 
-bool EqualsZero(float x);
-bool Equals(float x, float y);
+namespace vctr = nigemizu::models::vector;
 
-struct Vector2D {
-    float x;
-    float y;
-
-    Vector2D() : x(0.0f), y(0.0f) {}
-    Vector2D(float x, float y) : x(x), y(y) {}
-    Vector2D(const Vector2D&) = default;
-
-    void Zero();
-    void Set(float x, float y);
-
-    float Length() const;
-
-    bool IsParallelTo(const Vector2D& other) const;
-
-    Vector2D& operator=(const Vector2D& rhs);
-
-    Vector2D& operator+=(const Vector2D& rhs);
-    Vector2D& operator-=(const Vector2D& rhs);
-    Vector2D& operator*=(float rhs);
-    Vector2D& operator/=(float rhs);
-};
-
-Vector2D operator+(const Vector2D& v);
-Vector2D operator-(const Vector2D& v);
-
-Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs);
-Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs);
-Vector2D operator*(float lhs, const Vector2D& rhs);
-Vector2D operator*(const Vector2D& lhs, float rhs);
-Vector2D operator/(const Vector2D& lhs, float rhs);
-
-float Dot(const Vector2D& v);
-float Dot(const Vector2D& lhs, const Vector2D& rhs);
-
-float Cross(const Vector2D& lhs, const Vector2D& rhs);
+}  // namespace impl
 
 using Plotter = std::function<void(int, int)>;
 using ColorSetter = std::function<void(int, int, int, int)>;
@@ -54,11 +20,13 @@ using ColorSetter = std::function<void(int, int, int, int)>;
 void RenderLine(
     float x0, float y0, float x1, float y1, const Plotter& plotter);
 void RenderLine(
-    const Vector2D& p0, const Vector2D& p1, const Plotter& plotter);
+    const impl::vctr::Vector2D& p0, const impl::vctr::Vector2D& p1,
+    const Plotter& plotter);
 
 void RenderCircle(
     float center_x, float center_y, float radius, const Plotter& plotter);
-void RenderCircle(const Vector2D& c, float r, const Plotter& plotter);
+void RenderCircle(
+    const impl::vctr::Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
     kNoShape2D,
@@ -70,10 +38,10 @@ struct Shape2D {
     virtual ShapeType Type() const = 0;
 
     virtual bool CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const = 0;
+        const Shape2D& other, const impl::vctr::Vector2D& offset) const = 0;
 
     virtual void Render(
-        const Vector2D& offset, const Plotter& plotter) const = 0;
+        const impl::vctr::Vector2D& offset, const Plotter& plotter) const = 0;
 
     virtual std::unique_ptr<Shape2D> Clone() const = 0;
 };
@@ -85,12 +53,14 @@ struct NoShape2D : public Shape2D {
     ShapeType Type() const override { return ShapeType::kNoShape2D; }
 
     bool CollidesWith(
-            const Shape2D& other, const Vector2D& offset) const override {
+            const Shape2D& other,
+            const impl::vctr::Vector2D& offset) const override {
         return false;
     }
 
     void Render(
-            const Vector2D& offset, const Plotter& plotter) const override {
+            const impl::vctr::Vector2D& offset,
+            const Plotter& plotter) const override {
         /* NO-OP */
     }
 
@@ -98,45 +68,54 @@ struct NoShape2D : public Shape2D {
 };
 
 struct LineSegment2D : public Shape2D {
-    Vector2D s;  // Start point
-    Vector2D d;  // Direction (extends to the end point)
+    impl::vctr::Vector2D s;  // Start point
+    impl::vctr::Vector2D d;  // Direction (extends to the end point)
 
     LineSegment2D() = default;
-    LineSegment2D(const Vector2D& d) : d(d) {}
-    LineSegment2D(const Vector2D& s, const Vector2D& d) : s(s), d(d) {}
-    LineSegment2D(const LineSegment2D& other, const Vector2D& offset)
+    LineSegment2D(const impl::vctr::Vector2D& d) : d(d) {}
+    LineSegment2D(
+        const impl::vctr::Vector2D& s, const impl::vctr::Vector2D& d)
+        : s(s), d(d) {}
+    LineSegment2D(
+        const LineSegment2D& other, const impl::vctr::Vector2D& offset)
         : s(other.s + offset), d(other.d) {}
     LineSegment2D(const LineSegment2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kLineSegment2D; }
 
     bool CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const override;
+        const Shape2D& other,
+        const impl::vctr::Vector2D& offset) const override;
 
-    void Render(const Vector2D& offset, const Plotter& plotter) const override;
+    void Render(
+        const impl::vctr::Vector2D& offset,
+        const Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 
-    Vector2D GetEndPoint() const;
+    impl::vctr::Vector2D GetEndPoint() const;
 };
 
 struct Circle2D : public Shape2D {
-    Vector2D c;  // Center
-    float r;     // Radius
+    impl::vctr::Vector2D c;  // Center
+    float r;                 // Radius
 
     Circle2D() : r(0.0f) {}
     Circle2D(float r) : r(r) {}
-    Circle2D(const Vector2D& c, float r) : c(c), r(r) {}
-    Circle2D(const Circle2D& other, const Vector2D& offset)
+    Circle2D(const impl::vctr::Vector2D& c, float r) : c(c), r(r) {}
+    Circle2D(const Circle2D& other, const impl::vctr::Vector2D& offset)
         : c(other.c + offset), r(other.r) {}
     Circle2D(const Circle2D&) = default;
 
     ShapeType Type() const override { return ShapeType::kCircle2D; }
 
     bool CollidesWith(
-        const Shape2D& other, const Vector2D& offset) const override;
+        const Shape2D& other,
+        const impl::vctr::Vector2D& offset) const override;
 
-    void Render(const Vector2D& offset, const Plotter& plotter) const override;
+    void Render(
+        const impl::vctr::Vector2D& offset,
+        const Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 };
@@ -147,14 +126,17 @@ bool DetectCollision(const Circle2D& c1, const Circle2D& c2);
 
 bool DetectCollision(
     const LineSegment2D& ls1, const LineSegment2D& ls2,
-    const Vector2D& offset);
+    const impl::vctr::Vector2D& offset);
 bool DetectCollision(
-    const LineSegment2D& ls, const Circle2D& c, const Vector2D& offset);
+    const LineSegment2D& ls, const Circle2D& c,
+    const impl::vctr::Vector2D& offset);
 
 bool DetectCollision(
-    const Circle2D& c, const LineSegment2D& ls, const Vector2D& offset);
+    const Circle2D& c, const LineSegment2D& ls,
+    const impl::vctr::Vector2D& offset);
 bool DetectCollision(
-    const Circle2D& c1, const Circle2D& c2, const Vector2D& offset);
+    const Circle2D& c1, const Circle2D& c2,
+    const impl::vctr::Vector2D& offset);
 
 }  // namespace nigemizu::models::math
 

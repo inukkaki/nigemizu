@@ -3,6 +3,7 @@
 #include "meta/assert.h"
 #include "models/config.h"
 #include "models/math.h"
+#include "models/vector.h"
 
 namespace nigemizu::entity::base {
 
@@ -10,32 +11,33 @@ namespace impl {
 
 namespace config = nigemizu::models::config;
 namespace math = nigemizu::models::math;
+namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
 
-impl::math::Vector2D
-        BaseEntity::CalcGravity(const impl::math::Vector2D& g) const {
+impl::vctr::Vector2D
+        BaseEntity::CalcGravity(const impl::vctr::Vector2D& g) const {
     return phys_.mass*g;
 }
 
-impl::math::Vector2D BaseEntity::CalcDrag(float fluid_factor) const {
+impl::vctr::Vector2D BaseEntity::CalcDrag(float fluid_factor) const {
     float drag_coeff = phys_.drag_factor*fluid_factor;
     return -drag_coeff*pos_.v;
 }
 
-void BaseEntity::AddForce(const impl::math::Vector2D& force) {
+void BaseEntity::AddForce(const impl::vctr::Vector2D& force) {
     pos_.f += force;
 }
 
-void BaseEntity::AssignV(const impl::math::Vector2D& v) {
+void BaseEntity::AssignV(const impl::vctr::Vector2D& v) {
     pos_.v = v;
 }
 
-void BaseEntity::AssignR(const impl::math::Vector2D& r) {
+void BaseEntity::AssignR(const impl::vctr::Vector2D& r) {
     pos_.r = r;
 }
 
-void BaseEntity::AddR(const impl::math::Vector2D& dr) {
+void BaseEntity::AddR(const impl::vctr::Vector2D& dr) {
     pos_.r += dr;
 }
 
@@ -55,7 +57,7 @@ void BaseEntity::UpdateR(float dt) {
 bool BaseEntity::CollidesWith(const BaseEntity& other) const {
     NIGEMIZU_ASSERT(boundary_);
     NIGEMIZU_ASSERT(other.boundary_);
-    impl::math::Vector2D diff = other.pos_.r - pos_.r;
+    impl::vctr::Vector2D diff = other.pos_.r - pos_.r;
     return boundary_->CollidesWith(*other.boundary_, diff);
 }
 
