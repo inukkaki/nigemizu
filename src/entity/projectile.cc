@@ -4,7 +4,16 @@
 #include <cstdint>
 #include <iostream>
 
+#include "graphics/render.h"
+
 namespace nigemizu::entity::projectile {
+
+namespace impl {
+
+// DEBUG
+namespace rndr = nigemizu::graphics::render;
+
+}  // namespace impl
 
 // DEBUG
 void TestBullet::DoSomething() {
@@ -17,8 +26,8 @@ void TestBullet::DoSomething() {
 
 // DEBUG
 void TestBullet::Update(
-        const impl::math::Plotter& plotter,
-        const impl::math::ColorSetter& color_setter) {
+        const impl::rndr::Plotter& plotter,
+        const impl::rndr::ColorSetter& color_setter) {
     Move();
     DoSomething();
     RenderDebugInfo(plotter, color_setter);

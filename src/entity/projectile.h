@@ -9,6 +9,7 @@
 #include "entity/base.h"
 #include "entity/delegate.h"
 #include "entity/entity.h"
+#include "graphics/render.h"
 #include "models/math.h"
 #include "models/timer.h"
 
@@ -21,6 +22,7 @@ namespace pool = nigemizu::core::pool;
 namespace ebas = nigemizu::entity::base;
 namespace edlg = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
+namespace rndr = nigemizu::graphics::render;
 namespace math = nigemizu::models::math;
 namespace timer = nigemizu::models::timer;
 
@@ -44,8 +46,8 @@ public:
         // NOTE: This overload is somehow required to satisfy the constraints
         // of Poolable...
     virtual void Update(
-        const impl::math::Plotter& plotter,
-        const impl::math::ColorSetter& color_setter);
+        const impl::rndr::Plotter& plotter,
+        const impl::rndr::ColorSetter& color_setter);
 
 private:
     impl::timer::SimpleTimer timer_;

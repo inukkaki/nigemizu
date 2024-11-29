@@ -1,32 +1,19 @@
 #ifndef NIGEMIZU_MODELS_MATH_H_
 #define NIGEMIZU_MODELS_MATH_H_
 
-#include <functional>
 #include <memory>
 
+#include "graphics/render.h"
 #include "models/vector.h"
 
 namespace nigemizu::models::math {
 
 namespace impl {
 
+namespace rndr = nigemizu::graphics::render;
 namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
-
-using Plotter = std::function<void(int, int)>;
-using ColorSetter = std::function<void(int, int, int, int)>;
-
-void RenderLine(
-    float x0, float y0, float x1, float y1, const Plotter& plotter);
-void RenderLine(
-    const impl::vctr::Vector2D& p0, const impl::vctr::Vector2D& p1,
-    const Plotter& plotter);
-
-void RenderCircle(
-    float center_x, float center_y, float radius, const Plotter& plotter);
-void RenderCircle(
-    const impl::vctr::Vector2D& c, float r, const Plotter& plotter);
 
 enum class ShapeType : unsigned char {
     kNoShape2D,
@@ -41,7 +28,8 @@ struct Shape2D {
         const Shape2D& other, const impl::vctr::Vector2D& offset) const = 0;
 
     virtual void Render(
-        const impl::vctr::Vector2D& offset, const Plotter& plotter) const = 0;
+        const impl::vctr::Vector2D& offset,
+        const impl::rndr::Plotter& plotter) const = 0;
 
     virtual std::unique_ptr<Shape2D> Clone() const = 0;
 };
@@ -60,7 +48,7 @@ struct NoShape2D : public Shape2D {
 
     void Render(
             const impl::vctr::Vector2D& offset,
-            const Plotter& plotter) const override {
+            const impl::rndr::Plotter& plotter) const override {
         /* NO-OP */
     }
 
@@ -89,7 +77,7 @@ struct LineSegment2D : public Shape2D {
 
     void Render(
         const impl::vctr::Vector2D& offset,
-        const Plotter& plotter) const override;
+        const impl::rndr::Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 
@@ -115,7 +103,7 @@ struct Circle2D : public Shape2D {
 
     void Render(
         const impl::vctr::Vector2D& offset,
-        const Plotter& plotter) const override;
+        const impl::rndr::Plotter& plotter) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 };

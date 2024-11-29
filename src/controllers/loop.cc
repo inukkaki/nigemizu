@@ -12,6 +12,7 @@
 #include "entity/entity.h"
 #include "entity/playable.h"
 #include "entity/projectile.h"
+#include "graphics/render.h"
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/math.h"
@@ -109,8 +110,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     line_segment.AssignR({250.0f, 60.0f});
     //
 
-    using nigemizu::models::math::Plotter;
-    using nigemizu::models::math::ColorSetter;
+    using nigemizu::graphics::render::Plotter;
+    using nigemizu::graphics::render::ColorSetter;
     Plotter plotter = [renderer](int x, int y) -> void {
         SDL_RenderDrawPoint(renderer, x, y);
     };
