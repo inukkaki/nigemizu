@@ -13,8 +13,8 @@ namespace nigemizu::entity::playable {
 
 namespace impl {
 
-namespace base = nigemizu::entity::base;
-namespace dlgt = nigemizu::entity::delegate;
+namespace ebas = nigemizu::entity::base;
+namespace edlg = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace kbd = nigemizu::interfaces::keyboard;
 namespace math = nigemizu::models::math;
@@ -42,9 +42,9 @@ struct KeyConfig {
 class Playable : public impl::eent::Entity {
 public:
     Playable(
-        const impl::base::PhysicalProperty& phys,
+        const impl::ebas::PhysicalProperty& phys,
         std::unique_ptr<impl::math::Shape2D>&& boundary,
-        std::unique_ptr<impl::dlgt::MoveDelegate>&& move,
+        std::unique_ptr<impl::edlg::MoveDelegate>&& move,
         const KeyConfig& kc)
         : impl::eent::Entity(
             phys,

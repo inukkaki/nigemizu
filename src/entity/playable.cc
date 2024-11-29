@@ -17,7 +17,7 @@ namespace math = nigemizu::models::math;
 
 // DEBUG
 namespace sngl = nigemizu::core::singleton;
-namespace prjc = nigemizu::entity::projectile;
+namespace eprj = nigemizu::entity::projectile;
 
 }  // namespace impl
 
@@ -34,11 +34,11 @@ void Playable::Transfer(const impl::kbd::Keyboard& kbd) {
 // DEBUG
 void Playable::Attack(const impl::kbd::Keyboard& kbd) {
     if (kbd.Presses(impl::kbd::KeyCode::kZ)) {
-        impl::prjc::TestBulletPool& pool =
-            impl::sngl::Singleton::GetInstance<impl::prjc::TestBulletPool>();
+        impl::eprj::TestBulletPool& pool =
+            impl::sngl::Singleton::GetInstance<impl::eprj::TestBulletPool>();
         if (pool.HasVacancy()) {
-            std::unique_ptr<impl::prjc::TestBullet>
-                bullet = std::make_unique<impl::prjc::TestBullet>();
+            std::unique_ptr<impl::eprj::TestBullet>
+                bullet = std::make_unique<impl::eprj::TestBullet>();
             bullet->AssignR(pos().r);
             bullet->AddForce({20000.0f, 0.0f});
             bullet->Activated();

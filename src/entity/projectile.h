@@ -18,8 +18,8 @@ namespace impl {
 
 // DEBUG
 namespace pool = nigemizu::core::pool;
-namespace base = nigemizu::entity::base;
-namespace dlgt = nigemizu::entity::delegate;
+namespace ebas = nigemizu::entity::base;
+namespace edlg = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
 namespace math = nigemizu::models::math;
 namespace timer = nigemizu::models::timer;
@@ -31,9 +31,9 @@ class TestBullet : public impl::eent::Entity {
 public:
     TestBullet()
         : impl::eent::Entity(
-            impl::base::PhysicalProperty(1.0f, 0.0f),
+            impl::ebas::PhysicalProperty(1.0f, 0.0f),
             std::make_unique<impl::math::Circle2D>(4.0f),
-            std::make_unique<impl::dlgt::GeneralMotion>()) {
+            std::make_unique<impl::edlg::GeneralMotion>()) {
         timer_.Set();
     }
     virtual ~TestBullet() = default;

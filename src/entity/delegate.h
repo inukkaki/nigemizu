@@ -7,7 +7,7 @@ namespace nigemizu::entity::delegate {
 
 namespace impl {
 
-namespace base = nigemizu::entity::base;
+namespace ebas = nigemizu::entity::base;
 
 }  // namespace impl
 
@@ -16,21 +16,21 @@ public:
     MoveDelegate() = default;
     virtual ~MoveDelegate() = default;
 
-    virtual void Move(impl::base::BaseEntity& self) = 0;
+    virtual void Move(impl::ebas::BaseEntity& self) = 0;
 };
 
 class NoMotion final : public MoveDelegate {
 public:
     NoMotion() = default;
 
-    void Move(impl::base::BaseEntity& self) override { /* NO-OP */ }
+    void Move(impl::ebas::BaseEntity& self) override { /* NO-OP */ }
 };
 
 class GeneralMotion final : public MoveDelegate {
 public:
     GeneralMotion() = default;
 
-    void Move(impl::base::BaseEntity& self) override;
+    void Move(impl::ebas::BaseEntity& self) override;
 };
 
 }  // namespace nigemizu::entity::delegate

@@ -7,12 +7,12 @@ namespace nigemizu::entity::delegate {
 
 namespace impl {
 
-namespace base = nigemizu::entity::base;
+namespace ebas = nigemizu::entity::base;
 namespace config = nigemizu::models::config;
 
 }  // namespace impl
 
-void GeneralMotion::Move(impl::base::BaseEntity& self) {
+void GeneralMotion::Move(impl::ebas::BaseEntity& self) {
     float dt = impl::config::GetFrameDuration();
     self.UpdateA();
     self.UpdateV(dt);
