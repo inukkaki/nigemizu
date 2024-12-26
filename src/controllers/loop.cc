@@ -14,7 +14,6 @@
 #include "entity/projectile.h"
 #include "graphics/render.h"
 #include "interfaces/framerate.h"
-#include "meta/assert.h"
 #include "models/config.h"
 #include "models/shape.h"
 #include "models/vector.h"
@@ -55,8 +54,6 @@ bool HandleEvents(impl::kbd::Keyboard& kbd) {
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
-
-    NIGEMIZU_ASSERT(1 == 0);
 
     using nigemizu::core::singleton::Singleton;
     using nigemizu::interfaces::keyboard::Keyboard;
@@ -145,6 +142,11 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
+
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0xFF);
+        r1.RenderLine(100.0f, 1.0f, 110.0f, 11.0f);
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
+        r2.RenderLine({110.0f, 1.0f}, {120.0f, 11.0f});
 
         //
         player.AddForce(player.CalcDrag(1.0f));

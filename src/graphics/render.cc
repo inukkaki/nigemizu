@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "SDL2/SDL.h"
+
 #include "models/vector.h"
 
 namespace nigemizu::graphics::render {
@@ -11,6 +13,15 @@ namespace impl {
 namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
+
+void Renderer::RenderLine(float x1, float y1, float x2, float y2) {
+    SDL_RenderDrawLineF(renderer_, x1, y1, x2, y2);
+}
+
+void Renderer::RenderLine(
+        const impl::vctr::Vector2D& p1, const impl::vctr::Vector2D& p2) {
+    this->RenderLine(p1.x, p1.y, p2.x, p2.y);
+}
 
 void RenderLine(
         float x0, float y0, float x1, float y1, const Plotter& plotter) {
