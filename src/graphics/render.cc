@@ -24,7 +24,30 @@ void Renderer::RenderLine(float x1, float y1, float x2, float y2) {
 
 void Renderer::RenderLine(
         const impl::vctr::Vector2D& p1, const impl::vctr::Vector2D& p2) {
-    this->RenderLine(p1.x, p1.y, p2.x, p2.y);
+    RenderLine(p1.x, p1.y, p2.x, p2.y);
+}
+
+void Renderer::RenderCircle(float cx, float cy, float r) {
+    // NOTE: The following assignments will be changed in the future.
+    int icx = static_cast<int>(std::round(cx));
+    int icy = static_cast<int>(std::round(cy));
+    int ir = static_cast<int>(std::round(r));
+    int x = -ir;
+    int y = 0;
+    int error = 2 - 2*ir;
+    do {
+        SDL_RenderDrawPoint(renderer_, icx - x, icy + y);
+        SDL_RenderDrawPoint(renderer_, icx - y, icy - x);
+        SDL_RenderDrawPoint(renderer_, icx + x, icy - y);
+        SDL_RenderDrawPoint(renderer_, icx + y, icy + x);
+        ir = error;
+        if (ir <= y) { ++y; error += 2*y + 1; }
+        if ((ir > x) || (error > y)) { ++x; error += 2*x + 1; }
+    } while (x < 0);
+}
+
+void Renderer::RenderCircle(const impl::vctr::Vector2D& c, float r) {
+    RenderCircle(c.x, c.y, r);
 }
 
 void RenderLine(

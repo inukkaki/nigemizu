@@ -34,6 +34,9 @@ public:
     void RenderLine(
         const impl::vctr::Vector2D& p1, const impl::vctr::Vector2D& p2);
 
+    void RenderCircle(float cx, float cy, float r);
+    void RenderCircle(const impl::vctr::Vector2D& c, float r);
+
 private:
     impl::cutl::InitFlag initialized_;
 

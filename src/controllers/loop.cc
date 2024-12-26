@@ -148,6 +148,13 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         r1.SetRenderColor(0x00, 0xFF, 0xFF, 0xFF);
         r2.RenderLine({110.0f, 1.0f}, {120.0f, 11.0f});
 
+        color_setter(0xFF, 0x00, 0x00, 0xFF);
+        using nigemizu::graphics::render::RenderCircle;
+        RenderCircle(145.0f, 15.0f, 15.0f, plotter);
+        r1.SetRenderColor(0x00, 0xFF, 0x00, 0xFF);
+        r1.RenderCircle(144.0f, 15.0f, 15.0f);
+        r2.RenderCircle({165.0f, 5.0f}, 5.0f);
+
         //
         player.AddForce(player.CalcDrag(1.0f));
 
