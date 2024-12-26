@@ -42,3 +42,4 @@ target_include_directories(nigemizu
 )
 target_link_directories(nigemizu PUBLIC ${PATH_TO_SDL2}/lib)
 target_link_libraries(nigemizu PUBLIC ${SDL2_LIBS})
+target_compile_definitions(nigemizu PUBLIC NIGEMIZU_USE_GUI_ASSERT)

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#undef NIGEMIZU_USE_GUI_ASSERT
+/* #undef NIGEMIZU_USE_GUI_ASSERT */
 
 #include "meta/assert.h"
 

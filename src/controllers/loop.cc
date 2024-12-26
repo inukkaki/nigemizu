@@ -14,6 +14,7 @@
 #include "entity/projectile.h"
 #include "graphics/render.h"
 #include "interfaces/framerate.h"
+#include "meta/assert.h"
 #include "models/config.h"
 #include "models/shape.h"
 #include "models/vector.h"
@@ -54,6 +55,8 @@ bool HandleEvents(impl::kbd::Keyboard& kbd) {
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
     bool running = true;
+
+    NIGEMIZU_ASSERT(1 == 0);
 
     using nigemizu::core::singleton::Singleton;
     using nigemizu::interfaces::keyboard::Keyboard;
