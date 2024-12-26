@@ -1,6 +1,7 @@
 #ifndef NIGEMIZU_GRAPHICS_RENDER_H_
 #define NIGEMIZU_GRAPHICS_RENDER_H_
 
+#include <cstdint>
 #include <functional>
 
 #include "SDL2/SDL.h"
@@ -26,6 +27,8 @@ public:
     explicit Renderer(SDL_Renderer* renderer) : renderer_(renderer) {
         initialized_.Set();
     }
+
+    void SetRenderColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
     void RenderLine(float x1, float y1, float x2, float y2);
     void RenderLine(

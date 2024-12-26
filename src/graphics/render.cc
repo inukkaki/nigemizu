@@ -14,6 +14,10 @@ namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
 
+void Renderer::SetRenderColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    SDL_SetRenderDrawColor(renderer_, r, g, b, a);
+}
+
 void Renderer::RenderLine(float x1, float y1, float x2, float y2) {
     SDL_RenderDrawLineF(renderer_, x1, y1, x2, y2);
 }
