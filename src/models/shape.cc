@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "core/singleton.h"
 #include "graphics/render.h"
 #include "models/vector.h"
 
@@ -9,6 +10,7 @@ namespace nigemizu::models::shape {
 
 namespace impl {
 
+namespace sngl = nigemizu::core::singleton;
 namespace rndr = nigemizu::graphics::render;
 namespace vctr = nigemizu::models::vector;
 
@@ -37,10 +39,10 @@ bool LineSegment2D::CollidesWith(
     return collides;
 }
 
-void LineSegment2D::Render(
-        const impl::vctr::Vector2D& offset,
-        const impl::rndr::Plotter& plotter) const {
-    impl::rndr::RenderLine(s + offset, GetEndPoint() + offset, plotter);
+void LineSegment2D::Render(const impl::vctr::Vector2D& offset) const {
+    impl::rndr::Renderer& renderer =
+        impl::sngl::Singleton::GetInstance<impl::rndr::Renderer>();
+    renderer.RenderLine(s + offset, GetEndPoint() + offset);
 }
 
 std::unique_ptr<Shape2D> LineSegment2D::Clone() const {
@@ -70,10 +72,10 @@ bool Circle2D::CollidesWith(
     return collides;
 }
 
-void Circle2D::Render(
-        const impl::vctr::Vector2D& offset,
-        const impl::rndr::Plotter& plotter) const {
-    impl::rndr::RenderCircle(c + offset, r, plotter);
+void Circle2D::Render(const impl::vctr::Vector2D& offset) const {
+    impl::rndr::Renderer& renderer =
+        impl::sngl::Singleton::GetInstance<impl::rndr::Renderer>();
+    renderer.RenderCircle(c + offset, r);
 }
 
 std::unique_ptr<Shape2D> Circle2D::Clone() const {

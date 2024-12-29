@@ -6,6 +6,8 @@
 
 #include "controllers/loop.h"
 #include "core/singleton.h"
+#include "graphics/render.h"
+#include "interfaces/keyboard.h"
 #include "meta/boot.h"
 
 #if (defined(__WIN32) || defined(__WIN64))
@@ -15,7 +17,9 @@
 namespace impl {
 
 namespace loop = nigemizu::controllers::loop;
-namespace singleton = nigemizu::core::singleton;
+namespace sngl = nigemizu::core::singleton;
+namespace rndr = nigemizu::graphics::render;
+namespace kbd = nigemizu::interfaces::keyboard;
 namespace boot = nigemizu::meta::boot;
 
 }  // namespace impl
@@ -31,11 +35,14 @@ int main(int argc, char* argv[]) {
 
     bool initialized = impl::boot::InitGui(window, renderer);
 
+    impl::sngl::Singleton::GetInstance<impl::rndr::Renderer>(renderer);
+    impl::sngl::Singleton::GetInstance<impl::kbd::Keyboard>();
+
     if (initialized) {
         impl::loop::MainLoop(window, renderer);
     }
 
-    impl::singleton::Singleton::Finalize();
+    impl::sngl::Singleton::Finalize();
 
     impl::boot::CloseGui(window, renderer);
 

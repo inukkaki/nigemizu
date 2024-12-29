@@ -3,14 +3,12 @@
 
 #include <memory>
 
-#include "graphics/render.h"
 #include "models/vector.h"
 
 namespace nigemizu::models::shape {
 
 namespace impl {
 
-namespace rndr = nigemizu::graphics::render;
 namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
@@ -27,9 +25,7 @@ struct Shape2D {
     virtual bool CollidesWith(
         const Shape2D& other, const impl::vctr::Vector2D& offset) const = 0;
 
-    virtual void Render(
-        const impl::vctr::Vector2D& offset,
-        const impl::rndr::Plotter& plotter) const = 0;
+    virtual void Render(const impl::vctr::Vector2D& offset) const = 0;
 
     virtual std::unique_ptr<Shape2D> Clone() const = 0;
 };
@@ -46,9 +42,7 @@ struct NoShape2D : public Shape2D {
         return false;
     }
 
-    void Render(
-            const impl::vctr::Vector2D& offset,
-            const impl::rndr::Plotter& plotter) const override {
+    void Render(const impl::vctr::Vector2D& offset) const override {
         /* NO-OP */
     }
 
@@ -75,9 +69,7 @@ struct LineSegment2D : public Shape2D {
         const Shape2D& other,
         const impl::vctr::Vector2D& offset) const override;
 
-    void Render(
-        const impl::vctr::Vector2D& offset,
-        const impl::rndr::Plotter& plotter) const override;
+    void Render(const impl::vctr::Vector2D& offset) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 
@@ -101,9 +93,7 @@ struct Circle2D : public Shape2D {
         const Shape2D& other,
         const impl::vctr::Vector2D& offset) const override;
 
-    void Render(
-        const impl::vctr::Vector2D& offset,
-        const impl::rndr::Plotter& plotter) const override;
+    void Render(const impl::vctr::Vector2D& offset) const override;
 
     std::unique_ptr<Shape2D> Clone() const override;
 };

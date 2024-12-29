@@ -99,10 +99,11 @@ void RenderEntityA(
 
 void BaseEntity::RenderDebugInfo(
         const impl::rndr::Plotter& plotter,
+            // NOTE: This parameter 'plotter' is no longer required here.
         const impl::rndr::ColorSetter& color_setter) const {
     NIGEMIZU_ASSERT(boundary_);
     color_setter(0xFF, 0xFF, 0xFF, 0xFF);
-    boundary_->Render(pos_.r, plotter);
+    boundary_->Render(pos_.r);
     RenderEntityR(pos_, plotter, color_setter);
     RenderEntityV(pos_, plotter, color_setter);
     RenderEntityA(pos_, plotter, color_setter);
