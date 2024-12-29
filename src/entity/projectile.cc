@@ -25,12 +25,10 @@ void TestBullet::DoSomething() {
 }
 
 // DEBUG
-void TestBullet::Update(
-        const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter) {
+void TestBullet::Update() {
     Move();
     DoSomething();
-    RenderDebugInfo(plotter, color_setter);
+    RenderDebugInfo();
 }
 
 }  // namespace nigemizu::entity::projectile

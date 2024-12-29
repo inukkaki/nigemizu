@@ -1,5 +1,6 @@
 #include "entity/base.h"
 
+#include "core/singleton.h"
 #include "graphics/render.h"
 #include "meta/assert.h"
 #include "models/config.h"
@@ -9,6 +10,7 @@ namespace nigemizu::entity::base {
 
 namespace impl {
 
+namespace sngl = nigemizu::core::singleton;
 namespace rndr = nigemizu::graphics::render;
 namespace config = nigemizu::models::config;
 namespace vctr = nigemizu::models::vector;
@@ -68,45 +70,39 @@ constexpr float kRenderEntityVSize = 0.5f;
 constexpr float kRenderEntityASize = 8.0f/impl::config::kDefaultFrameRate;
 
 void RenderEntityR(
-        const Positional& pos, const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter) {
-    color_setter(0xFF, 0xFF, 0xFF, 0xFF);
-    impl::rndr::RenderLine(
+        const Positional& pos, impl::rndr::Renderer& renderer) {
+    renderer.SetRenderColor(0xFF, 0xFF, 0xFF, 0xFF);
+    renderer.RenderLine(
         pos.r.x - kRenderEntityRSize, pos.r.y,
-        pos.r.x + kRenderEntityRSize, pos.r.y,
-        plotter);
-    impl::rndr::RenderLine(
+        pos.r.x + kRenderEntityRSize, pos.r.y);
+    renderer.RenderLine(
         pos.r.x, pos.r.y - kRenderEntityRSize,
-        pos.r.x, pos.r.y + kRenderEntityRSize,
-        plotter);
+        pos.r.x, pos.r.y + kRenderEntityRSize);
 }
 
 void RenderEntityV(
-        const Positional& pos, const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter) {
-    color_setter(0xFF, 0xFF, 0x00, 0xFF);
-    impl::rndr::RenderLine(pos.r, pos.r + kRenderEntityVSize*pos.v, plotter);
+        const Positional& pos, impl::rndr::Renderer& renderer) {
+    renderer.SetRenderColor(0xFF, 0xFF, 0x00, 0xFF);
+    renderer.RenderLine(pos.r, pos.r + kRenderEntityVSize*pos.v);
 }
 
 void RenderEntityA(
-        const Positional& pos, const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter) {
-    color_setter(0xFF, 0x00, 0x00, 0xFF);
-    impl::rndr::RenderLine(pos.r, pos.r + kRenderEntityASize*pos.a, plotter);
+        const Positional& pos, impl::rndr::Renderer& renderer) {
+    renderer.SetRenderColor(0xFF, 0x00, 0x00, 0xFF);
+    renderer.RenderLine(pos.r, pos.r + kRenderEntityASize*pos.a);
 }
 
 }  // namespace
 
-void BaseEntity::RenderDebugInfo(
-        const impl::rndr::Plotter& plotter,
-            // NOTE: This parameter 'plotter' is no longer required here.
-        const impl::rndr::ColorSetter& color_setter) const {
+void BaseEntity::RenderDebugInfo() const {
     NIGEMIZU_ASSERT(boundary_);
-    color_setter(0xFF, 0xFF, 0xFF, 0xFF);
+    impl::rndr::Renderer& renderer =
+        impl::sngl::Singleton::GetInstance<impl::rndr::Renderer>();
+    renderer.SetRenderColor(0xFF, 0xFF, 0xFF, 0xFF);
     boundary_->Render(pos_.r);
-    RenderEntityR(pos_, plotter, color_setter);
-    RenderEntityV(pos_, plotter, color_setter);
-    RenderEntityA(pos_, plotter, color_setter);
+    RenderEntityR(pos_, renderer);
+    RenderEntityV(pos_, renderer);
+    RenderEntityA(pos_, renderer);
 }
 
 }  // namespace nigemizu::entity::base

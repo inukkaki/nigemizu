@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include "graphics/render.h"
 #include "meta/assert.h"
 #include "models/shape.h"
 #include "models/vector.h"
@@ -12,7 +11,6 @@ namespace nigemizu::entity::base {
 
 namespace impl {
 
-namespace rndr = nigemizu::graphics::render;
 namespace shape = nigemizu::models::shape;
 namespace vctr = nigemizu::models::vector;
 
@@ -75,9 +73,7 @@ public:
 
     bool CollidesWith(const BaseEntity& other) const;
 
-    void RenderDebugInfo(
-        const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter) const;
+    void RenderDebugInfo() const;
 
 private:
     Positional pos_;

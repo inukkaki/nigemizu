@@ -160,7 +160,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         player.Control(kbd);
         player.Move();
-        player.RenderDebugInfo(plotter, color_setter);
+        player.RenderDebugInfo();
 
         if (player.CollidesWith(circle)) {
             std::cout << "Circle > Collided!" << std::endl;
@@ -169,8 +169,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
             std::cout << "Line segment > Collided!" << std::endl;
         }
 
-        circle.RenderDebugInfo(plotter, color_setter);
-        line_segment.RenderDebugInfo(plotter, color_setter);
+        circle.RenderDebugInfo();
+        line_segment.RenderDebugInfo();
         //
 
         //
@@ -189,7 +189,7 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
         }
         ++elapsed_frames;
         if (elapsed_frames >= 300) { elapsed_frames = 0; }
-        tbpool.Update(plotter, color_setter);
+        tbpool.Update();
         //
 
         SDL_RenderPresent(renderer);

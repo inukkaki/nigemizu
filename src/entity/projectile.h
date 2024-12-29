@@ -9,7 +9,6 @@
 #include "entity/base.h"
 #include "entity/delegate.h"
 #include "entity/entity.h"
-#include "graphics/render.h"
 #include "models/shape.h"
 #include "models/timer.h"
 
@@ -22,7 +21,6 @@ namespace pool = nigemizu::core::pool;
 namespace ebas = nigemizu::entity::base;
 namespace edlg = nigemizu::entity::delegate;
 namespace eent = nigemizu::entity::entity;
-namespace rndr = nigemizu::graphics::render;
 namespace shape = nigemizu::models::shape;
 namespace timer = nigemizu::models::timer;
 
@@ -42,12 +40,9 @@ public:
 
     void DoSomething();
 
-    virtual void Update() { /* NO-OP */ }
-        // NOTE: This overload is somehow required to satisfy the constraints
-        // of Poolable...
-    virtual void Update(
-        const impl::rndr::Plotter& plotter,
-        const impl::rndr::ColorSetter& color_setter);
+    virtual void Update();
+        // NOTE: Update function that has (void) signature is somehow required
+        // to satisfy the constraints of Poolable.
 
 private:
     impl::timer::SimpleTimer timer_;
