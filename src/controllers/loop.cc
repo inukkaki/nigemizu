@@ -9,14 +9,11 @@
 #include <memory>
 #include "core/singleton.h"
 #include "entity/delegate.h"
-#include "entity/entity.h"
 #include "entity/playable.h"
 #include "entity/projectile.h"
-#include "graphics/render.h"
 #include "interfaces/framerate.h"
 #include "models/config.h"
 #include "models/shape.h"
-#include "models/vector.h"
 
 namespace nigemizu::controllers::loop {
 
@@ -24,17 +21,27 @@ namespace impl {
 
 namespace kbd = nigemizu::interfaces::keyboard;
 
+// DEBUG
+namespace sngl = nigemizu::core::singleton;
+namespace ebas = nigemizu::entity::base;
+namespace edlg = nigemizu::entity::delegate;
+namespace eply = nigemizu::entity::playable;
+namespace eprj = nigemizu::entity::projectile;
+namespace fr = nigemizu::interfaces::framerate;
+namespace config = nigemizu::models::config;
+namespace shape = nigemizu::models::shape;
+
 }  // namespace impl
 
 namespace {
 
 bool HandleEvents(impl::kbd::Keyboard& kbd) {
-    bool running = true;
+    bool proceeds = true;
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
         case SDL_QUIT:
-            running = false;
+            proceeds = false;
             break;
         case SDL_KEYDOWN:
             kbd.HandleKeyDown(event.key.keysym.sym);
@@ -46,160 +53,67 @@ bool HandleEvents(impl::kbd::Keyboard& kbd) {
             break;
         }
     }
-    return running;
+    return proceeds;
 }
 
 }  // namespace
 
 void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
     // DEBUG
-    bool running = true;
+    bool proceeds = true;
 
-    using nigemizu::core::singleton::Singleton;
-    using nigemizu::interfaces::keyboard::Keyboard;
-    Keyboard& kbd = Singleton::GetInstance<Keyboard>();
+    int frame_rate = impl::config::GetFrameRate();
+    impl::fr::FrameRateBalancer frb(frame_rate);
+    impl::fr::FrameRateMeasurer frm;
+    double measured_frame_rate;
+
+    impl::kbd::Keyboard& kbd =
+        impl::sngl::Singleton::GetInstance<impl::kbd::Keyboard>();
+
+    impl::eprj::TestBulletPool& tb_pool =
+        impl::sngl::Singleton::GetInstance<impl::eprj::TestBulletPool>(100ull);
+    impl::eply::Playable player(
+        impl::ebas::PhysicalProperty(4.0f, 4.0f),
+        std::make_unique<impl::shape::Circle2D>(8.0f),
+        std::make_unique<impl::edlg::GeneralMotion>(),
+        impl::eply::KeyConfig(
+            impl::kbd::KeyCode::kUp,
+            impl::kbd::KeyCode::kLeft,
+            impl::kbd::KeyCode::kRight,
+            impl::kbd::KeyCode::kDown));
+
+    player.AssignR({80.0f, 40.0f});
+
     kbd.Clear();
-
-    //
-    using nigemizu::graphics::render::Renderer;
-    Renderer& r1 = Singleton::GetInstance<Renderer>(renderer);
-    Renderer& r2 = Singleton::GetInstance<Renderer>();
-    //
-
-    namespace config = nigemizu::models::config;
-    // config::SetFrameRate(30);
-    int frame_rate = config::GetFrameRate();
-    float frame_duration = config::GetFrameDuration();
-    std::cout << frame_rate << " fps" << std::endl;
-    std::cout << frame_duration << " s" << std::endl;
-
-    using nigemizu::interfaces::framerate::FrameRateBalancer;
-    using nigemizu::interfaces::framerate::FrameRateMeasurer;
-    FrameRateBalancer frb(frame_rate);
-    FrameRateMeasurer frm;
-
-    double measured_frame_rate = 0.0;
-
-    //
-    using nigemizu::entity::playable::Playable;
-    using nigemizu::entity::base::PhysicalProperty;
-    using nigemizu::models::shape::Circle2D;
-    // using nigemizu::models::shape::NoShape2D;
-    namespace dlgt = nigemizu::entity::delegate;
-    using nigemizu::entity::playable::KeyConfig;
-    using nigemizu::interfaces::keyboard::KeyCode;
-    Playable player(
-        PhysicalProperty(4.0f, 4.0f),
-        std::make_unique<Circle2D>(8.0f),
-        // std::make_unique<NoShape2D>(),
-        std::make_unique<dlgt::GeneralMotion>(),
-        KeyConfig(
-            KeyCode::kUp,
-            KeyCode::kLeft,
-            KeyCode::kRight,
-            KeyCode::kDown));
-    player.AssignR({16.0f, 16.0f});
-
-    using nigemizu::entity::entity::Entity;
-    Entity circle(
-        PhysicalProperty(4.0f, 4.0f),
-        std::make_unique<Circle2D>(16.0f),
-        std::make_unique<dlgt::NoMotion>());
-    circle.AssignR({200.0f, 150.0f});
-
-    using nigemizu::models::vector::Vector2D;
-    using nigemizu::models::shape::LineSegment2D;
-    Entity line_segment(
-        PhysicalProperty(4.0f, 4.0f),
-        std::make_unique<LineSegment2D>(Vector2D(-10.0f, 50.0f)),
-        std::make_unique<dlgt::NoMotion>());
-    line_segment.AssignR({250.0f, 60.0f});
-    //
-
-    using nigemizu::graphics::render::Plotter;
-    using nigemizu::graphics::render::ColorSetter;
-    Plotter plotter = [renderer](int x, int y) -> void {
-        SDL_RenderDrawPoint(renderer, x, y);
-    };
-    ColorSetter color_setter = [renderer](int r, int g, int b, int a) -> void {
-        SDL_SetRenderDrawColor(renderer, r, g, b, g);
-    };
-
-    //
-    using nigemizu::entity::projectile::TestBulletPool;
-    TestBulletPool& tbpool = Singleton::GetInstance<TestBulletPool>(100ull);
-    int elapsed_frames = 0;
-    int count = 0;
-    //
 
     frb.SetTimer();
     frm.SetTimer();
-    while (running) {
-        running = HandleEvents(kbd);
-        if (!running) {
+    while (proceeds) {
+        proceeds = HandleEvents(kbd);
+        if (!proceeds) {
             break;
         }
 
+        // --- CALC AND RENDERING START ---
         SDL_SetRenderDrawColor(renderer, 0x20, 0x40, 0x70, 0xFF);
         SDL_RenderClear(renderer);
 
-        r2.SetRenderColor(0xFF, 0x00, 0xFF, 0xFF);
-        r1.RenderLine(100.0f, 1.0f, 110.0f, 11.0f);
-        r1.SetRenderColor(0x00, 0xFF, 0xFF, 0xFF);
-        r2.RenderLine({110.0f, 1.0f}, {120.0f, 11.0f});
-
-        color_setter(0xFF, 0x00, 0x00, 0xFF);
-        using nigemizu::graphics::render::RenderCircle;
-        RenderCircle(145.0f, 15.0f, 15.0f, plotter);
-        r1.SetRenderColor(0x00, 0xFF, 0x00, 0xFF);
-        r1.RenderCircle(144.0f, 15.0f, 15.0f);
-        r2.RenderCircle({165.0f, 5.0f}, 5.0f);
-
-        //
         player.AddForce(player.CalcDrag(1.0f));
-
         player.Control(kbd);
         player.Move();
         player.RenderDebugInfo();
 
-        if (player.CollidesWith(circle)) {
-            std::cout << "Circle > Collided!" << std::endl;
-        }
-        if (player.CollidesWith(line_segment)) {
-            std::cout << "Line segment > Collided!" << std::endl;
-        }
-
-        circle.RenderDebugInfo();
-        line_segment.RenderDebugInfo();
-        //
-
-        //
-        if (elapsed_frames % 10 == 0) {
-            if (tbpool.HasVacancy()) {
-                using nigemizu::entity::projectile::TestBullet;
-                std::unique_ptr<TestBullet>
-                    bullet = std::make_unique<TestBullet>();
-                bullet->AssignR({50.0f, 50.0f + 12.0f*count});
-                bullet->AddForce({500.0f*(1 + count), 0.0f});
-                bullet->Activated();
-                tbpool.Create(std::move(bullet));
-                ++count;
-            }
-            if (count > 9) { count = 0; }
-        }
-        ++elapsed_frames;
-        if (elapsed_frames >= 300) { elapsed_frames = 0; }
-        tbpool.Update();
-        //
+        tb_pool.Update();
 
         SDL_RenderPresent(renderer);
+        // --- CALC AND RENDERING END ---
+
+        kbd.Update();
 
         measured_frame_rate = frm.MeasureFrameRate();
         if (measured_frame_rate > 0.0) {
-            std::cout << measured_frame_rate << " fps" << std::endl;
+            std::cout << measured_frame_rate << " FPS" << std::endl;
         }
-
-        kbd.Update();
         frb.Balance();
     }
 }
