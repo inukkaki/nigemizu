@@ -194,7 +194,8 @@ void MainLoop(SDL_Window* window, SDL_Renderer* renderer) {
 
         SDL_RenderPresent(renderer);
 
-        if (frm.MeasureFrameRate(measured_frame_rate)) {
+        measured_frame_rate = frm.MeasureFrameRate();
+        if (measured_frame_rate > 0.0) {
             std::cout << measured_frame_rate << " fps" << std::endl;
         }
 

@@ -36,7 +36,7 @@ public:
     FrameRateMeasurer() : elapsed_frames_(0) {}
 
     void SetTimer();
-    bool MeasureFrameRate(double& measured_frame_rate);
+    double MeasureFrameRate();
 
 private:
     int elapsed_frames_;  // s-1
