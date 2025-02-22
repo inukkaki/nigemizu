@@ -1,11 +1,11 @@
-#include "interfaces/texture.h"
+#include "graphics/texture.h"
 
 #include "meta/modal.h"
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
-namespace nigemizu::interfaces::texture {
+namespace nigemizu::graphics::texture {
 
 namespace impl {
 
@@ -61,4 +61,4 @@ void Texture::Render(
     SDL_RenderCopy(renderer, texture_, &srcrect, &dstrect);
 }
 
-}  // namespace nigemizu::interfaces::texture
+}  // namespace nigemizu::graphics::texture

@@ -38,17 +38,16 @@ constexpr uint64_t kMeasuringPeriod = 1000ull;  // ms
 
 }  // namespace
 
-bool FrameRateMeasurer::MeasureFrameRate(double& measured_frame_rate) {
-    bool executed = false;
+double FrameRateMeasurer::MeasureFrameRate() {
+    double measured_frame_rate = -1.0;
     ++elapsed_frames_;
     uint64_t elapsed_time = timer_.GetElapsedTime();
     if (elapsed_time >= kMeasuringPeriod) {
-        executed = true;
         measured_frame_rate = 1000*elapsed_frames_/elapsed_time;
         elapsed_frames_ = 0;
         timer_.Set();
     }
-    return executed;
+    return measured_frame_rate;
 }
 
 }  // nigemizu::interfaces::framerate

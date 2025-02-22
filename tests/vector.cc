@@ -2,22 +2,22 @@
 
 #include <iostream>
 
-#include "models/math.h"
+#include "models/vector.h"
 
 namespace impl {
 
-namespace math = nigemizu::models::math;
+namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
 
-void PrintVector2D(const impl::math::Vector2D& vec, const char* label) {
+void PrintVector2D(const impl::vctr::Vector2D& vec, const char* label) {
     std::cout << label << ": ";
     std::cout << "x=" << vec.x << ", y=" << vec.y << " ";
     std::cout << "[" << &vec << "]" << std::endl;
 }
 
 int main() {
-    using nigemizu::models::math::Vector2D;
+    using nigemizu::models::vector::Vector2D;
     Vector2D zero;
     Vector2D v1(0.5f, -2.5f);
     Vector2D v2(-1.2f, -6.0f);
@@ -67,10 +67,10 @@ int main() {
     PrintVector2D(v1, "v1");
     PrintVector2D(v2, "v2");
     std::cout << "v1.Length(): " << v1.Length() << std::endl;
-    using nigemizu::models::math::Dot;
+    using nigemizu::models::vector::Dot;
     std::cout << "Dot(v1): " << Dot(v1) << std::endl;
     std::cout << "Dot(v1, v2): " << Dot(v1, v2) << std::endl;
-    using nigemizu::models::math::Cross;
+    using nigemizu::models::vector::Cross;
     std::cout << "Cross(v1, v1): " << Cross(v1, v1) << std::endl;
     std::cout << "Cross(v1, v2): " << Cross(v1, v2) << std::endl;
 

@@ -1,11 +1,11 @@
-#ifndef NIGEMIZU_INTERFACES_TEXTURE_H_
-#define NIGEMIZU_INTERFACES_TEXTURE_H_
+#ifndef NIGEMIZU_GRAPHICS_TEXTURE_H_
+#define NIGEMIZU_GRAPHICS_TEXTURE_H_
 
 #include <memory>
 
 #include "SDL2/SDL.h"
 
-namespace nigemizu::interfaces::texture {
+namespace nigemizu::graphics::texture {
 
 struct RenderRect {
     int u;
@@ -34,6 +34,6 @@ private:
     SDL_Texture* texture_;
 };
 
-}  // namespace nigemizu::interfaces::texture
+}  // namespace nigemizu::graphics::texture
 
-#endif  // NIGEMIZU_INTERFACES_TEXTURE_H_
+#endif  // NIGEMIZU_GRAPHICS_TEXTURE_H_

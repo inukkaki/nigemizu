@@ -4,22 +4,24 @@
 #include <memory>
 
 #include "meta/assert.h"
-#include "models/math.h"
+#include "models/shape.h"
+#include "models/vector.h"
 
 namespace nigemizu::entity::base {
 
 namespace impl {
 
-namespace math = nigemizu::models::math;
+namespace shape = nigemizu::models::shape;
+namespace vctr = nigemizu::models::vector;
 
 }  // namespace impl
 
 struct Positional {
-    impl::math::Vector2D r;  // px
-    impl::math::Vector2D v;  // px s-1
-    impl::math::Vector2D a;  // px s-2
+    impl::vctr::Vector2D r;  // px
+    impl::vctr::Vector2D v;  // px s-1
+    impl::vctr::Vector2D a;  // px s-2
 
-    impl::math::Vector2D f;  // Sum of external forces; kg px s-2
+    impl::vctr::Vector2D f;  // Sum of external forces; kg px s-2
 
     Positional() = default;
     Positional(const Positional&) = default;
@@ -43,7 +45,7 @@ class BaseEntity {
 public:
     BaseEntity(
         const PhysicalProperty& phys,
-        std::unique_ptr<impl::math::Shape2D>&& boundary)
+        std::unique_ptr<impl::shape::Shape2D>&& boundary)
         : phys_(phys),
           boundary_(std::move(boundary)) {
         NIGEMIZU_ASSERT(boundary_);
@@ -55,29 +57,29 @@ public:
     const PhysicalProperty& phys() const { return phys_; }
     PhysicalProperty&       phys()       { return phys_; }
 
-    impl::math::Vector2D CalcGravity(const impl::math::Vector2D& g);
-    impl::math::Vector2D CalcDrag(float fluid_factor);
+    impl::vctr::Vector2D CalcGravity(const impl::vctr::Vector2D& g) const;
+    impl::vctr::Vector2D CalcDrag(float fluid_factor) const;
 
-    void AddForce(const impl::math::Vector2D& force);
+    void AddForce(const impl::vctr::Vector2D& force);
 
-    void AssignV(const impl::math::Vector2D& v);
-    void AssignR(const impl::math::Vector2D& r);
+    void AssignV(const impl::vctr::Vector2D& v);
+    void AssignR(const impl::vctr::Vector2D& r);
 
-    void AddR(const impl::math::Vector2D& dr);
+    void AddR(const impl::vctr::Vector2D& dr);
 
     void UpdateA();
     void UpdateV(float dt);
     void UpdateR(float dt);
 
-    void RenderDebugInfo(
-        const impl::math::Plotter& plotter,
-        const impl::math::ColorSetter& color_setter) const;
+    bool CollidesWith(const BaseEntity& other) const;
+
+    void RenderDebugInfo() const;
 
 private:
     Positional pos_;
     PhysicalProperty phys_;
 
-    std::unique_ptr<impl::math::Shape2D> boundary_;
+    std::unique_ptr<impl::shape::Shape2D> boundary_;
 };
 
 }  // namespace nigemizu::entity::base

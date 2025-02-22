@@ -10,15 +10,19 @@ add_executable(nigemizu
 
     core/pool.cc
     core/singleton.cc
+    core/utils.cc
 
     entity/base.cc
     entity/delegate.cc
     entity/entity.cc
     entity/playable.cc
+    entity/projectile.cc
+
+    graphics/render.cc
+    graphics/texture.cc
 
     interfaces/framerate.cc
     interfaces/keyboard.cc
-    interfaces/texture.cc
 
     meta/assert.cc
     meta/boot.cc
@@ -26,8 +30,9 @@ add_executable(nigemizu
     meta/winfunc.cc
 
     models/config.cc
-    models/math.cc
+    models/shape.cc
     models/timer.cc
+    models/vector.cc
 )
 target_compile_features(nigemizu PUBLIC cxx_std_23)
 target_include_directories(nigemizu
@@ -37,3 +42,4 @@ target_include_directories(nigemizu
 )
 target_link_directories(nigemizu PUBLIC ${PATH_TO_SDL2}/lib)
 target_link_libraries(nigemizu PUBLIC ${SDL2_LIBS})
+target_compile_definitions(nigemizu PUBLIC NIGEMIZU_USE_GUI_ASSERT)
